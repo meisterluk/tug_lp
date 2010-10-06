@@ -1,0 +1,32 @@
+/*
+        Author:         prokls
+        Date:           10.09.30
+        License:        Emailware
+*/
+
+@media all {
+	p, li, blockquote, div { font-size: 14px; }
+	li { line-height: 20px; }
+
+        .s { font-size: 0.8em; }
+        .b { font-weight: bold; }
+	.done { text-decoration: line-through; }
+
+	.hw { border: #000 solid 1px; padding: 0; } /* homework */
+
+	/* lehrveranstaltung / course */
+	.lv { font-weight: bold; margin-right: 20px; }
+	.lv_link { color: #CCC; text-decoration: none; }
+	.lv_link:hover { color: #666; }
+
+        #signature {
+                color: #999;
+                background-color: #EFEFEF;
+                margin: 10px;
+                padding: 10px;
+        }
+}
+
+@media print {
+	#signature { display: none; }
+}

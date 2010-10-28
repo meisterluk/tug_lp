@@ -7,7 +7,9 @@
 @media all {
     /* general element definition */
     html { background-color: #EEC; font-family: Arial, Helvetica, sans-serif; }
-    body { width: 80%; margin: 5%; padding: 20px; border: 1px solid #333; background-color: #FFD; }
+    body { width: 80%; margin: 5%; padding: 20px; border: 1px solid #333;
+        background-color: #FFD; background-image: url(../ssh.png);
+        background-repeat: no-repeat; background-position: top right; }
     h1 { color: #BB9; }
     h3 { color: #775; }
     p, li, blockquote, div { font-size: 14px; }

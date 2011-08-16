@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- HTML 4 sucks. HTML 5 to go -->
+<html>
+  <head>
+    <title>GPG Discussion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="creator" content="Lukas Prokop">
+    <meta name="description" content="Die Diskussion 'Der Unterschied zwischen sign-key und send-key' oder 'wieso ich nicht hochlade' zusammengefasst">
+    <meta name="language" content="de">
+
+    <meta name="robots" content="all">
+    <link rel="lukas' weblog" title="MyBlog" href="http://lukas-prokop.at/blog/">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <style type="text/css">
+    <!--
+        body {
+            background-image: url(../gdi.jpg);
+            background-repeat: no-repeat;
+            background-position: top right;
+        }
+        h2 { font-size: 80%; }
+        h4 { color: #997; }
+        h5 { color: #AA8; }
+        h6 { color: #BB9; }
+        .toc > * { font-size: 90%; }
+    -->
+    </style>
+ </head>
+
+ <body>
+    <h1>Diskussion auf tu-graz.lv.gdi zusammengefasst</h1>
+    <h2>"Der Unterschied zwischen sign-key und send-key"
+        oder "wieso ich nicht hochlade"</h2>
+
+    <h3>Table of Contents</h3>
+    <ul class="toc">
+        <li><a href="#problem">Problematik</a>
+            <ul>
+                <li><a href="#what-is-it-about">Worum geht's?</a></li>
+                <li><a href="#reaction">Wie soll man dann reagieren?</a></li>
+                <li><a href="#notes">Randnotizen</a></li>
+            </ul>
+        </li>
+        <li><a href="#arguments">Argumentation</a>
+            <ul>
+                <li><a href="#why-not">Wieso sollte ich nicht online signiert erscheinen?</a></li>
+                <li><a href="#forever">Wieso sollten die Daten für immer online bleiben?</a></li>
+                <li><a href="#relation">Dieses "in Verbindung" ist doch komplett egal</a></li>
+                <li><a href="#web-of-trust">Geht es um die Verhinderung der Verbreitung des Web of Trusts?</a></li>
+                <li><a href="#new-key">Dann erstelle einen neuen Nicht-GDI-Key?</a></li>
+                <li><a href="#social-network">Was soll dieses SchülerVZ/Facebook-Argument?</a></li>
+                <li><a href="#relevance">Hat dies so große Relevanz?</a></li>
+                <li><a href="#why-do-i-care">Wieso sprichst du dies an?</a></li>
+                <li><a href="#communication">Ich bin Daten-paranoid. Darf ich verschlüsselt kommunizieren?</a></li>
+                <li><a href="emailtraffic">Wenn jeder den empfohlenen Weg wählt, sind dann "Verbindungen" unsichtbar?</a></li>
+            </ul>
+        </li>
+        <li><a href="#gdi">GDI spezifisch</a>
+            <ul>
+                <li><a href="#upload">Okay... aber es wird in der Übung verlangt, dass wir hochladen?!</a></li>
+                <li><a href="#tutors">Wie sollen die GDI Tutoren sonst schauen, ob der Schlüssel signiert wurde?</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3 id="problem">Problematik</h3>
+    <h4 id="what-is-it-about">Worum geht's?</h4>
+    <p>
+        Nach einer Keysigningparty wird der Schlüssel signiert (--sign-key,
+        'Key' &gt; 'Sign' ... je nach verwendeter Software). Dabei wird
+        der signierte Schlüssel meist wieder hochgeladen. Infolge dessen
+        findet man den Namen des signierenden Partners direkt unter dem
+        eigenen Schlüssel.
+    </p>
+    <p class="mono">sig  sig   3B5AEBFA 2011-01-22 
+        __________ __________ Lukas Prokop
+        &lt;lukas.prokop@student.tugraz.at&gt;</p>
+
+    <p>
+        Dies geschah jedoch ohne das Einverständnis des Schlüsselbesitzers.
+    </p>
+
+    <h4 id="reaction">Wie soll man dann reagieren?</h4>
+    <p id="prefered-way">
+        Exportiere den signierten Schlüssel und sende ihn dann an den
+        Schlüsselbesitzer retour. Dieser kann selbstständig entscheiden,
+        ob sein Schlüssel online signiert erscheinen soll.
+    </p>
+
+    <h4 id="notes">Randnotizen</h4>
+    <ul>
+    <li>
+        <p>
+            Diese Diskussion basiert auf:
+        </p>
+        <p class="mono">
+            &gt; If you are working with an entity which does not want their key on a <br>
+            &gt; public keyserver, you should at this point you should return their <br>
+            &gt; signed key back to them by their method of choice - normally encrypted <br>
+            &gt; email. You should not send a public key to a keyserver with out the <br>
+            &gt; permission of the key's owner. Publicizing a public key slightly <br>
+            &gt; reduces the security of a key pair, therefor it is considered rude <br>
+            &gt; to make a key more public than its owner desires. <br>
+            <a href="http://cryptnet.net/fdp/crypto/keysigning_party/en/keysigning_party.html#id2557964">[0]</a>
+        </p>
+    </li>
+
+    <li>
+        Das UNIX-Programm <a href="http://linux.die.net/man/1/caff">"CA Fire
+        and Forget"</a> automatisiert das Versenden der Mail
+    </li>
+    </ul>
+
+    <h3 id="arguments">Argumentation</h3>
+    <h4 id="why-not">Wieso sollte ich nicht online signiert erscheinen?</h4>
+    <p>
+        Weil es Menschen gibt, die so Daten-paranoid sind, dass sie
+        sie nicht <em>für immer</em> online <em>in Verbindung</em>
+        mit anderen Personen gebracht werden sollen.
+    </p>
+
+    <h4 id="forever">Wieso sollten die Daten für immer online bleiben?</h4>
+    <p>
+        In der Tat hatte ich mich zuerst geirrt. Die sogenannten
+        Revocation-Zertifikate werden verteilt und nicht von Keyservern
+        "exekutiert" (der Keyserver löscht deshalb den Schlüssel nicht).
+        Bei einem Löschen am Server wären die Schlüssel nur
+        unzuverlässig auf <em>allen</em> Servern gelöscht werden.
+    </p>
+    <p>
+        Somit ist es in der Realität noch unpraktischer: Die
+        Schlüsselinformationen verschwinden niemals, weil sie online weiterhin
+        vorhanden sind und nur mit einem
+        <span style="color:#F00; font-weight:bold">revok</span> dargestellt
+        werden.
+    </p>
+
+    <h4 id="relation">Dieses "in Verbindung" ist doch komplett egal</h4>
+    <p>
+        In der Tat ist es nicht leicht argumentierbar, allerdings lassen gute
+        Data Mining Methoden durchaus Schlüsse zu.
+    </p>
+    <p>
+        <span style="font-weight:bold">Das "kleines Netzwerk"-Argument:</span>
+        Wenn 26 Parlamentsabgeordnete über etwas abstimmen und die Freiheit
+        haben ihre Stimme nicht abzugeben und bei einer Abstimmung 25 diese
+        Freiheit in Anspruch nehmen, so verliert die 1 übrige Person ihr Recht
+        auf das Wahlgeheimnis.
+    </p>
+    <p>
+        <span style="font-weight:bold">Analog gilt:</span> Wenn 998 von 1000 Personen
+        Verschlüsselung verweigern ("Ich habe nichts zu verbergen") bzw. nicht
+        brauchen, so könnte man durchaus vermuten, dass die 2 Personen etwas zu
+        verbergen hätte und Geheimnisse besitzen. Dies kann sich negativ auf
+        die Person auswirken (zB entwickelt sich ein Interesse die Geheimnisse
+        dieser Personen zu enthüllen). Und auf die Aussage "Aber RSA
+        (default-Algorithmus von GnuPG) ist ja sicher" antworte ich mit
+        "Reden wir in <a href="http://de.wikipedia.org/wiki/Shor-Algorithmus">50
+        Jahren</a> darüber" und "Hacking geht über die technische Ebene hinaus".
+    </p>
+    <p>
+        Wie soll man damit umgehen? Die Parlamentsabgeordneten müssen alle ihre
+        Stimme abgeben, haben jedoch ein Feld "Keine Entscheidung". Für die
+        Verschlüsselung brauchen wir ein großes Netzwerk mit vielen Personen.
+        Verschlüsselung muss allgemein üblich werden. Dadurch wird verschleiert,
+        wer wirklich Geheimnisse über Verschlüsselung verbreitet.
+    </p>
+    <p>
+        <span style="font-weight:bold">Der Umgang mit Keyservern:</span>
+        Abseits von diesem "in Verbindung bringen" halte ich es für ein
+        generelles Problem, dass Kommunikationspartner den Schlüssel fremder
+        Personen hochladen. Ein Keyserver ermöglicht eine verschlüsselte
+        Kommunikation ab der ersten Email. Und ob der Schlüsselbesitzer dies
+        ermöglichen möchte, möge er <em>selbst</em> entscheiden. Keyserver sind
+        nicht dazu da mit Daten gefüttert zu werden.
+    </p>
+    <p>
+        <span style="font-weight:bold">Aber bei dieser GDI-Übung wurden ja
+        keine Verbindungen veröffentlicht?</span>
+        Doch. Es wurde von Studenten ins Internet geschrieben 'ich habe
+        zugleich mit Person XY studiert'. Wahrscheinlichkeitstheoretisch
+        kann auch darauf geschlossen werden, dass man an der gleichen
+        Lehrveranstaltung teilnahm.
+    </p>
+
+    <h4 id="web-of-trust">
+        Geht es um die Verhinderung der Verbreitung des Web of Trusts?
+    </h4>
+    <p>Omg. Nein. Web of Trust ftw.</p>
+
+    <h4 id="new-key">Dann erstelle einen neuen Nicht-GDI-Key?</h4>
+    <p>
+        Dies ändert rein gar nichts. Bei der aktuellen Fehlverwendung des
+        Signierens kann jemand nur dann verschlüsselt kommunizieren,
+        wenn er bereit ist seinen Namen, die Emailadresse und seine
+        signierten Personen veröffentlicht. Dabei ist Verschlüsselung
+        ein Grundrecht und auch Daten-paranoiden Menschen sollte es
+        zugänglich sein.
+    </p>
+
+    <h4 id="social-network">Was soll dieses SchülerVZ/Facebook-Argument?</h4>
+    <p>
+        Auf den sozialen Plattformen ist es allgemein üblich, dass Daten
+        fremder Personen online gestellt werden ohne deren Einverständnis
+        einzufordern. Seien es Photos oder die Bekanntgabe über gemeinsame
+        Treffen. Selbiges gilt für Keyserver, wo Schlüssel hochgeladen werden
+        ohne die Einwilligung des Schlüsselbesitzers einzuholen.
+    </p>
+
+    <h4 id="relevance">Hat dies so große Relevanz?</h4>
+    <p>
+        Nein. Es handelt sich um eine I-Tüpfchen-Reiterei. Insbesondere
+        verurteile ich deswegen niemanden. Aber es geht um die Grundfreiheit
+        die Kontrolle über die eigenen Daten zu behalten. Sorry, dass ich so
+        Daten-paranoid bin.
+    </p>
+
+    <h4 id="why-do-i-care">Wieso sprichst du dies an?</h4>
+    <p>
+        Aus diversen Gründen. Weil eine Daten-paranoide Person dies nichtmal
+        öffentlich unter Studenten diskutieren, weil der TU-Graz-Newsserver
+        von Suchmaschinen indiziert wird. Weil es um die Sicherung von
+        Freiheiten geht. Weil ich Daten-paranoide Menschen mag.
+    </p>
+
+    <h4 id="communication">
+        Ich bin Daten-paranoid. Darf ich verschlüsselt kommunizieren?
+    </h4>
+    <p>
+        Wenn Menschen weiterhin einfach die Schlüssel anderer öffentlich
+        machen, dann nein. Behält jeder die Kontrolle über die eigenen
+        Daten für sich, dann schon. 
+    </p>
+
+    <h4 id="emailtraffic">
+        Wenn jeder den empfohlenen Weg wählt, sind dann "Verbindungen"
+        unsichtbar?
+    </h4>
+    <p>
+        Nein, wie genannt wurde, werden Emailheader weiterhin
+        unverschlüsselt übertragen. Dadurch sind die Verbindungen
+        momentan sowieso öffentlich. Ich halte entgegen, dass hier
+        andere Instanzen verantwortlich sind und man trotzdem am
+        eigenen Konzept etwas ändern muss. Ebenso gibt es Entwicklungen
+        auf diesem Gebiet, die vielversprechend klingen, aber an der
+        Verbreitung scheitern (in einem dezentralen System schwer).
+    </p>
+    <p>
+        Aber es stimmt: Die Augen vor dieser Wahrheit schließen,
+        ist unvernünftig.
+    </p>
+
+    <h3 id="gdi">GDI spezifisch</h3>
+    <h4 id="upload">
+        Okay... aber es wird in der Übung verlangt, dass wir hochladen?!
+    </h4>
+    <p>
+        Nein. Die Formulierung lautet:
+    </p>
+    <p class="mono">
+        Wenn alles korrekt ist, <em>kannst</em> Du den Schlüssel
+        am Keyserver signieren.
+    </p>
+
+    <h4 id="tutors">
+        Wie sollen die GDI Tutoren sonst schauen, ob der Schlüssel
+        signiert wurde?
+    </h4>
+    <p>
+        Grundsätzlich ging ich davon aus, dass es reicht in der Abgabe
+        in den verbatim-Block die Namen der signierten Personen zu sehen.
+        Findet man die Namen der zwei Personen gegenseitig in ihren
+        Abgaben, so kann man davon ausgehen, dass sie sich getroffen haben.
+        Diese Praxis ist durchaus zu kritisieren. Der Signaturprozess
+        selbst kann nicht verifiziert werden. Ich habe mich selbst
+        gewundert.
+    </p>
+    <p class="mono">
+        Der Textblock mit diesen vier Namen ist (ähnlich wie beim dritten
+        Beispiel des zweiten Übungsblattes) mit Deinem privaten Schlüssel zu
+        signieren und als &lt;verbatim&gt; Block auf Deine Abgabeseite zu
+        stellen.
+    </p>
+
+    <p>
+        Der ideale Weg wäre es alle Schlüssel der Personen in eine Datei
+        zu geben. Der Tutor kann diese Datei importieren und erhält alle
+        Schlüssel auf seinem Rechner. Dort sieht er, ob diese Schlüssel
+        signiert wurden. Dieses Vorgehen ist jedoch nicht von der Angabe
+        erwünscht.
+    </p>
+
+    <pre id="signature">Lukas Prokop
+student of <span class="s">Computer Science</span> and <span class="s">Software Development and Business Management</span>
+admi<!-- -->n<!-- @monthpy -->@<!-- -->lukas&#45;prokop.at
+License: Emailware</pre>
+ </body>
+</html>

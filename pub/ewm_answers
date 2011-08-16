@@ -1,0 +1,106 @@
+1.2
+    * Cognitive Science
+    * Psychology
+    * Philosophy
+    * Communication Theory
+    * Management Science
+    * Sociology
+    * Ethnology
+    * Didactics
+    * Information Management
+    * Computer Science
+    * Neuroscience
+
+1.6
+    * Strategic Goal
+    * Knowledge Areas
+    * Key Performance Indicators
+    * Knowledge Area Status
+    * KM Status
+    * KM Gap-Analysis
+    * KM Action Plan
+    * KM Strategy Map
+
+2.1
+    * Learning and advanced training
+        * Employees, skills
+        * aggregation and creation of knowledge
+    * Business objectives
+        * Extension of customer base
+        * Quality Assurance for products
+    * Company culture
+        * Room design
+        * Coffee lounge
+    * Business-related processes
+        * Analysis, Modelling
+        * Efficiency of business processes
+    * Information technology
+        * Portals
+        * Document management
+    * Management processes
+        * Trend scouting
+        * Knowledge Maturity
+
+2.2
+    * Proficiency
+    * Codification
+    * Diffusion
+    
+2.3
+    * Orientation of the value creation
+    * Relevance to business
+    * Comprehension of strategic considerations, which so far have
+      no characteristics in the organization
+    * May include not used knowledge areas of the employees/the
+      organization
+    * Many organizations have a business strategy
+
+2.4
+    * Corporate strategy & challenges in the future
+    * Strategic goals for the next planning horizon
+    * Involved stakeholders
+    * Relationships to partners and other areas in the organization
+    * Core-work processes based on the chosen perspective
+    * Work environment structures (teams, roles, projects)
+
+2.6
+    Results of the following steps (Knowledge Management Maturity Procedure Model) get codified:
+    
+    1. Business case / strategic goal
+    2. Identified Knowledge Areas to achieve strategic goal
+    3. Key Performance Indicators on a Balanced Scorecard
+    4. Codify the current Knowledge Area Status in an AS-IS-profile
+    5. Comparison of target achievement to necessary effort for each current ongoing KM activity (KM Status).
+    6. Identify gaps in the area of KM activities
+    7. Collection and prioritizing identified KM measures to their contribution to the KM Maturity and necessary effort.
+
+3.1
+    Databases enable us to structure information. Databases considered in a tabular representation organize objects per row and attributes per column. Data is cleaned up. Constraints define possible ranges of values. In difference an information space is organized in bags (media, documents, websites) unstructured and range of values is not predefined. Data is often not "clean".
+    
+    ==================== ======================= =====================
+    Category             Data retrieval          Information retrieval
+    -------------------- ----------------------- ---------------------
+    Content              structured              unstructured
+    Matching             partially exact         best match
+    Model                deterministic           probabilistic
+    Query language       formal                  natural language
+    Query specification  complete                incomplete
+    Retrieved objects    fulfill query spec      relevanz
+    Effect of data error sensitive               insensitive
+    ==================== ======================= =====================
+
+3.2
+    Information retrieval is a field concerned with the structure, analysis, storage, searching, organization and retrieval of information.
+
+3.6
+    * Web Search Engines: HTML documents, PDFs, Flash... general Web content
+    * Enterprise Search Engines: document formats... with permission system
+    * Vertical Search Engines: Search engines limited to a field of interest
+    * Desktop Search Engines: Limited to locally available files
+    * Search Engines for specific file types: Multimedia, Text, Audio, Pictures, ...
+
+4.1
+    "Web 2.0 is the business revolution in the computer industry caused by the move to the internet as a platform and an attempt to understand the rules for success on that new platform" (Tim O'Reilly)
+    
+7.1
+    A proposed explanation of empirical phenomena

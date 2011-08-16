@@ -1,0 +1,405 @@
+% definitions.tex
+%
+% Version: 1.0
+%
+% Copyright 2010, Lukas Prokop
+
+\documentclass[11pt,a4paper,twocolumn]{article}
+
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{lmodern}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{textcomp}
+\usepackage{wasysym} % diameter
+
+\usepackage[sf]{titlesec}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+
+\usepackage[unicode,pdfborder={0 0 0}]{hyperref}
+\usepackage{boxedminipage}
+\usepackage{lastpage}
+\usepackage{multicol}
+\usepackage{units}
+\usepackage{eurosym}
+\usepackage{ifthen}
+\usepackage{xifthen}
+\usepackage{listings}
+
+% Document Configuration
+\pagenumbering{arabic}
+\pagestyle{plain}
+\setcounter{tocdepth}{2}
+\parindent0mm
+\parskip2mm
+\setlength{\unitlength}{1cm}
+\renewcommand{\thefootnote}{\arabic{footnote}} % not happy with other ones :-/
+\renewcommand{\theequation}{\alph{equation}}
+
+% Aliases
+% - general
+\newcommand{\mathsymspace}[1]{{\hskip3pt}#1{\hskip3pt}}
+\newcommand{\cmd}[1]{{\tt #1}}
+\newcommand{\life}[2]{* #1 $\dagger$ #2}
+\newcommand{\TODO}{\fbox{\clock \color{blue} TODO}}
+\newcommand{\bs}{\textbackslash}
+
+% - math
+% --- space
+\newcommand{\mathspace}{\hspace{20pt}} % n=1; \mathspace \frac{1}{n}
+
+% --- functions
+%\newcommand{\mod}[1]{\bmod{#1}}
+\newcommand{\eul}[1]{{\varphi}(#1)}
+\newcommand{\vect}[2]{ \left ( \begin{array}{c} #1 \\ #2 \end{array} \right ) }
+\newcommand{\ggt}[2]{\textrm{ggT}(#1, #2)}
+\newcommand{\divides}{\hskip1pt\mid\hskip5pt}
+\newcommand{\ggT}[2]{\text{ggT}(#1, #2)}
+%\renewcommand{\binom}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\maximum}[2]{\textrm{max}(#1, #2)}
+\newcommand{\minimum}[2]{\textrm{min}(#1, #2)}
+\newcommand{\set}[1]{{\Big\{}#1{\Big\}}}
+
+% --- symbols
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\lra}{\Leftrightarrow}
+\newcommand{\average}{\diameter}
+\renewcommand{\phi}{\varphi}
+
+% --- complex numbers
+\newcommand{\comp}[1]{\overline{#1}}
+\newcommand{\conj}[1]{#1 *}
+
+% --- boolean
+\newcommand{\andsym}{\mathsymspace{$ \land$}}
+\newcommand{\orsym} {\mathsymspace{$ \lor $}}
+\newcommand{\notsym}{\mathsymspace{$ \neg $}}
+\newcommand{\true}{\hspace{1pt}\text{W}\hspace{1pt}}
+\newcommand{\nomathtrue}{\hspace{1pt}W\hspace{1pt}}
+\newcommand{\false}{\hspace{3pt}\text{F}\hspace{3pt}}
+\newcommand{\nomathfalse}{\hspace{3pt}F\hspace{3pt}}
+
+% - pattern.tex related
+% --- general
+\newcommand{\linerule}{\hrule{\textwidth}}
+\newtheoremstyle{area}
+    {6pt}{6pt}{\normalfont}
+    {0pt}{\bfseries}{.\hspace{10pt}}{ }{#1}
+\theoremstyle{area}
+%\theoremstyle{plain}
+
+% --- VO stuff
+\newtheorem{mathdef}{Definition}
+\newcommand{\question}[1]{\textbf{Q: }#1 \par}
+\newcommand{\answer}[1]{\textbf{A: }#1 \par}
+\newcommand{\quoded}{
+    \parbox{\textwidth}{
+        \centering{
+            \textsc{
+                \small{
+                    --- quod erat demonstrandum. ---
+                }
+            }
+        }
+    }
+}
+
+% --- design, layout
+\renewcommand{\epsilon}{\varepsilon}
+
+\title{Definitionen aus der LV \\ Analysis T1}
+\author{Lukas Prokop}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Logik und Mengenlehre}
+
+\small{Siehe auch ''boolean logic cheatsheet''}
+
+\emph{Ableitungsregel:}
+\[
+    A \land (A \ra B) \Ra B
+\]
+
+\emph{Widerlegungsregel:}
+\[
+    (\neg B) \land (A \ra B) \Ra \neg A
+\]
+
+\emph{Kettenschlussregel:}
+\[
+    (A \ra B) \land (B \ra C) \Ra (A \ra C)
+\]
+
+\emph{Beweis durch Fallunterscheidung}
+\[
+    (A \lor B) \land (A \ra C) \land (B \ra C) \Ra C
+\]
+
+\subsection{Terminologie}
+
+\begin{description}
+  \item[$A \Ra B$]
+    ''A ist eine hinreichende Bedingung für B''
+  \item[$B \Ra A$]
+    ''B ist eine notwendige Bedingung für A''
+  \item[$\cap$]
+    Durchschnitt
+  \item[$\cup$]
+    Vereinigung
+  \item[$\setminus$]
+    Differenz
+  \item[$A \cap B = \emptyset$]
+    A ist elementfremd (disjunkt) zu B
+\end{description}
+
+\subsection{Kartesisches Produkt}
+
+Unter dem kartesischen Produkt versteht man alle geordneten Paare mit
+a aus A und b aus B.
+
+\[
+    A \times B = \set{ (a,b) \mid a \in A, b \in B }
+\]
+
+Beispiel:
+\[
+    \set{a,b} \times \set{x,y,z}
+        = \set{(a,x), (a,y), (a,z), (b,x), (b,y), (b,z)}
+\]
+
+Es sei \dots
+\[
+    A^3 = A \times A \times A
+\]
+
+$A^3$ bezeichnet man als Tripel. $A^4$ bezeichnet man als Quadrupel.
+$A^n$ bezeichnet man als n-Tupel.
+
+\section{Kombinatorik}
+
+Wir definieren \dots
+
+\[
+    \# \text{ die Anzahl}
+\] \[
+    j \text{ als ''Laufindex''}
+\]
+\begin{equation}
+    n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n
+\end{equation}
+\[
+    0! = 1
+\]
+\begin{equation}
+    \sum_{j=0}^n a_j = a_1 + a_2 + \ldots + a_n
+\end{equation}
+\[
+    \sum_{j=n}^n a_j = a_n
+\] \[
+    m > n: \sum_{j=m}^n a_j = 0
+\] \[
+    \sum_{j=1}^{n+1} a_j = \sum_{j=1}^{n} a_j + a_{n+1}
+\]
+\begin{equation}
+    \prod_{j=1}^n a_j = a_1 \cdot a_2 \cdot \ldots \cdot a_n
+\end{equation}
+\[
+    m > n: \prod_{j=m}^n a_j = 1
+\] \[
+    \prod_{j=1}^n (a_j \cdot \lambda)
+        = \Big(\prod_{j=1}^n a_j\Big) \cdot \lambda^n
+\] \[
+    \prod_{j=1}^{n+1} a_j = \prod_{j=1}^{n} a_j \cdot a_{n+1}
+\]
+
+Wieviele Möglichkeiten gibt es alle Elemente von M anzuordnen
+(Permutation von M)?
+
+\emph{Antwort:} $| M |!$
+
+Wieviele Möglichkeiten gibt es aus n verschiedenen Objekten k
+verschiedene Objekte auszuwählen? (Reihenfolge von k berücksichtigt)
+
+\emph{Antwort:} $\prod_{j=0}^{k-1} (n-j)$. Wird auch Variation
+$V_k^n$ genannt.
+
+Wieviele Möglichkeiten gibt es aus n verschiedenen Objekten k
+verschiedene Objekte auszuwählen? (Reihenfolge von k nicht
+berücksichtigt)
+
+\emph{Antwort:} $\frac{n!}{(n-k)! k!} = \binom{n}{k}$. Wird auch
+''Binomialkoeffizient'' (gesprochen: n über k) genannt. Oder
+''Kombination von n Elementen zur k-ten Klasse'' $C_k^n$.
+
+\begin{equation}
+    \frac{n!}{(n-k)! k!} = \binom{n}{k}
+\end{equation}
+\[
+    \binom{n}{0} = \binom{n}{n} = 1
+\] \[
+    \binom{n}{1} = \binom{n}{n-1} = n
+\] \[
+    m > n: \binom{n}{m} = 1
+\]
+
+\emph{Binomischer Lehrsatz:}
+
+\begin{equation}
+    (x + y)^n = \sum_{k=0}^n \binom{n}{k} x^k y^{n-k}
+\end{equation}
+\[
+    \binom{n+1}{k} = \binom{n}{k-1} + \binom{n}{k}
+\]
+
+\section{Ringtheorie}
+
+Eine Menge R, formal definiert durch $(R, +, \cdot)$, mit den Operationen
+$+$ und $\cdot$ heißt Ring, sofern er die folgenden Kriterien erfüllt:
+
+\begin{itemize}
+  \item 0 als neutrales Element bez. Addition
+  \item Assoziativgesetz bez. Addition
+  \item Kommutativgesetz bez. Addition
+  \item Die Zahl selbst negiert als neutrales Element der Addition
+  \item Distributivgesetz der Multiplikation bez. Addition
+\end{itemize}
+
+Ein \emph{Ring mit Eins} ist ein Ring mit dem zusätzlichen Kritierium
+''1 als neutrales Element bez. Multiplikation''. Ein ''kommutativer
+Ring'' ist ein Ring mit Eins mit dem zusätzlichen Kriterium
+''Kommutativgesetz bez. Multiplikation''.
+
+\section{Zahlenbereiche}
+
+\begin{description}
+  % @hfill stupid \LaTeX
+  \item[Natürliche Zahlen $\mathbb{N}$] \hfill \\
+    $0, 1, 2, 3, 4, \dots$
+  \item[Ganze Zahlen $\mathbb{G}$] \hfill \\
+    $\dots -3, -2, -1, 0, 1, 2, 3 \dots$
+  \item[Rationale Zahlen $\mathbb{R}$] \hfill \\
+    $\set{\frac{p}{q} \mid p \in \mathbb{G}, q \in \mathbb{G}^+} $
+  \item[Irrationale Zahlen $\mathbb{I}$] \hfill \\
+    $\mathbb{R} \setminus \mathbb{Q}$ (Menge der Zahlen, die sich nicht
+    als Bruch notieren lassen; zB $\sqrt{2}$, $e$)
+  \item[Reele Zahlen $\mathbb{R}$] \hfill \\
+    $\mathbb{Q} \cup \mathbb{I}$
+  \item[Komplexe Zahlen $\mathbb{C}$] \hfill \\
+    $\set{(a + bi) \mid a, b \in \mathbb{R}, i^2 = \sqrt{-1}}$
+\end{description}
+
+\begin{equation}
+    \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q}
+        \subset \mathbb{R} \subset \mathbb{C}
+\end{equation}
+
+\begin{equation}
+    (\forall n \in \mathbb{R}: | n | \geq 0)
+\end{equation}
+
+Dreiecksungleichung:
+
+\begin{equation}
+    | r + s | \leq | r | + | s |
+\end{equation}
+
+\section{Folgen}
+
+\begin{quote}
+    ''Eine Folge $(a_n)_{n\in\mathbb{N}_0}$ hat höchstens einen Grenzwert''
+\end{quote}
+
+Eine Folge $a_n$ ist konvergent zum Grenzwert A, wenn\dots
+
+\begin{equation}
+    \forall \epsilon > 0 \exists N \in \mathbb{N}:
+        \forall n \geq N : |a_n - A| < \epsilon
+\end{equation}
+
+Sei $(a_n)_{n\in\mathbb{N}_0}$ eine Folge, dann heißt $x\in\mathbb{R}$
+\emph{Häufungspunkt} der Folge $(a_n)_{n\in\mathbb{N}_0}$, wenn
+
+\begin{equation}
+    \forall \epsilon > 0 \forall N \in \mathbb{N} \exists n > N:
+        | a_n - x | < \epsilon
+\end{equation}
+
+Eine Folge heißt
+\begin{itemize}
+  \item monoton wachsend: $\forall n \in \mathbb{N}: a_{n+1} \geq a_n$
+  \item monoton fallend: $\forall n \in \mathbb{N}: a_{n+1} \leq a_n$
+  \item streng monoton wachsend, wenn \\ $\forall n \in \mathbb{N}: a_{n+1} > a_n$
+  \item streng monoton fallend, wenn \\ $\forall n \in \mathbb{N}: a_{n+1} < a_n$
+\end{itemize}
+
+Eine Nullfolge ist definiert durch: 
+\[
+    \lim_{n\ra\infty} a_n = 0
+\]
+
+\section{Reihen}
+
+\begin{equation}
+    (s_n = \sum_{k=0}^n a_k)_{n\in\mathbb{N}_0} = \sum_{n=0}^\infty a_n
+\end{equation}
+
+Sei $(a_n)_{n\in\mathbb{N}_0}$ eine Folge. Die \emph{n-te Partialsumme} der
+Reihe $\sum_{k=0}^n a_k$ ist definiert durch
+
+\[
+    s_n = \sum_{k=0}^n a_k
+\]
+
+Eine Menge $A  \subseteq \mathbb{R}$ heißt \emph{beschränkt} (mit $m$
+als unterer Schranke und $n$ als oberer Schranke), wenn
+
+\begin{equation}
+    \exists m, M \in \mathbb{R} : \forall x \in A : m \leq x \leq M
+\end{equation}
+
+Sei $A \subseteq \mathbb{R}$, A beschränkt und $m = \inf{A}$ und
+$M = \sup{A}$. Dann gilt:
+
+\begin{equation}
+    \forall x \in \mathbb{A} : m \leq x \leq M
+\end{equation}
+\begin{equation}
+    \forall \epsilon > 0 \exists x \in A : x > M - \epsilon
+\end{equation}
+\begin{equation}
+    \forall \epsilon > 0 \exists x \in A : x < m + \epsilon
+\end{equation}
+
+Sei $(a_n)_{n\in\mathbb{N}}$ eine beschränkte Folge reeler Zahlen
+dann seien:
+
+\begin{equation}
+    \limsup{a_n}_{n\ra\infty} = \text{Limes superior}
+\end{equation}
+\begin{equation}
+    \liminf{a_n}_{n\ra\infty} = \text{Limes inferior}
+\end{equation}
+
+Eine Reihe $\sum_{n=0}^\infty a_n$ heißt \emph{absolut konvergent},
+wenn: $\sum_{n=0}^\infty |a_n|$ konvergiert. Eine konvergente Reihe,
+die nicht absolut konvergiert, heißt bedingt konvergent.
+
+\end{document}

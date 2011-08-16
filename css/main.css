@@ -1,38 +1,43 @@
-/*
-        Author:         prokls
-        Date:           10.09.30
-        License:        Emailware
-*/
-
 @media all {
-    /* general element definition */
-    html { background-color: #EEC; font-family: Arial, Helvetica, sans-serif; }
-    body { width: 80%; margin: 5%; padding: 20px; border: 1px solid #333;
-        background-color: #FFD; background-image: url(../ssh.png);
-        background-repeat: no-repeat; background-position: top right; }
-    h1 { color: #BB9; }
-    h3 { color: #775; }
-    p, li, blockquote, div { font-size: 14px; }
-    li { line-height: 20px; }
-    a { color: #997; text-decoration: none; }
+    body {
+        background-color: #CCC;
+        font-family: "Palatino", Verdana, serif;
+        width: 60%;
+        margin: auto;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #014;
+    }
+    a:link, a:visited, a:active {
+        text-decoration: none;
+        color: #014;
+        font-weight: 400;
+    }
+    #logo {
+        float: right;
+    }
+    #logo:hover {
+        background-color: #FFF;
+    }
+    .bbg {
+        background-color: #EEE;
+        padding: 20px;
+    }
+    dt {
+        font-weight: bold;
+    }
 
     /* special classes */
     .s { font-size: 0.8em; }
     .b { font-weight: bold; }
     .done { text-decoration: line-through; }
-    .notyet { display: none; }
-    .ip_check { font-size: 18px; margin: 20px 40px; }
-    .ip_check > small { font-size: 12px; }
-    #logo { float: left; margin: 10px; border: 5px solid #AAA; }
-    #logo:hover { border: 5px solid #BBB; }
-    .logotext { margin-left: 250px; }
+    .notyet { opacity: 0.2; }
+    .mono { font-family: "Courier New", Courier, monospace; }
+    .wo { margin-right: 30px; }
 
-    /* university oriented */
-    .hw { border: #000 solid 1px; padding: 0; } /* homework */
-
-    .lv { font-weight: bold; margin-right: 20px; } /* lehrveranstaltung/course */
-    .lv_link { color: #CCC; text-decoration: none; }
-    .lv_link:hover { color: #666; }
+    /* university related */
+    .hw { border: #247 solid 1px; padding: 0 5px; } /* homework */
+    .lv { letter-spacing: 0.1em; margin-right: 20px; } /* course */
 
     #signature {
         color: #999;
@@ -43,6 +48,23 @@
 }
 
 @media print {
-    html, body { padding: 0px; background-color: #FFF; color: #000; border: none; }
-    #signature { display: none; }
+    body {
+        width: 100%;
+        background-color: #FFF;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #000;
+    }
+    a:link, a:visited, a:active {
+        text-decoration: underline;
+        color: #000;
+        font-weight: normal;
+    }
+    a:link:after {
+        content: " <" attr(href) ">";
+        text-decoration: none;
+    }
+    .signature, #logo {
+        display: none
+    }
 }

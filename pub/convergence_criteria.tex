@@ -1,0 +1,240 @@
+% convergence_criteria.tex
+%
+% Author:  Lukas Prokop <admin@lukas-prokop.at>
+% Date:    10.11.04
+% Version: alpha
+% License: Emailware
+%
+% Copyright 2010, Lukas Prokop
+
+\documentclass[10pt,twocolumn]{article}
+
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage[sf]{titlesec}
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{boxedminipage}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[unicode]{hyperref}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{fullpage}
+
+% Document Configuration
+\thispagestyle{empty}
+\pagenumbering{arabic} % Alph, alph, arabic, Roman, roman
+\parindent0mm
+\parskip2mm
+\headheight10mm
+\headsep10mm
+\setlength{\unitlength}{1cm}
+\renewcommand{\thefootnote}{\roman{footnote}}
+\renewcommand{\theequation}{\alph{equation}}
+
+% Aliases
+% - general
+\newcommand{\TODO}[1]{}%\fbox{\color{blue} TODO} #1\par}
+\newcommand{\note}[1]{\fbox{\textbf{Note:}} #1\par}
+
+% - math
+% --- functions
+%\newcommand{\mod}[1]{\bmod{#1}}
+\newcommand{\eul}[1]{{\varphi}(#1)}
+\newcommand{\vect}[2]{ \left ( \begin{array}{c} #1 \\ #2 \end{array} \right ) }
+\newcommand{\ggt}[2]{\textrm{ggT}(#1, #2)}
+\newcommand{\divides}{\hskip1pt\mid\hskip5pt}
+\newcommand{\ggT}[2]{\text{ggT}(#1, #2)}
+%\renewcommand{\binom}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\maximum}[2]{\textrm{max}(#1, #2)}
+\newcommand{\minimum}[2]{\textrm{min}(#1, #2)}
+\newcommand{\set}[1]{\Big\{ #1 \Big\}}
+
+% --- boolean
+\renewcommand{\t}{\texttt{\text{T}}\hspace{1pt}}
+\newcommand{\nomatht}{\hspace{1pt}T\hspace{1pt}}
+\newcommand{\f}{\texttt{\text{F}}\hspace{1pt}}
+\newcommand{\nomathf}{\hspace{3pt}F\hspace{1pt}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\por}{|}
+\newcommand{\pand}{\&}
+
+% - pattern.tex related
+% --- general
+
+% --- VO stuff
+\newtheorem{mathdef}{Definition}
+\newcommand{\quoded}{\textit{--- quod erat demonstrandum. ---}}
+
+% --- design, layout
+\renewcommand{\epsilon}{\varepsilon}
+
+\title{Konvergenzkriterien}
+\author{Prokop Lukas}
+
+\begin{document}
+\maketitle
+
+\section{Konvergenzkriterien für Folgen}
+
+\subsection{Das allgemeine Konvergenzkriterium}
+
+\[
+    (\forall \epsilon > 0)(\exists N \in \mathbb{N} :)
+        \forall n \geq N : | a_n - A | < \epsilon
+\]
+
+\subsection{Cauchy-Kriterium}
+
+Die Folge $(s_n)_{n\in\mathbb{N}}$ konvergiert genau, wenn
+
+\[
+    (\forall \epsilon > 0)(\exists N : )(\forall n > N)
+        (\forall l \in \mathbb{N}) : | s_{n+l} - s_n | < \epsilon
+\]
+
+Dies beschränkt sich jedoch auf $\mathbb{R}$ und $\mathbb{C}$. In
+$\mathbb{Q}$ ist nicht jede Cauchy-Folge ebenso konvergent.
+
+\subsection{Hauptsatz über monotone Zahlenfolgen}
+
+Eine nach oben beschränkte monoton wachsende Folge
+in $\mathbb{K}$ ist konvergent, ebenso eine nach unten
+beschränkte monoton fallende.
+
+\subsection{Beschränktheit, Monotonie und Konvergenz}
+
+Eine monotone und beschränkte Folge ist konvergent.
+
+\subsection{Bolzano-Weierstrauß}
+
+Sei $(a_n)_{n\in\mathbb{N}_0}$ eine beschränkte Folge, dann besitzt
+$(a_n)_{n\in\mathbb{N}_0}$ eine konvergente Teilfolge (damit auch eine
+Häufungspunkt).
+
+\subsection{Sandwich-Kriterium}
+
+Wenn $\lim_{n\ra\infty} a_n = \lim_{n\ra\infty} c_n = A$ und
+$ a_n \leq b_n \leq c_n$ für fast alle $n \in \mathbb{N}$ ist, so ist
+auch ($b_n$) konvergent und es ist $\lim_{n\ra\infty} b_n = A$.
+
+\subsection{Nullfolgen}
+
+Wenn $a_n$ eine Nullfolge ist und $b_n$ beschränkt ist, so ist
+$(a_n \cdot b_n)$ konvergent und ebenfalls eine Nullfolge:
+$\lim_{n\ra\infty} b_n = A$.
+
+\section{Konvergenzkriterien für Reihen}
+
+\subsection{Cauchy-Kriterium}
+
+Die Reihe $\sum_{n=0}^\infty a_n$ konvergiert genau dann, wenn:
+
+\[
+    (\forall \epsilon > 0)(\exists N : )(\forall n > N)
+        (\forall l \in \mathbb{N}) :
+            \Bigg| \sum_{k=n+1}^{n+l} a_k < \epsilon \Bigg|
+\]
+
+\subsection{Satz 2.8.3}
+
+Seien $a_n \geq 0$. Die dazugehörige Reihe $s_n = \sum_{n=0}^\infty a_n$
+konvergiert genau dann, wenn die Folge der Partialsummen beschränkt ist.
+
+\subsection{Majorantenkriterium}
+
+Sei $\sum_{n=0}^\infty a_n$ eine konvergente Reihe mit positiven Gliedern
+und es gelte $\forall n : 0 \leq b_n \leq a_n$, dann konvergiert die
+Reihe $\sum_{n=0}^\infty b_n$.
+
+\subsection{Minorantenkriterium}
+
+Sei $a_n \geq 0$ und es divergiere die Reihe $\sum_{n=0}^\infty a_n$.
+Sei weiters $b_n \geq a_n$, dann divergiert auch $\sum_{n=0}^\infty b_n$.
+
+\subsection{Verdichtungssatz}
+
+Sei $(a_n)_{n\in\mathbb{N}}$ monoton fallend und positiv. Dann konvergiert
+$\sum_{n=0}^\infty a_n$ genau dann, wenn $\sum_{k=0}^\infty 2^k
+\cdot a_{2^k}$ konvergiert.
+
+\subsection{Leibniz-Kriterium}
+
+Sei $(a_n)_{n\in\mathbb{N}}$ eine monoton fallende Nullfolge, dann
+konvergiert $\sum_{n=0}^\infty (-1)^n \cdot a_n$.
+
+\subsection{Quotientenkriterium}
+
+Sei $(b_n)_{n\in\mathbb{N}}$ eine Folge reeler Zahlen, dann gilt:
+
+\begin{equation}
+    \liminf_{n\ra\infty} \frac{| b_{n+1} |}{| b_n |} > 1 \Rightarrow
+        \sum_{n=0}^\infty b_n \text{ ist divergent}
+\end{equation}
+\begin{equation}
+    \limsup_{n\ra\infty} \frac{| b_{n+1} |}{| b_n |} < 1 \Rightarrow
+        \sum_{n=0}^\infty b_n \text{ ist konvergent}
+\end{equation}
+
+Wenn $q = \lim_{n\rightarrow\infty} \frac{| b_{n+1} |}{| b_n |}$ existiert,
+dann konvergiert $\sum_{n=0}^\infty b_n$, wenn $q < 1$ und divergiert,
+wenn $q > 1$. Bei $q = 1$ ist keine Aussage möglich.
+
+\subsection{Wurzelkriterium}
+
+Sei $(a_n)_{n\in\mathbb{N}}$ eine Folge reeler Zahlen, dann gilt:
+
+\begin{equation}
+    \text{Wenn } \limsup_{n\rightarrow\infty} \sqrt[n]{a_n} > 1,
+    \text{ dann divergiert die Reihe}
+\end{equation}
+\begin{equation}
+    \text{Wenn } \limsup_{n\rightarrow\infty} \sqrt[n]{a_n} < 1,
+    \text{ dann konvergiert die Reihe}
+\end{equation}
+
+Wenn $q = \lim_{n\rightarrow\infty} \sqrt[n]{a_n}$ existiert,
+so konvergiert die Reihe, wenn $q < 1$, und divergiert, wenn
+$q > 1$. Bei $q = 1$ ist keine Aussage möglich.
+
+\section{Referenzfolgen}
+
+\[
+    \lim_{n\ra\infty} \frac{1}{n} = 0
+\] \[
+    \lim_{n\ra\infty} \sqrt[n]{a} = 1
+\] \[
+    \lim_{n\ra\infty} \sqrt[n]{n} = 1
+\] \[
+    \lim_{n\ra\infty} \sqrt[n]{n!} = \infty
+\] \[
+    \lim_{n\ra\infty} \frac{a^n}{n!} = 0
+\] \[
+    \lim_{n\ra\infty} \Big(1 + \frac{1}{n}\Big)^n = e
+\]
+
+\section{Referenzreihen}
+
+Mit $k \in \mathbb{N}^+$
+
+\[
+    \sum_{n=1}^\infty \frac{1}{k \cdot n} \text{ ist divergent}
+\] \[
+    \sum_{n=1}^\infty \frac{1}{n^\alpha} \text{ ist}
+    \begin{cases}
+        \text{konvergent} & \text{ für } \alpha > 1 \\
+        \text{divergent} & \text{ für } \alpha \leq 1 \\
+    \end{cases}
+\]
+
+\end{document}

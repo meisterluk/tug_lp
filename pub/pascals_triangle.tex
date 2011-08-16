@@ -1,0 +1,89 @@
+% inequation.tex
+%
+% Author:  Lukas Prokop <admin@lukas-prokop.at>
+% Date:    10.11.05
+% Version: alpha
+% License: Emailware
+%
+% Copyright 2010, Lukas Prokop
+
+\documentclass[landscape]{article}
+
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage[sf]{titlesec}
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{boxedminipage}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[unicode]{hyperref}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{fullpage}
+
+% Document Configuration
+\thispagestyle{empty}
+\pagenumbering{arabic} % Alph, alph, arabic, Roman, roman
+\parindent0mm
+\parskip2mm
+\headheight10mm
+\headsep10mm
+\setlength{\unitlength}{1cm}
+\renewcommand{\thefootnote}{\roman{footnote}}
+\renewcommand{\theequation}{\alph{equation}}
+
+% Aliases
+% - general
+\newcommand{\TODO}[1]{}%\fbox{\color{blue} TODO} #1\par}
+\newcommand{\note}[1]{\fbox{\textbf{Note:}} #1\par}
+
+% - math
+% --- functions
+%\newcommand{\mod}[1]{\bmod{#1}}
+\newcommand{\eul}[1]{{\varphi}(#1)}
+\newcommand{\vect}[2]{ \left ( \begin{array}{c} #1 \\ #2 \end{array} \right ) }
+\newcommand{\ggt}[2]{\textrm{ggT}(#1, #2)}
+\newcommand{\divides}{\hskip1pt\mid\hskip5pt}
+\newcommand{\ggT}[2]{\text{ggT}(#1, #2)}
+%\renewcommand{\binom}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\maximum}[2]{\textrm{max}(#1, #2)}
+\newcommand{\minimum}[2]{\textrm{min}(#1, #2)}
+
+% --- boolean
+\renewcommand{\t}{\texttt{\text{T}}\hspace{1pt}}
+\newcommand{\nomatht}{\hspace{1pt}T\hspace{1pt}}
+\newcommand{\f}{\texttt{\text{F}}\hspace{1pt}}
+\newcommand{\nomathf}{\hspace{3pt}F\hspace{1pt}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\por}{|}
+\newcommand{\pand}{\&}
+
+% - pattern.tex related
+% --- general
+
+% --- VO stuff
+\newtheorem{mathdef}{Definition}
+\newcommand{\quoded}{\textit{--- quod erat demonstrandum. ---}}
+
+% --- design, layout
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\goto}[1]{{#1\rightarrow\infty}}
+
+\begin{document}
+
+\begin{center}
+\input{triangle.lst}
+\end{center}
+
+\end{document}

@@ -22,12 +22,12 @@
 
     <p>Do you own a TUG IP address?</p>
 <?php if (substr($_SERVER['REMOTE_ADDR'], 0, 7) == '129.27.') { ?>
-    <p style="margin-left:30px">
+    <p class="ip_check">
         Yes, you are using a TUGraz IP address<br>
         <small>(Your IP address is matching 129.27.*)</small>
     </p>
 <?php } else { ?>
-    <p style="margin-left:30px">
+    <p class="ip_check">
         Nope, visit <a href="http://www.vpn.tugraz.at">vpn.tugraz.at</a> to obtain one<br>
     </p>
 <?php } ?>

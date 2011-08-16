@@ -1,0 +1,190 @@
+AngabeDrei
+==========
+
+Thanks to Markus Lienbacher for mirroring!
+
+Beispiel 1: SQL [9 Punkte]
+
+Du solltest inzwischen Deine Zugangsdaten zu unserem PostgreSQL-Server an Deine TUGonline-Adresse erhalten haben. Die einfachste Art eine Verbindung zu besagtem Server herzustellen ist Dich mit Deinen Zugangsdaten bei http://gdi.ist.tugraz.at/phppgadmin/ einzuloggen. Wir haben Dir eine Datenbank erstellt, in der Du die folgenden Aufgaben lösen sollst.
+
+Als Lektüre zu diesen Beispielen bietet sich das exzellente Online-Manual an. Hier dürfte besonders der zweite Teil des Tutorials ab Creating a New Table interessant sein. In der Vorlesung wurde auch gezeigt, wie alles auf einfache und komfortable Art und Weise via Webinterface mit dem phpPgAdmin gemacht werden kann.
+
+Bei allen Beispielen sollen auch die entsprechenden Befehle zum Erstellen und Füllen der Tabellen auf der Abgabeseite stehen. Dass heißt es reicht nicht, wenn die entsprechenden Daten in Deiner Datenbank vorhanden sind. Du musst auch die dazugehörigen create table und insert into Befehle in <verbatim> Blöcken auf Deiner Abgabeseite angeben.
+
+Installation
+
+Die Abgabe der SQL-Beispiele hat wie weiter unten beschrieben zu erfolgen. Sprich: Die Tabellen, Daten, Funktionen, etc. müssen auf unserem Server zu finden sein und die entsprechenden Anweisungen müssen in <verbatim> Blöcken auf Euren Abgabeseiten stehen.
+
+Es empfiehlt sich aber die Entwicklungsarbeit selbst auf der eigenen Maschine abzuwickeln: Es ist ziemlich wahrscheinlich, dass irgendein Student im Eifer des Gefechts eine Endlosschleife oder auch nur eine sehr zeitaufwendige Berechnung starten wird. Die wird dann vorübergehend - ich kann nicht abschätzen wie lange - unseren Server belegen, was den gesamten Zugriff blockieren kann. Besonders gegen Ende der Deadline - interessanterweise die Zeit, in der die meisten Zugriffsversuche stattfinden wink - kann das ziemlich fatal sein, und ist in der Vergangenheit auch immer wieder vorgekommen.
+
+Der weise Student beugt also vor und installiert sich PostgreSQL auf seiner lokalen Maschine.
+
+Anmerkung:
+
+    * Bitte beachte, dass die Abgabe nicht nur - wie oben erwähnt - zur Deadline auf unserem Server liegen muss, sondern dort auch ausführbar sein muss. Wenn Du Dir also eine andere PostgreSQL-Version installierst, dann achte darauf, dass Dein Code trotzdem unter der bei uns installierten Version 8.1 läuft! 
+
+Beispiel 1a: Datenbank [3 Punkte]
+
+    * Lege 3 Tabellen zu einem Thema Deiner Wahl an und fülle sie mit 5-10 Datensätzen.
+    * Erstelle 5 (sinnvolle) Abfragen, die unter anderem AND, OR, NOT und Klammern verwenden.
+          o 2 dieser Abfragen sollen außerdem Datensätze aus mehreren Tabellen in Verbindung bringen (Stichwort joins). 
+
+Die Abgabe zu diesem Beispiel besteht aus zwei Teilen:
+
+   1. Zum einen müssen die 3 Tabellen (und die je 5-10 Datensätze) in Deiner Datenbank zu finden sein.
+          * Vergiss nicht die Befehle für deren Erstellung auch auf Deiner Abgabeseite anzugeben! 
+   2. Die 5 SQL-Abfragen sollen in einem <verbatim> Block auf Deiner Abgabeseite stehen. Gib hier auch jeweils eine kurze Erklärung betreffend ihrer Funktion dazu. 
+
+Beispiel 1b: Portia [3 Punkte]
+
+Gegeben sind drei Truhen. Auf jeder Truhe ist eine Aussage, die entweder wahr oder falsch ist. In genau einer der Truhen ist ein Portrait von Portia. Verwende den unten dargestellten SQL-Table portrait_in und gib nun auf Deiner Abgabeseite eine SQL-Anfrage an, die den entsprechenden Datensatz auswählt.
+
+Beachte, dass die SQL-Anfrage die dahinterstehende Logik wiederspiegeln soll: Du wirst also AND, OR und NOT benötigen. (Insbesondere wäre z. B. select * from portrait_in where gold; nicht zulässig.) Es ist sicher nicht verkehrt auch hier eine kurze Erklärung hinzuzufügen.
+
+Truhen:
+
+    * gold: Das Portrait ist hier drin.
+    * silber: Das Portrait ist hier drin.
+    * blei: Mindestens zwei der Aussagen auf diesen Truhen sind falsch. 
+
+SQL-Table portrait_in:
+gold 	silber 	blei
+true 	false 	false
+false 	true 	false
+false 	false 	true
+
+Beispiel 1c: Einstein [3 Punkte]
+
+In der Vorlesung wurde das Einstein Problem vorgestellt:
+
+    * Es gibt fünf Häuser mit je einer anderen Farbe.
+    * In jedem Haus wohnt eine Person einer anderen Nationalität.
+    * Jeder der Hausbewohner bevorzugt ein bestimmtes Getränk, raucht eine bestimmte Zigarettenmarke und hält ein bestimmtes Haustier.
+    * Keine der fünf Personen trinkt das gleiche Getränk, raucht die gleichen Zigaretten oder hält das gleiche Tier wie einer der anderen. 
+
+    * 15 Hinweise:
+         1. Der Brite lebt im roten Haus.
+         2. Der Schwede hält einen Hund.
+         3. Der Däne trinkt gerne Tee.
+         4. Das grüne Haus steht links vom weißen Haus.
+         5. Der Besitzer des grünen Hauses trinkt Kaffee.
+         6. Die Person, die Pall Mall raucht, hält einen Vogel.
+         7. Der Mann, der im mittleren Haus wohnt, trinkt Milch.
+         8. Der Besitzer des gelben Hauses raucht Dunhill.
+         9. Der Norweger wohnt im ersten Haus.
+        10. Der Marlboro-Raucher wohnt neben dem, der die Katze hält.
+        11. Der Mann, der ein Pferd hält, wohnt neben dem, der Dunhill raucht.
+        12. Der Winfield-Raucher trinkt gerne Bier.
+        13. Der Norweger wohnt neben dem blauen Haus.
+        14. Der Deutsche raucht Rothmans.
+        15. Der Marlboro-Raucher hat einen Nachbarn, der Wasser trinkt. 
+
+    * Frage: Wer hat den Fisch als Haustier? 
+
+Das SQL-Skript, in dem die ersten beiden der fünf Häuser behandelt werden, findest Du hier. Wie üblich kannst Du es in Deiner Datenbank - im neu anzulegenden Schema einstein - bei phpPgAdmin über den SQL-Link im Header ausführen.
+
+Gesucht sind nun - analog zu haus_1_2 die SQL-Anweisungen zum Erstellen der restlichen Tabellen haus_1_2_3, haus_1_2_3_4 und haus_1_2_3_4_5. Ziel ist dass die Anweisung "SELECT * FROM haus_1_2_3_4_5;" genau einen Datensatz enthält, aus dem die Nationalität des Fischbesitzers ersichtlich ist.
+
+Beachte bei der Abgabe folgende Punkte:
+
+    * Alle Tabellen - sowohl die im Skript vorgegebenen als auch die von Dir zu erstellenden - müssen in Deiner Datenbank stehen. Um genau zu sein müssen sie sich in einem von Dir neu anzulegenden Schema namens einstein befinden.
+    * Die SQL-Befehle zum Erstellen von haus_1_2_3, haus_1_2_3_4 und haus_1_2_3_4_5 müssen außerdem in <verbatim> Blöcken auf Deiner Abgabeseite stehen. Zusätzlich sind noch folgende Teile gesondert anzugeben:
+          o Das gesamte Ergebniss des SELECT * FROM haus_1_2_3_4_5;.
+          o Die Nationalität des Fischbesitzers.
+          o Eine kurze (aber nachvollziehbare) Erklärung der Logik, die hinter Deiner Ausarbeitung des Beispiels steht. 
+
+Beispiel 2: GPG [4 Punkte]
+
+Ähnlich dem dritten Beispiel des vorherigen Übungsblattes, ist diesmal ein Text zu verschlüsseln. Verwende hierzu den (öffentlichen) Schlüssel Deines Studienassistenten! Der Ablauf ist ähnlich dem bei der Signatur; nur diesmal eben Encrypt statt Sign.
+
+Wie gehabt ist der erhaltene Text in einen <verbatim> Block Deiner Abgabeseite zu kopieren. Achtung: Dieses Beispiel ist alleine - also ohne Partner - zu bewältigen!!
+
+ALERT! Achtung ALERT! Die Datei, die Du verschlüsselst und deren (verschlüsselten) Inhalt Du dann ins TWiki stellst, sollte besser keine Umlaute im Dateinamen haben. Es kann sonst unter Umständen zu Problemen beim Entschlüsseln kommen, was sich natürlich negativ auf die Punkte auswirkt.
+
+Zu Verschlüsseln
+
+Dies ist der von Markus Thomas Lienbacher zu verschluesselnde Text.
+
+Beispiel
+
+Das Endergebnis könnte wie folgt aussehen:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.2 (MingW32) - GPGshell v3.46
+
+hQIOA9xJE506fJmgEAf/fjbq5GuO2ZMeYaPjgXUSLSjc+COykoBcT3ESZ6Dhw7nS
+fHnDIio87Z3Qdx6dFvT0GuQCmGSX6mhKVVJ2AdlIp7QDo5lcSetVoO0BGDad8C0H
++YcV5dvJ7/J/PEcmoaIboTGaVi+aXHvGsbWbr1PZacRqJWwgS+cj9AT1T5k37yZS
+ulz3jwXDknmbpFunW43NFMwyTOVv1qpkQclWyItcYqfE88E2VAr5F7+U4z+gtr7V
+NRH/IgwWnhc3cgjxrj/7gr6FEz4jTbVaMAQOqTrPY0bdYoUjIPnfmVQdlMdpSMmF
+0BAw/N+/GhdnxuJMh8xgyKHB9qVZL9ZKn+3y1sJimAf/cPd8vPr34g53T9dGxZRR
+cxwGbDdvdmZkUAMysu0rj0VFdTEye+F0liOqS1JuUmj0sxqExniSrWNnn8mbHpCk
+sL9eTssgX6jmK4u3btUmjKIlBn0zyN/9J7kTmYop04xrm+LOpbGNylpZl4fBgGPB
++H6Ewl/9HXPP26Rayob8eKMIyXhLO2kVP3qmR/G0cdtrcAcIXKrdS/amVsWPQ9fG
+WGyiQI6sFfOpM3Dwx7y9mgOK5LwbiyWferCCnU3RlrtGqdmQFLpUz9PakJZR7Q5/
+fdsqMudF8u9e19mKH7ljBMWe7Neepxgcy1PTGIr++/FrD4lhQyfgzkcMjv1sZE2R
+39J7AVZRUCf08wW/hiWB3BHwakrFaZM+GMXIRqPDKV6zp1Z6ri6Qa/KvGO9HUqQN
+dAmmmALKhiNeN5PjNrLG/k8RZpZ8tTarl4AMqng4o4FwQzbPcyuyXoF/VsWxU4WI
+qQxpnBVadZGiORPWJutlOOklP6U53krdTdI5O+Sp
+=3gi/
+-----END PGP MESSAGE-----
+
+Beispiel 3: Regular Expressions [12 Punkte]
+
+Beispiel 3a: Praxis [3 Punkte]
+
+Extrahiere einen möglichst originellen, sich täglich ändernden Teil einer externen Webseite. Benutze dazu den TWiki INCLUDE-Befehl mit einem entsprechenden regulären Ausdruck, damit auch der von Dir extrahierte Teil immer aktuell ist. (Ein statischer Link auf ein sich täglich änderndes Bild - z. B. der aktuelle Goldwert - würde beispielsweise nicht gelten!)
+
+Gib außerdem eine kurze Beschreibung Deines regulären Ausdrucks mit an: Was soll er extrahieren? Wie macht er das? Etc..
+
+Anmerkungen:
+
+    * Die Bewertung setzt sich aus folgenden Merkmalen Deines INCLUDE Ausdrucks zusammen:
+          o Kreativität
+          o Originalität
+          o Technische Umsetzung, insbesondere Stabilität (Wie gut kommt Dein Ausdruck mit Änderungen der Webseite zurecht?)
+          o Kompliziertheit, zB ineinander verschachtelte INCLUDEs und/oder komplexe Zusammensetzungen mehrerer INCLUDEs.
+          o Sinnhaftigkeit 
+    * TWiki kann auch HTML-Tags interpretieren. Du kannst also auch <table>, <tr>, <td> oder dergleichen extrahieren. Achte hierbei aber darauf, die Tags auch wieder zu schließen; entweder gleich im extrahierten Teil - z. B. einen ganzen <table> extrahieren - oder manuell nach dem INCLUDE - z. B. den Beginn einer <tr> extrahieren, danach </tr></table> hinzufügen. 
+
+Beispiel 3b: Theorie [9 Punkte]
+
+Analyse [3 Punkte]
+
+Gegeben ist ein regulärer Ausdruck:
+
+(((aa)*(ba?b)+)|((ba?)*b+aa))+
+
+Gib an welcher der folgenden Ausdrücke von diesem Ausdruck gematcht werden, und welche nicht.
+
+    * bbbaba
+    * bbabaabbaabab
+    * aaaabbbbbaabab 
+
+Konstruktion [3 Punkte]
+
+Das Alphabet sei {a,b}. Gib einen (möglichste einfachen) regulären Ausdruck an, der genau jene Wörter matcht, für die folgendes gilt:
+
+    * Das erste Zeichen ist gleich dem letzten.
+    * Irgendwo zwischen erstem und letztem Zeichen kommt der String aba vor.
+    * Irgendwo zwischen erstem und letztem Zeichen kommt der String bb vor. 
+
+Beispiele:
+gematcht 	nicht gematcht
+abbabaa 	bababab
+babbabab 	aababbb
+abababbba 	ababba
+bbbababbbb 	bbabab
+
+Automat [3 Punkte]
+
+Gegeben ist wiederum ein regulärer Ausdruck:
+
+((ab?a*b)|(ba+b)*)+
+
+Erstelle einen deterministischen Automaten, der genau jene Wörter akzeptiert, die von diesem Ausdruck gematcht werden. Gib diesen Ausdruck dann auf Deiner Abgabeseite an.
+
+Die Syntax des Automaten ist nicht vorgegeben! Verwende einfach jene Darstellungsform, die Deiner Meinung nach am einfachsten zu verstehen ist. Eine Möglichkeit wäre zum Beispiel etwas in dieser Art zu verwenden:
+
+    * Anfangszustand: Start
+    * Endzustände: Ende1, Ende2, ... 

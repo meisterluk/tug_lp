@@ -1,0 +1,90 @@
+Grundlagen der Informatik - Prüfungsstoff
+=========================================
+
+:Lehrveranstaltung: Grundlagen der Informatik
+:Veranstalter:      Slany W., Voit K.
+:Datum:             24. Jänner 2011
+
+Themengebiete
+-------------
+
+Theorie
+    > Geschichte
+        > Programmiersprachen
+        > Algorithmen
+    > Definition
+        > Informatik
+        > Compiler / Interpreter
+        > Universelle Turingmaschine
+        > Reduktionsbeweis
+        > Turingvollständigkeit
+        > Regex Metacharaktere
+Zahlensysteme
+    > Binärzahlen
+Algorithmen
+    > Marvin-10 / Labyrinth
+    > Komplexitätstheorie / Entscheidbarkeitstheorie
+        > Turingmaschinen
+        > Halteproblem
+        > Landau-Notation
+    > Collatz' Problem
+    > Dominoproblem
+    > Damenproblem
+Logik
+    > Paradoxon (Lügner)
+    > Google Eingabefeld
+    > Tabellenmethode
+    > die 3 Basisoperationen (ODER, UND, NOT)
+    > Disjunktive / Konjunktive Normalform
+SQL
+    > SELECT
+    > CREATE TABLE
+    > JOINs
+Verschlüsselung
+    > symmetr. vs asymmetrische Verschlüsselung
+        > Verschlüsselungsprozess
+        > Import
+        > Export
+        > Signierprozess
+    > One time pad
+    > Analogie zu Vorhängeschlössern
+Reguläre Ausdrücke
+    > Microsoft Word - Search and Replace
+    > twiki INCLUDE
+    > Konstruktion
+    > Analyse
+    > Determinismus / Nicht-Determinismus
+Formale Grammatiken
+    > Chomsky-Hierarchie
+    > G = (V, Σ, P, S)
+    > Terminalsymbole / Nichtterminalsymbole
+    > NP-Vollständigkeitsbeweis
+
+
+Lesenswerte Referenzen
+----------------------
+
+Die von Prof. Slany aufgezeichnete Tabelle (VO 07. Dez 2010) der
+Chomsky-Grammatik-Typen kann in
+http://en.wikipedia.org/wiki/Chomsky_hierarchy#The_hierarchy gefunden werden.
+
+* http://de.wikipedia.org/wiki/Dualsystem
+* http://de.wikipedia.org/wiki/Alan_Turing
+* http://en.wikipedia.org/wiki/Reduction_(complexity)
+* http://www-i1.informatik.rwth-aachen.de/~algorithmus/algo5.php
+* http://de.wikipedia.org/wiki/Kategorie:Paradoxon
+* http://en.wikipedia.org/wiki/Halting_problem
+* http://www.austromath.at/medienvielfalt/materialien/krypto/lernpfad/content/k_asymm.htm
+* http://www.regular-expressions.info/
+* http://de.wikipedia.org/wiki/Kontextsensitive_Grammatik
+* http://de.wikipedia.org/wiki/Chomsky-Hierarchie
+* http://de.wikipedia.org/wiki/Backus-Naur-Form
+* http://www.herr-rau.de/wordpress/2009/01/formale-sprachen-teil-1-die-chomsky-hierarchie.htm
+
+Erweiterte Referenzliste
+------------------------
+
+* http://de.wikipedia.org/wiki/LL-Parser
+* http://projecteuler.net/index.php?section=problems&id=14
+* http://pydoc.org/2.5.1/re.html
+* http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html

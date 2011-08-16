@@ -1,0 +1,49 @@
+/*
+        Author:         prokls
+        Date:           10.09.30
+        License:        Emailware
+*/
+
+@media all {
+    /* general element definition */
+    html { background-color: #EEC; font-family: Arial, Helvetica, sans-serif; }
+    body { width: 80%; margin: 5%; padding: 20px; border: 1px solid #333;
+        background-color: #FFD; background-image: url(../ssh.png);
+        background-repeat: no-repeat; background-position: top right; }
+    h1 { color: #BB9; }
+    h3 { color: #775; }
+    p, li, blockquote, div { font-size: 14px; }
+    li { line-height: 20px; }
+    a { color: #997; text-decoration: none; }
+
+    /* special classes */
+    .s { font-size: 0.8em; }
+    .b { font-weight: bold; }
+    .done { text-decoration: line-through; }
+    .notyet { display: none; }
+    .ip_check { font-size: 18px; margin: 20px 40px; }
+    .ip_check > small { font-size: 12px; }
+    #logo { float: left; margin: 10px; border: 5px solid #AAA; }
+    #logo:hover { border: 5px solid #BBB; }
+    .logotext { margin-left: 250px; }
+    .mono { font-family: "Courier New", Courier, monospace; }
+
+    /* university oriented */
+    .hw { border: #000 solid 1px; padding: 0; } /* homework */
+
+    .lv { font-weight: bold; margin-right: 20px; } /* lehrveranstaltung/course */
+    .lv_link { color: #CCC; text-decoration: none; }
+    .lv_link:hover { color: #666; }
+
+    #signature {
+        color: #999;
+        background-color: #EFEFEF;
+        margin: 10px;
+        padding: 10px;
+    }
+}
+
+@media print {
+    html, body { padding: 0px; background-color: #FFF; color: #000; border: none; }
+    #signature { display: none; }
+}

@@ -1,0 +1,227 @@
+% boolean_cheatsheet.tex
+%
+% Author:  Lukas Prokop <admin@lukas-prokop.at>
+% Date:    10.10.31
+% Version: 1.0
+% License: Emailware
+%
+% Copyright 2010, Lukas Prokop
+
+\documentclass[10pt]{article}
+
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage[sf]{titlesec}
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{boxedminipage}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[unicode]{hyperref}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{fullpage}
+
+% Document Configuration
+\thispagestyle{empty}
+\pagenumbering{arabic} % Alph, alph, arabic, Roman, roman
+\parindent0mm
+\parskip2mm
+\headheight10mm
+\headsep10mm
+\setlength{\unitlength}{1cm}
+\renewcommand{\thefootnote}{\roman{footnote}}
+\renewcommand{\theequation}{\alph{equation}}
+
+% Aliases
+% - general
+\newcommand{\TODO}[1]{}%\fbox{\color{blue} TODO} #1\par}
+\newcommand{\note}[1]{\fbox{\textbf{Note:}} #1\par}
+
+% - math
+% --- functions
+%\newcommand{\mod}[1]{\bmod{#1}}
+\newcommand{\eul}[1]{{\varphi}(#1)}
+\newcommand{\vect}[2]{ \left ( \begin{array}{c} #1 \\ #2 \end{array} \right ) }
+\newcommand{\ggt}[2]{\textrm{ggT}(#1, #2)}
+\newcommand{\divides}{\hskip1pt\mid\hskip5pt}
+\newcommand{\ggT}[2]{\text{ggT}(#1, #2)}
+%\renewcommand{\binom}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\maximum}[2]{\textrm{max}(#1, #2)}
+\newcommand{\minimum}[2]{\textrm{min}(#1, #2)}
+
+% --- boolean
+\renewcommand{\t}{\texttt{\text{T}}\hspace{1pt}}
+\newcommand{\nomatht}{\hspace{1pt}T\hspace{1pt}}
+\newcommand{\f}{\texttt{\text{F}}\hspace{1pt}}
+\newcommand{\nomathf}{\hspace{3pt}F\hspace{1pt}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\por}{|}
+\newcommand{\pand}{\&}
+
+\newcommand{\truthtable}[5]{
+    \begin{table}[!th]
+      \begin{tabular}{c|c|c}
+        A      & B      & #1 \\
+      \hline
+        \t  & \t  & #2 \\
+        \t  & \f & #3 \\
+        \f & \t  & #4 \\
+        \f & \f & #5 \\
+      \hline
+      \end{tabular}
+    \end{table}
+}
+
+% - pattern.tex related
+% --- general
+
+% --- VO stuff
+\newtheorem{mathdef}{Definition}
+\newcommand{\quoded}{\textit{--- quod erat demonstrandum. ---}}
+
+% --- design, layout
+\renewcommand{\epsilon}{\varepsilon}
+
+\begin{document}
+
+\section{Boolean Logic cheatsheet}
+
+\TODO{fixed width + column centered alignment of cells 3--6 not possible}
+
+\newcolumntype{x}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{y}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{z}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcommand{\exprwidth}{6pt}
+
+\begin{table}[!ht]
+  \caption{Boolean binary functions}
+  \begin{tabular}{r|lx{\exprwidth}y{\exprwidth}z{\exprwidth}ll}
+      \multicolumn{1}{l}{\begin{tabular}{r|c}
+        \tiny{A} & \tiny{\t}\tiny{\t}\tiny{\f}\tiny{\f} \\
+        \tiny{B} & \tiny{\t}\tiny{\f}\tiny{\t}\tiny{\f} \\
+      \end{tabular}} & Definition & \multicolumn{3}{c}{Expression}
+      & Description 1    & Description 2 \\
+    \hline
+      \t\t\t\t & $A \lor \neg A$
+        && $\top$                  && 1. Tautology      & One function \\
+      \t\t\t\f & $A \lor B$
+        & $A$ & $\por$ & $B$        & Disjunction       & \texttt{OR} \\
+      \t\t\f\t & $A \lor \neg B$
+        & $A$ & $\la$ & $B$         & 2. Implication    & Subjunction \\
+      \t\t\f\f & $A$
+        &&                         && 1. Identity       & \\
+      \t\f\t\t & $\neg A \lor B$
+        & $A$ & $\ra$ & $B$         & 1. Implication    & Subjunction \\
+      \t\f\t\f & $B$
+        &&                         && 2. Identity       & \\
+      \t\f\f\t & $(A \land B) \lor \neg (A \lor B)$
+        & $A$ & $\lra$ & $B$        & Bijunction        & Biconditional \\
+      \t\f\f\f & $A \land B$
+        & $A$ & $\pand$ & $B$       & Conjunction       & \texttt{AND} \\
+      \f\t\t\t & $\neg (A \land B)$
+        & $A$&$\uparrow$&$B$        & Negate-Conjunction& \texttt{NAND} \\
+      \f\t\t\f & $\neg (A \land B) \land (A \lor B)$
+        & $A$ & $\otimes$ & $B$     & Antivalence       & \texttt{XOR} \\
+      \f\t\f\t & $\neg B$
+        &&                         && 2. Negation       & \\
+      \f\t\f\f & $A \land \neg B$
+        & $A$ & $\nrightarrow$ & $B$& 1. Difference     & Nonimplication \\
+      \f\f\t\t & $\neg A$
+        &&                         && 1. Negation       & \\
+      \f\f\t\f & $\neg A \land B$
+        & $A$ & $\nleftarrow$ & $B$ & 2. Difference     & Converse
+        nonimplication \\
+      \f\f\f\t & $\neg (A \lor B)$
+        & $A$ & $\downarrow$ & $B$  & Negate-Disjunction& \texttt{NOR} \\
+      \f\f\f\f & $\neg (A \lor \neg A)$
+        && $\bot$                  && 2. Tautology      & Zero function \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\note{Subjunction equals to the phrase ''If A, then B''}
+
+\begin{multicols}{3}
+\subsection{Commutative law}
+\[
+    A \land B \Leftrightarrow B \land A
+\] \[
+    A \lor B \Leftrightarrow B \lor A
+\]
+
+\subsection{Assoziative law}
+
+\[
+    A \land (B \land C) \Leftrightarrow (A \land B) \land C
+\] \[
+    A \lor (B \lor C) \Leftrightarrow (A \lor B) \lor C
+\]
+
+\subsection{Distributive law}
+
+\[
+    A \land (B \lor C) \Leftrightarrow (A \land B) \lor (A \land C)
+\] \[
+    A \lor (B \land C) \Leftrightarrow (A \lor B) \land (A \lor C)
+\]
+
+\subsection{Identity laws}
+
+\[
+    A \land \t \Leftrightarrow A
+\] \[
+    A \lor \f \Leftrightarrow A
+\]
+
+\subsection{Zero / One laws}
+
+\[
+    A \land \f \Leftrightarrow \f
+\] \[
+    A \lor \t \Leftrightarrow \t
+\]
+
+\subsection{Complementary laws}
+
+\[
+    A \land \neg A \Leftrightarrow \f
+\] \[
+    A \lor \neg A \Leftrightarrow \t
+\]
+
+\subsection{Idempotence laws}
+
+\[
+    A \land A \Leftrightarrow A
+\] \[
+    A \lor A \Leftrightarrow A
+\]
+
+\subsection{Merging laws}
+
+\[
+    A \land (A \lor B) \Leftrightarrow A
+\] \[
+    A \lor (A \land B) \Leftrightarrow A
+\]
+
+\subsection{Other notations}
+
+\[
+    A \land B \Leftrightarrow A*B \Leftrightarrow A{\cdot}B \Leftrightarrow AB
+\] \[
+    A \lor B \Leftrightarrow A + B
+\]
+\end{multicols}
+
+\end{document}

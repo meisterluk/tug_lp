@@ -1,0 +1,80 @@
+\begin{thebibliography}{10}
+
+\bibitem{anatomie}
+Vincente Baixauli and Marcello Negri.
+\newblock {\em Anatomie des Menschen}.
+\newblock Kaiser, neuauflage 2002 edition, 1997.
+
+\bibitem{sensorarray}
+D.~Betancourt and C.~del Rio.
+\newblock Study of the human eye working principle: An impressive high angular
+  resolution system with simple array detectors.
+\newblock In {\em Sensor Array and Multichannel Processing, 2006. Fourth IEEE
+  Workshop on}, pages 93--97, July 2006.
+
+\bibitem{compis}
+B.S. Carlson.
+\newblock Comparison of modern ccd and cmos image sensor technologies and
+  systems for low resolution imaging.
+\newblock In {\em Sensors, 2002. Proceedings of IEEE}, volume~1, pages
+  171--176, January 2002.
+
+\bibitem{vim}
+Karl~R. Gegenfurtner, Sebastian Walter, and Doris~I. Braun.
+\newblock {\em Visuelle Informationsverarbeitung im Gehirn}, pages 42--45.
+\newblock mentis, 2002.
+
+\bibitem{hubel}
+D.H. Hubel and T.N. Wiesel.
+\newblock Receptive fields, binocular interaction, and functional architecture
+  in the cat's visual cortex.
+\newblock {\em jphysiol}, 160:106--154, 1962.
+
+\bibitem{retinapathways}
+Wei Hui, Guan Xu-Dong, and Zuo Qingsong.
+\newblock Main retina information processing pathways modeling.
+\newblock In {\em Cognitive Informatics (ICCI), 2010 9th IEEE International
+  Conference on}, pages 318 --324, July 2010.
+
+\bibitem{arch}
+Ng~Jeffrey, Anil~A. Bharath, and Li~Zhaoping.
+\newblock A survey of architecture and function of the primary visual cortex
+  (v1).
+\newblock {\em EURASIP Journal on Advances in Signal Processing}, page~17,
+  2007.
+
+\bibitem{modanalysis}
+B.W. Lin and Ou~Ma.
+\newblock Modeling and analysis of human binocular perception of position and
+  velocity in the visual cortex.
+\newblock In {\em Neural Networks, 2007. IJCNN 2007. International Joint
+  Conference on}, pages 973--978, August 2007.
+
+\bibitem{schiller}
+Peter~H. Schiller, Nikos~K. Logothetis, and Eliot~R. Charles.
+\newblock Functions of the colour-opponent and broad-band channels of the
+  visual system.
+\newblock {\em letters to nature}, 343:68--70, January 1990.
+
+\bibitem{photo}
+A.J.P. Theuwissen.
+\newblock Ccd or cmos image sensors for consumer digital still photography?
+\newblock In {\em VLSI Technology, Systems, and Applications, 2001. Proceedings
+  of Technical Papers. 2001 International Symposium on}, pages 168--171,
+  January 2001.
+
+\bibitem{thorpe}
+S.~Thorpe, D.~Fize, and C.~Marlot.
+\newblock {Speed of processing in the human visual system.}
+\newblock {\em Nature}, 381(6582):520--522, June 1996.
+
+\bibitem{brainactivation}
+K.~Yamamoto, Y.~Takeuchi, J.~Tachibana, K.~Uchida, M.~Maeno, K.~Yanashima,
+  A.~Uchiyama, and K.~Magatani.
+\newblock Analysis of brain activation by visual and auditory stimulation after
+  visual and auditory simultaneous stimulation using f-mri.
+\newblock In {\em Engineering in Medicine and Biology Society, 2004. IEMBS '04.
+  26th Annual International Conference of the IEEE}, volume~1, pages
+  1872--1875, September 2004.
+
+\end{thebibliography}

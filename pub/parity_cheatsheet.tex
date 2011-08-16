@@ -1,0 +1,164 @@
+% parity_cheatsheet.tex
+%
+% Author:  Lukas Prokop <admin@lukas-prokop.at>
+% Date:    10.10.31
+% Version: alpha
+% License: Emailware
+%
+% Copyright 2010, Lukas Prokop
+
+\documentclass[10pt]{article}
+
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage[sf]{titlesec}
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{boxedminipage}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[unicode]{hyperref}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{fullpage}
+
+% Document Configuration
+\thispagestyle{empty}
+\pagenumbering{arabic} % Alph, alph, arabic, Roman, roman
+\parindent0mm
+\parskip2mm
+\headheight10mm
+\headsep10mm
+\setlength{\unitlength}{1cm}
+\renewcommand{\thefootnote}{\roman{footnote}}
+\renewcommand{\theequation}{\alph{equation}}
+
+% Aliases
+% - general
+\newcommand{\TODO}[1]{}%\fbox{\color{blue} TODO} #1\par}
+\newcommand{\note}[1]{\fbox{\textbf{Note:}} #1\par}
+
+% - math
+% --- functions
+%\newcommand{\mod}[1]{\bmod{#1}}
+\newcommand{\eul}[1]{{\varphi}(#1)}
+\newcommand{\vect}[2]{ \left ( \begin{array}{c} #1 \\ #2 \end{array} \right ) }
+\newcommand{\ggt}[2]{\textrm{ggT}(#1, #2)}
+\newcommand{\divides}{\hskip1pt\mid\hskip5pt}
+\newcommand{\ggT}[2]{\text{ggT}(#1, #2)}
+%\renewcommand{\binom}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\maximum}[2]{\textrm{max}(#1, #2)}
+\newcommand{\minimum}[2]{\textrm{min}(#1, #2)}
+
+% --- boolean
+\renewcommand{\t}{\texttt{\text{T}}\hspace{1pt}}
+\newcommand{\nomatht}{\hspace{1pt}T\hspace{1pt}}
+\newcommand{\f}{\texttt{\text{F}}\hspace{1pt}}
+\newcommand{\nomathf}{\hspace{3pt}F\hspace{1pt}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\por}{|}
+\newcommand{\pand}{\&}
+
+\newcommand{\truthtable}[5]{
+    \begin{table}[!th]
+      \begin{tabular}{c|c|c}
+        A      & B      & #1 \\
+      \hline
+        \t  & \t  & #2 \\
+        \t  & \f & #3 \\
+        \f & \t  & #4 \\
+        \f & \f & #5 \\
+      \hline
+      \end{tabular}
+    \end{table}
+}
+
+% - pattern.tex related
+% --- general
+
+% --- VO stuff
+\newtheorem{mathdef}{Definition}
+\newcommand{\quoded}{\textit{--- quod erat demonstrandum. ---}}
+
+% --- design, layout
+\renewcommand{\epsilon}{\varepsilon}
+
+\author{Lukas Prokop}
+\title{Parity cheatsheet}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+  \begin{boxedminipage}{0.5\textwidth}
+    \begin{description}
+      \item[n] $n \in \mathbb{N}$
+      \item[a,b] even integers
+      \item[c,d] odd integers
+      \item[I] set of even integers
+      \item[K] set of odd integers
+      \item[f] any function
+      \item[g,h] even functions; satisfying $\big( f(x) = f(-x) \big)$
+      \item[o,p] odd functions; satisfying $\big( f(x) \neq f(-x) \big)$
+      \item[M] set of even functions
+      \item[N] set of odd functions
+    \end{description}
+  \end{boxedminipage}
+\end{center}
+
+\begin{multicols}{2}
+
+\subsection{Addition, Subtraction}
+
+\[
+    even \pm even = even
+\] \[
+    even \pm odd = odd
+\] \[
+    odd \pm odd = even
+\]
+
+\subsection{Multiplication}
+
+\[
+    even \times even = even
+\] \[
+    odd \times odd = odd
+\]
+
+\subsection{Facts}
+
+
+\begin{itemize}
+  \item $O(x) = 0$ is the only function $ \in M, N $.
+  \item $(O \neq g \land O \neq h) : (g + h) \notin \Big\{ M, N \Big\} $
+  \item $(g + h) \in M$
+  \item $(g \cdot n) \in M$
+  \item $(o + p) \in N$
+  \item $(o \cdot n) \in N$
+  \item $(g \cdot h) \in M$
+  \item $(o \cdot p) \in M$
+  \item $\frac{g}{h} \in M$
+  \item $\frac{o}{p} \in M$
+  \item $\frac{g}{o} \in N$
+  \item $g' \in N$
+  \item $o' \in M$
+  \item $(g \circ h) \in M$
+  \item $(o \circ p) \in N$
+  \item $(g \circ o) \in M$
+  \item $(f \circ g) \in M$
+  \item $\int_{-A}^{+A} o = 0$
+  \item $\int_{-A}^{+A} g = 2 \cdot \int_{0}^{+A} g$
+\end{itemize}
+
+\end{multicols}
+\end{document}

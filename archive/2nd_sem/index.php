@@ -30,7 +30,7 @@
 
     <meta name="robots" content="all">
     <link rel="lukas' weblog" title="MyBlog" href="http://lukas-prokop.at/blog/">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
  </head>
 
  <body>

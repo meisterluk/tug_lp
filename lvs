@@ -1,60 +1,102 @@
-Fächerauswahl SS11
-==================
+Einführung in die strukturierte Programmierung (ESP, VU)
+Inhalte: C Programmierung
+Gruppe: Sorin, Giovanni, Stefan, Lukas
+Beurteilung: 3 Abgaben, 1 Klausur
+Anrechnung: 3 ECTS, 2 SSt
 
-Interessensleitbild
--------------------
+Rechnernetze und -organisation VO (RNO, VO)
+Inhalte: Assembler, Netzwerkdienste
+Beurteilung: 2 ECTS, 2 SSt
 
-* IT-Security
-* Cryptography
-* Java
-* UNIX
+Buchhaltung und Bilanzierung (BuBi, VO)
+Inhalte: doppelte Buchhaltung
+Beurteilung: 1 Klausur
+Anrechnung: 2.5 ECTS, 1 SSt
 
-Alte Fächer
------------
+Buchhaltung und Bilanzierung (BuBi, UE)
+Inhalte: doppelte Buchhaltung
+Beurteilung: 1 Klausur
+Anrechnung: 2 ECTS, 1 SSt
 
-* Grundlagen der Elektrotechnik TE
-* Buchhaltung und Bilanzierung VO
-* Buchhaltung und Bilanzierung UE
+Wahrscheinlichkeitstheorie für Informatikstudien (WFI, VU)
+Inhalte: Wahrscheinlichkeitstheorie
+Beurteilung: 3 Übungstests, 1 Klausur
+Gruppe: ?, alle Teilnehmer in 3 Gruppen geteilt
+Anrechnung: 3 ECTS, 2 SSt
 
-Vorwegnahme
------------
+Statistik für Informatikstudien (SFI, VU)
+Inhalte: Statistik
+Beurteilung: 1 Übungstest, 1 Klausur
+Gruppe: ?, alle Teilnehmer in 2 Gruppen geteilt
+Anrechnung: 1.5 ECTS, 1 SSt
 
-* Projektmanagement
-  Gruppenarbeit mit Severin, 1.5 ECTS
+Numerisches Rechnen und lineare Algebra (LinAlg/NRLA, VU)
+Inhalte: Matrizenrechnung, lineare Gleichungssysteme
+Beurteilung: 2 Hausübungen, 2 Tests, 1 Klausur
+Anrechnung: 4.5 ECTS, 3 SSt
 
-* Softwareentwicklung & Wissensmanagement
-* Softwareparadigmen
+Objektorientierte Analyse und Design (OAD, VU)
+Inhalte: OOP Design, Design Patterns
+Beurteilung: 4 Übungen, 2 Teilklausuren
+Gruppe: Severin, Gerhard, Thomas, Lukas, Felix <- #12
+Anrechnung: 4.5 ECTS, 3 SSt
 
-Mögliche Fächer
----------------
+Einführung in die Informationssicherheit (EIS, VO)
+Inhalte: Zertifikate, Signaturen, Verschlüsselung
+Beurteilung: Klausur
+Anrechnung: 1.5 ECTS, 1 SSt
 
-* Anwendung von Betriebs- und Informationssystemen
-  sehr einfach, 1 ECTS
+Einführung in die Informationssicherheit (EIS, UE)
+Inhalte: Je nach gewähltem Thema
+Beurteilung: 1 Projektabgabe
+Gruppe: Gerhard, Thomas, Severin, Lukas
+Anrechnung: 1.5 ECTS, 1 SSt
 
-* Chemische Informatik
-  Offtopic, 1.5 SSt
+Datenstrukturen und Algorithmen (DUA, VO)
+Inhalte: Datenstrukturen und deren Implementierung
+Beurteilung: Klausur
+Anrechnung: 3 ECTS, 2 SSt
 
-* Staatswissenschaften
-  2 SSt
+Datenstrukturen und Algorithmen (DUA, UE)
+Inhalte: Datenstrukturen und deren Implementierung
+Beurteilung: Hausübungen
+Anrechnung: 1.5 ECTS, 1 SSt
 
-* Technische Informatik 1
-* AK Informatikrecht und Datenschutz
-* Computational Intelligence
-* Bioethik
-* Rhetorik und Präsentation
+Datenbanken 2 (DB2, VU)
+Inhalte: Java Servlets, MySQL
+Beurteilung: Projektabgabe, Klausur?
+Anrechnung: 1.5 ECTS, 1 SSt
+Gruppe: Felix, Lukas
 
-Wintersemester/Master only
---------------------------
+Neue Informationssysteme (NIS, VU)
+Inhalte: PHP, XML
+Beurteilung: 1 Projektabgabe, Klausur?
+Anrechnung: 2.5 ECTS, 2 SSt
+Gruppe: Lukas, Felix, Pete
 
-* Arbeitsrecht
-* Compilerbau
-* AK Betriebswirtschaftslehre
-* Multimediale Informationssysteme 1
-* Softwarearchitektur
-* Entwurf und Analyse von Algorithmen
-* Entwurf von Echtzeitsystemen
-* Computermathematik 1 (Vortrag. Madritsch)
-* Technische Informatik 2
-* AK Zahlentheorie (Kryptographie)
-* Technik & Ethik
-* Neue Informationssysteme
+Logik und Logische Programmierung (LLP)
+Inhalte: Prädikatenlogik, Prolog
+Beurteilung: wöchentliche Übung, 3 Teilklausuren
+Anrechnung: 3 ECTS, 2 SSt
+Gruppe: Felix, Lukas
+
+Softwarearchitektur (SA, VO)
+Inhalte: Software quality, WWW, Architectural design
+Beurteilung: Klausur
+Anrechnung: 3 ECTS, 2 SSt
+
+Softwarearchitektur (SA, KU)
+Inhalte: Software quality, WWW, Architectural design
+Beurteilung: 3 Abgaben
+Gruppe: Lukas, Gerhard, Severin
+Anrechnung: 1.5 ECTS, 1 SSt
+
+Kosten und Erfolgsrechnung (KoRe, VO)
+Inhalte: Rechnungswesen, Kostenerstellung, Rechnungen
+Beurteilung: "schriftlich und mündlich"
+Anrechnung: 2.5 ECTS, 1 SSt
+
+Kosten und Erfolgsrechnung (KoRe, UE)
+Inhalte: Rechnungswesen, Kostenerstellung, Rechnungen
+Beurteilung: "schriftlich und mündlich"
+Anrechnung: 2 ECTS, 2 SSt

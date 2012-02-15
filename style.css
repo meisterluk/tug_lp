@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@media all {
+    article {
+        text-align: left;
+        background-color: #EEE;
+        width: 70%;
+        margin: auto;
+        padding: 10px;
+    }
+    header {
+        text-align: center;
+    }
+}

@@ -21,7 +21,7 @@ Anrechnung: 2 ECTS, 1 SSt
 Wahrscheinlichkeitstheorie für Informatikstudien (WFI, VU)
 Inhalte: Wahrscheinlichkeitstheorie
 Beurteilung: 3 Übungstests, 1 Klausur
-Gruppe: ?, alle Teilnehmer in 3 Gruppen geteilt
+Gruppe: Gruppe 2 von 3 (fix)
 Anrechnung: 3 ECTS, 2 SSt
 
 Statistik für Informatikstudien (SFI, VU)
@@ -38,7 +38,7 @@ Anrechnung: 4.5 ECTS, 3 SSt
 Objektorientierte Analyse und Design (OAD, VU)
 Inhalte: OOP Design, Design Patterns
 Beurteilung: 4 Übungen, 2 Teilklausuren
-Gruppe: Severin, Gerhard, Thomas, Lukas, Felix <- #12
+Gruppe: Severin, Gerhard, Thomas, Lukas, Felix (#12, fix)
 Anrechnung: 4.5 ECTS, 3 SSt
 
 Einführung in die Informationssicherheit (EIS, VO)
@@ -49,7 +49,7 @@ Anrechnung: 1.5 ECTS, 1 SSt
 Einführung in die Informationssicherheit (EIS, UE)
 Inhalte: Je nach gewähltem Thema
 Beurteilung: 1 Projektabgabe
-Gruppe: Gerhard, Thomas, Severin, Lukas
+Gruppe: Gerhard, Thomas [Sprecher], Severin, Lukas (#27, fix)
 Anrechnung: 1.5 ECTS, 1 SSt
 
 Datenstrukturen und Algorithmen (DUA, VO)
@@ -78,7 +78,7 @@ Logik und Logische Programmierung (LLP)
 Inhalte: Prädikatenlogik, Prolog
 Beurteilung: wöchentliche Übung, 3 Teilklausuren
 Anrechnung: 3 ECTS, 2 SSt
-Gruppe: Felix, Lukas
+Gruppe: Felix, Lukas (fix)
 
 Softwarearchitektur (SA, VO)
 Inhalte: Software quality, WWW, Architectural design
@@ -88,7 +88,7 @@ Anrechnung: 3 ECTS, 2 SSt
 Softwarearchitektur (SA, KU)
 Inhalte: Software quality, WWW, Architectural design
 Beurteilung: 3 Abgaben
-Gruppe: Lukas, Gerhard, Severin
+Gruppe: Lukas, Florian, Gerhard, Severin
 Anrechnung: 1.5 ECTS, 1 SSt
 
 Kosten und Erfolgsrechnung (KoRe, VO)
@@ -100,3 +100,4 @@ Kosten und Erfolgsrechnung (KoRe, UE)
 Inhalte: Rechnungswesen, Kostenerstellung, Rechnungen
 Beurteilung: "schriftlich und mündlich"
 Anrechnung: 2 ECTS, 2 SSt
+2 ECTS, 2 SSt

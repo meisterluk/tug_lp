@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>prokls</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="author" content="Lukas Prokop">
+    <meta name="description" content="User website of prokls">
+
+    <meta name="robots" content="all">
+    <link rel="stylesheet" type="text/css" href="css/tug.css">
+    <style type="text/css">
+    <!--
+      body {
+        font-family: fantasy;
+        font-size: 1.1em;
+        line-height: 1.3em;
+        
+        background-color: #EEE;
+      }
+      .article {
+        background-color: white;
+        margin: auto;
+        padding: 1.5em;
+        width: 50%;
+        min-width: 400px;
+      }
+      .article h1 {
+        letter-spacing: 1em;
+        font-size: 3em;
+        text-align: right;
+      }
+      header hr {
+        margin-bottom: 4em;
+      }
+      .lv {
+        font-size: 1em;
+      }
+      .notyet {
+        opacity: 0.6;
+      }
+      .done {
+        text-decoration: line-through;
+      }
+      .hw {
+        margin-left: 1.8em;
+        border: 1px solid #334;
+      }
+      .signature {
+        font-family: monospace;
+        font-size: 0.8em;
+        white-space: pre-wrap;
+        background-color: #EEE;
+        padding: 1.2em;
+        text-align: right;
+        line-height: 1.3em;
+      }
+      dt {
+        font-weight: bold;
+      }
+      dt:hover + dd, dd:hover, li:hover {
+        color: brown;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <div class="article">
+      <div class="header">
+        <h1>prokls</h1>
+        <div class="header">
+          <p style="width: 50%; float:left">
+            <span style="margin-left:3em">student's homepage</span> <br />
+            <span style="font-variant:small-caps">University of technology Graz</span>, <br />
+            <span style="margin-left:1em">Austria</span>
+          </p>
+          <div style="float:right" id="qr">
+            <img src="qr.png" alt="QR Code" width="170" height="170" />
+          </div>
+        </div>
+        <hr style="clear:both" />
+      </div>
+      <h2>Schwarzes Brett</h2>
+      <ul>
+        <li><i>Last update:</i> 2012, 14th of Feb</li>
+        <li><a href="lvs">Courses</a></li>
+        <li><a href="archive/">Archiv</a></li>
+        <li><i>Current status:</i> 3rd semester, 19 LVs, 44.5 ECTS &amp; 29 SSt to go, 2 tutorial groups
+          <!--
+            RNO (3) done.
+            SA (3) done.
+            EIS (1.5) done.
+            EIS (1.5) done.
+            WFI (3) done.
+            NRLA (4.5) done.
+            OAD (4.5) done.
+            DUA (1.5) done.
+            DB2 (1.5) done.
+            NIS (2.5) done.
+            LLP (3) done.
+            SA (3) done.
+            SA (1.5) done.
+            ESP (3) done.
+          -->
+
+          <!-- ECTS * 2, 113 as base -->
+          <div style="border:#333 solid 1px; padding:1px; width:360px">
+            <div style="background-color:#9AC; width:187px; overflow:visible">
+              study
+            </div>
+          </div>
+
+          <!-- #(abgeschlossene LVs) * 20 -->
+          <div style="border:#333 solid 1px; padding:1px; width:380px">
+            <div style="background-color:#F9A; width:300px; overflow:visible">
+              3.&nbsp;semester
+            </div>
+
+          </div>
+        </li>
+      </ul>
+
+      <h2>Ausarbeitungen</h2>
+      <ul>
+        <li>
+          <span class="lv" title="Einführung in die strukturierte Programmierung">ESP:</span>
+        </li>
+        <li>
+          <span class="lv" title="Rechnernetze und Organisation">RNO:</span>
+
+          Cheatsheet
+          <a href="pub/rno_cheatsheet.tex">[TeX]</a>
+          <a href="pub/rno_cheatsheet.pdf">[PDF]</a>
+
+          Ausarbeitung Fragen 2010
+          <a href="pub/rno2010_ausarbeitung.txt">[TXT]</a>
+        </li>
+        <li>
+          <span class="lv" title="Buchhaltung und Bilanzierung">BuBi:</span>
+        </li>
+        <li>
+          <span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI:</span>
+
+          Zusammenfassung
+          <a href="pub/wfi_summary.tex">[TeX]</a>
+          <a href="pub/wfi_summary.pdf">[PDF]</a>
+        </li>
+        <li>
+          <span class="lv" title="Statistik für Informatikstudien">SFI:</span>
+        </li>
+        <li>
+          <span class="lv" title="Numerisches Rechnen und Lineare Algebra">NRLA:</span>
+
+          Terminology
+          <a href="pub/nrla_terminology.tex">[TeX]</a>
+          <a href="pub/nrla_terminology.pdf">[PDF]</a>
+
+          Summary 
+          <a href="pub/nrla_summary.tex">[TeX]</a>
+          <a href="pub/nrla_summary.pdf">[PDF]</a>
+
+          numpy and matrizes
+          <a href="pub/nrla.py">[PY]</a>
+        </li>
+        <li>
+          <span class="lv" title="Objektorientierte Analyse und Design">OAD:</span>
+        </li>
+        <li>
+          <span class="lv" title="Einführung in die Informationssicherheit">EIS:</span>
+        </li>
+        <li>
+          <span class="lv" title="Datenstrukturen und Algorithmen">DUA:</span>
+        </li>
+        <li>
+          <span class="lv" title="Datenbanken 2">DB2:</span>
+
+          Databases and relations
+          <a href="pub/databases_relations.pdf">[PDF]</a>
+          <a href="pub/databases_relations.tex">[TeX]</a>
+        </li>
+        <li>
+          <span class="lv" title="Neue Informationssysteme">NIS:</span>
+        </li>
+        <li>
+          <span class="lv" title="Logik und Logisches Programmierung">LLP:</span>
+
+          Introduction to Prolog <a href="pub/llp_intro.pl">[PL]</a>
+        </li>
+        <li>
+          <span class="lv" title="Softwarearchitektur">SA:</span>
+
+          Summary 
+          <a href="pub/sa_summary.tex">[TeX]</a>
+          <a href="pub/sa_summary.pdf">[PDF]</a>
+        </li>
+        <li>
+          <span class="lv" title="Kosten- und Erfolgsrechnung">KoRe:</span>
+        </li>
+      </ul>
+      
+      <h2>Aufgaben</h2>
+      <ul>
+        <li>
+          <span class="lv" title="Einführung in die strukturierte Programmierung">ESP:</span>
+          
+          <span class="hw done">Hausübung 1</span>
+          <span class="hw done">Hausübung 2</span>
+          <span class="hw done">Übungsbeispiel 1</span>
+          <span class="hw done">Übungsbeispiel 2</span>
+          <span class="hw done">Übungsbeispiel 3</span>
+        </li>
+        <li>
+          <span class="lv" title="Buchhaltung und Bilanzierung">BuBi:</span>
+        </li>
+        <li>
+          <span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI:</span>
+
+          <span class="hw done">Aufgabenblatt 1</span>
+          <span class="hw">Aufgabenblatt 2</span>
+          <span class="hw">Aufgabenblatt 3</span>
+        </li>
+        <li>
+          <span class="lv" title="Statistik für Informatikstudien">SFI:</span>
+
+          <span class="hw">Aufgabenblatt 1</span>
+        </li>
+        <li>
+          <span class="lv" title="Numerisches Rechnen und Lineare Algebra">NRLA:</span>
+
+          <span class="hw done">Aufgabenzettel 1</span>
+          <span class="hw done">Aufgabenzettel 1</span>
+        </li>
+        <li>
+          <span class="lv" title="Objektorientierte Analyse und Design">OAD:</span>
+
+          <span class="hw done">Uebung 1</span>
+          <span class="hw done">Uebung 2</span>
+          <span class="hw done">Uebung 3</span>
+          <span class="hw done">Create sample DB data</span>
+          <span class="hw done">Uebung 4</span>
+        </li>
+        <li>
+          <span class="lv" title="Einführung in die Informationssicherheit">EIS:</span>
+
+          <span class="hw done">Write report</span>
+        </li>
+        <li>
+          <span class="lv" title="Datenstrukturen und Algorithmen">DUA:</span>
+
+          <span class="hw done">Aufgabe 1</span>
+          <span class="hw done">Aufgabe 2</span>
+          <span class="hw done">Aufgabe 3</span>
+          <span class="hw done">Aufgabe interaktiv</span>
+          <span class="hw done">Aufgabe 4</span>
+          <span class="hw done">Aufgabe 5</span>
+          <span class="hw done">Aufgabe 6</span>
+          <span class="hw done">Aufgabe 7</span>
+          <span class="hw done">Aufgabe 8</span>
+          <span class="hw done">Aufgabe 9</span>
+        </li>
+        <li>
+          <span class="lv" title="Datenbanken 2">DB2:</span>
+
+          <span class="hw done">Webseite</span>
+          <span class="hw done">Bericht</span>
+          <span class="hw done">Abgabe</span>
+        </li>
+        <li>
+          <span class="lv" title="Neue Informationssysteme">NIS:</span>
+
+          <span class="hw done">Webseite</span>
+          <span class="hw done">Bericht</span>
+          <span class="hw done">Abgabe</span>
+        </li>
+        <li>
+          <span class="lv" title="Logik und Logisches Programmierung">LLP:</span>
+
+          <span class="hw done">Übung 1</span>
+          <span class="hw done" title="11.10.24">Übung 2</span>
+          <span class="hw done" title="11.11.21">Übung 3</span>
+          <span class="hw done" title="11.12.12">Übung 4</span>
+          <span class="hw done" title="12.01.23">Übung 5</span>
+        </li>
+        <li>
+          <span class="lv" title="Softwarearchitektur">SA:</span>
+
+          <span class="hw done" title="11.11.03">Team building</span>
+          <span class="hw done" title="11.12.07">CA, EA, IA</span>
+          <span class="hw done" title="12.01.19">Prototype</span>
+        </li>
+        <li>
+          <span class="lv" title="Kosten- und Erfolgsrechnung">KoRe:</span>
+
+          <span class="hw">lernen</span>
+          <span class="hw">lernen</span>
+          <span class="hw">lernen</span>
+        </li>
+        <li>
+          <span class="lv" title="Grundlagen der Informatik">GDI:</span>
+          
+          <span class="hw">Realdaten löschen</span>
+          <span class="hw">Spreadsheets testen</span>
+          <span class="hw">C Marvin10 fertig</span>
+          <span class="hw">Blogbeitrag testen</span>
+          <span class="hw done" title="11.10.27">AufgabeEins</span>
+          <span class="hw done" title="11.11.08">AufgabeEins AGs</span>
+          <span class="hw done" title="11.11.08">AufgabeZwei Partner</span>
+          <span class="hw done" title="11.11.17">AufgabeZwei</span>
+          <span class="hw done" title="11.11.24">AufgabeZwei AGs</span>
+          <span class="hw done" title="11.11.24">AufgabeDrei Partner</span>
+          <span class="hw done" title="11.12.08">AufgabeDrei</span>
+          <span class="hw done" title="11.12.15">AufgabeDrei AGs</span>
+          <span class="hw done" title="11.12.24">Finale</span>
+
+          <!--
+            Evaluation includes:
+                * Create testsuites
+                * evaluation exercise by exercise
+                * plagiarism
+                * revision control check
+                * total points check by sample
+                * create timeslots
+                * doodle entry & Email
+                * define AG example
+                * assign AG examples
+          -->
+        </li>
+      </ul>
+      
+      <h2>Prüfungstermine</h2>
+      <dl style="-moz-column-count:2; column-count:2">
+        <dt>11.10.12</dt>
+          <dd><span class="lv" title="Rechnernetze und Organisation">RNO</span> (done.)</dd>
+        <dt>11.10.25</dt>
+          <dd><span class="lv" title="Buchhaltung und Bilanzierung">BuBi</span> (nope.)</dd>
+        <dt>11.10.25</dt>
+          <dd><span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI EE (done.)</span></dd>
+        <dt>11.11.11</dt>
+          <dd><span class="lv" title="Softwarearchitektur">SA (nope.)</span></dd>
+        <dt>11.11.14</dt>
+          <dd><span class="lv" title="Logik und Logisches Programmierung">LLP (done.)</span></dd>
+        <dt>11.11.22</dt>
+          <dd><span class="lv" title="Objektorientierte Analyse und Design">OAD (done.)</span></dd>
+        <dt>11.11.22</dt>
+          <dd><span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI EE (done.)</span></dd>
+        <dt>11.11.29</dt>
+          <dd><span class="lv" title="Numerisches Rechnen und Lineare Algebra">NRLA</span> (1st PE, done.)</dd>
+        <dt>11.12.06</dt>
+          <dd><span class="lv" title="Buchhaltung und Bilanzierung">BuBi (nope.)</span></dd>
+        <dt>11.12.06</dt>
+          <dd><span class="lv" title="Kosten- und Erfolgsrechnung">KoRe (nope.)</span></dd>
+        <dt>11.12.06</dt>
+          <dd><span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI EE (done.)</span>
+        <dt>11.12.09</dt>
+          <dd><span class="lv" title="Softwarearchitektur">SA (done.)</span></dd>
+        <dt>11.12.12</dt>
+          <dd><span class="lv" title="Datenstrukturen und Algorithmen">DUA</span> (nope.)</dd>
+        <dt>11.12.19</dt>
+          <dd><span class="lv" title="Wahrscheinlichkeitstheorie für Informatikstudien">WFI</span> (done.)</dd>
+        <dt>12.01.24</dt>
+          <dd><span class="lv" title="Objektorientierte Analyse und Design">OAD</span> (2nd PE, done.)</dd>
+        <dt>12.01.24</dt>
+          <dd><span class="lv" title="Numerisches Rechnen und Lineare Algebra">NRLA</span> (2nd PE, done)</dd>
+        <dt>12.01.30</dt>
+          <dd><span class="lv" title="Logik und Logisches Programmierung">LLP</span> (done.)</dd>
+        <dt>12.01.31</dt>
+          <dd><span class="lv" title="Statistik für Informatikstudien">SFI</span>(done.)</dd>
+        <dt>12.02.02</dt>
+          <dd><span class="lv" title="Buchhaltung und Bilanzierung">BuBi</span> (nope.)</dd>
+        <dt>12.02.07</dt>
+          <dd><span class="lv" title="Datenstrukturen und Algorithmen">DUA</span> (done.)</dd>
+      </dl>
+      
+      <div class="signature">Lukas Prokop
+student of CS and SDBM
+lukas [·] prokop [<!-- -->@<!-- -->] stu<!-- -->dent [·] tugraz [·] at
+License: Emailware</div>
+    </div>
+  </body>
+</html>

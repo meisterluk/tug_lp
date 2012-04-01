@@ -8,7 +8,20 @@
         margin: auto;
         padding: 10px;
     }
+    dt {
+        font-variant: small-caps;
+    }
     header {
         text-align: center;
     }
+    thead {
+		font-weight: bold;
+    }
+
+    /* todo states */
+    .exercises .notyet { opacity: 0.2; }
+    .exercises li {} /* active */
+    .exercises .urgent { color: #600; }
+    .exercises .review { color: #555; }
+    .exercises .done { text-decoration: line-through; }
 }

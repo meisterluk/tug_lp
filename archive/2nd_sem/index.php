@@ -48,16 +48,17 @@
 
     <ul class="bbg">
       <li>
-        <i>Current status:</i> 2nd semester, more than 10 LVs, more than 33 ECTS &amp; 21 SSt to go
-        <!-- ECTS * 2 -->
-        <div style="border:#333 solid 1px; padding:1px; width:360px">
-          <div style="background-color:#9AC; width:111px; overflow:visible">
-            Studium
+        2nd semester, 12 LVs, 37.5 ECTS, 81% success rate
+
+        <!-- ECTS * 2, 22.5 ECTS as base (CS, only compulsory subjects) -->
+        <div style="border:#333 solid 1px; padding:1px; width:336px">
+          <div style="background-color:#9AC; width:102px; overflow:visible">
+            study
           </div>
         </div>
         <!-- #(abgeschlossene LVs) * 30 -->
         <div style="border:#333 solid 1px; padding:1px; width:360px">
-          <div style="background-color:#DDA; width:300px; overflow:visible">
+          <div style="background-color:#DDA; width:270px; overflow:visible">
             2.&nbsp;Semester
           </div>
         </div>
@@ -73,7 +74,7 @@
       <li>
         <a href="../../pub/img498.jpg">L</a><a href="../../pub/img499.jpg">ö</a><a href="../../pub/img500.jpg">s</a><a href="../../pub/img501.jpg">u</a><a href="../../pub/img502.jpg">n</a><a href="../../pub/img503.jpg">g</a><a href="../../pub/img504.jpg">e</a><a href="../../pub/img505.jpg">n</a> <a href="../../pub/img506.jpg">für</a> <a href="../../pub/img507.jpg">R</a><a href="../../pub/img509.jpg">O</a> <a href="../../pub/img510.jpg">Mus</a><a href="../../pub/img511.jpg">ter</a><a href="../../pub/img512.jpg">bei</a><a href="../../pub/img513.jpg">sp</a><a href="../../pub/img514.jpg">ie</a><a href="../../pub/img515.jpg">le</a>
       </li>
-      <li><a href="archive/1st_sem">1st semester</a></li>
+      <li><a href="../1st_sem">Previous semester</a></li>
     </ul>
 
     <h1>Ausarbeitungen</h1>

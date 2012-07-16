@@ -1,0 +1,221 @@
+Compulsory subjects
+===================
+
+_title (_shortcut, _type)
+Id: _identifier
+Contents: _keywords
+Group: (_member, )+
+Evaluation: _{# + type submissions}, _{# + type exams}
+Clawback: _{# ECTS}, _{# SSt}
+
+Software paradigms (SP, LP)
+Id: 716.060
+Contents: parsing compiler interpreter functional procedural logic
+Group: Hedwig, LukasR, Dave, LukasP [fix]
+Evaluation: [unknown]
+Clawback: 4.5 ECTS, 3 SSt
+
+Design and Development of Large Systems (DDLS, LP)
+Id: 711.013
+Contents: software development methodologies program optimization multithreading
+Group: Felix, Pete {automatic group building system}
+Evaluation: several submission and a tutorial talk
+Clawback: 4.5 ECTS, 3 SSt
+
+Architecture of Distributed Systems (ADS, L)
+Id: 448.020
+Contents: distributed computing architectures pervasive computing
+Evaluation: one exam
+Clawback: 3 ECTS, 2 SSt
+
+Computer Graphics 1 (CG1, LP)
+Id: 710.003
+Contents: vectors colors light 3D
+Clawback: 2.5 ECTS, SSt
+
+Computer Graphics 2 (CG2, LP)
+Id: 710.004
+Contents: CG1++
+Evaluation: 1 intermediate test, 1 final test, practical submission, discussion of practical work
+Clawback: 2 ECTS, SSt
+
+Computer Vision 1 (CV1, LP)
+Id: 710.005
+Contents: image processing filtering geometry
+Clawback: 2 ECTS, SSt
+
+Computer Vision 2 (CV2, LP)
+Id: 710.006
+Contents: motion tracking compression
+Clawback: 2.5 ECTS, SSt
+
+Theoretical Computer Science 1 (TCS, L)
+Id: 708.243
+Contents: Turing machines complexity theory Cook probabilistic concepts
+Clawback: 3 ECTS, SSt
+
+Theoretical Computer Science 1 (TCS, P)
+Id: 708.244
+Contents: Turing machines complexity theory Cook probabilistic concepts
+Group: ThomasK, Felix, Karin, LukasP [fix]
+Clawback: 1 ECTS, SSt
+
+Computational Geometry (GA, L)
+Id: 708.080
+Contents: polygons distance intersection algorithm
+Clawback: 3 ECTS, SSt
+
+Computational Geometry (GA, P)
+Id: 708.081
+Contents: polygons distance intersection algorithm
+Clawback: 1 ECTS, SSt
+
+Software Engineering and Knowledge Management (SEKM, LP)
+Id: 716.062
+Contents: software development process knowledge management focus
+Group: LukasR, Maria
+Clawback: 4 ECTS, SSt
+
+Business Economics (BE, L)
+Id: 373.334
+Contents: enterprise marketing investment
+Clawback: 4.5 ECTS, SSt
+
+Business Economics (BE, P)
+Id: 373.335
+Contents: enterprise marketing investment
+Clawback: 2 ECTS, SSt
+
+Project Management (PM, L)
+Id: 706.022
+Contents: risk management, project organization
+Clawback: 1.5 ECTS, SSt
+
+Project Management (PM, P)
+Id: 706.023
+Contents: risk management, project organization
+Group: LukasR, Maria, LukasP, AlexN [fix]
+Clawback: 1.5 ECTS, SSt
+
+
+Nice courses
+============
+
+guidelines: no master courses
+TODO: look at websites of institutes
+
+winter semester
+---------------
+
+* 646.003 Chemical Informatics (P)
+  KF, 1.5 SSt
+
+* 218.485 Introduction to the Austrian Constitution (L)
+  TUGraz, 2 SSt
+
+* 433.104 Technology and Ethics (L)
+  TUGraz, 1 SSt
+
+* 448.008 Technical Informatics 2 (L)
+  TUGraz, 2 SSt
+
+* 448.009 Technical Informatics 2 (P)
+  TUGraz, 1 SSt
+
+* 373.386 Industrial Law (Labour Law) (L)
+  TUGraz, 2 SSt
+
+* 448.024 Design of Real-Time Systems (P)
+  TUGraz, 1 SSt
+
+* 448.023 Design of Real-Time Systems (L)
+  TUGraz, 2 SSt
+
+* 502.516 Computer Mathematics 1 (LP)
+  TUGraz, 1 SSt
+
+* 716.110 Crunch points of modern industrial software development and IT project management (LP)
+  TUGraz, 3 SSt
+
+* 716.111 Choice and Decision Making for Health and Well-Being Researchers (L)
+  TUGraz, 1 SSt
+
+summer semester
+---------------
+
+* 705.049 Fundamentals of operating systems programming (DP)
+  TUGraz, 1 SSt
+
+* 448.004 Technical Informatics 1 (L)
+  TUGraz, 2 SSt
+
+* 448.006 Technical Informatics 1 (P)
+  TUGraz, 1 SSt
+
+* 710.112 AK Informatikrecht und Datenschutz (L)
+  TUGraz, 2 SSt
+
+* 442.070 Computational Intelligence (L)
+  TUGraz, 2 SSt
+
+* 708.070 Computational Intelligence (P)
+  TUGraz, 1 SSt
+
+* 447.003 Bioethics (L)
+  TUGraz, 1 SSt
+
+* 439.026 Programming of Microprocessors (L)
+  TUGraz, 2 SSt
+
+* 706.201 Selected Topics Business Economics (L)
+  TUGraz, 3 SSt
+
+* 448.021 Architecture of Distributed Systems (P)
+  TUGraz, 1 SSt
+
+* 716.055 Modelling Technical Systems (L)
+  TUGraz, 2 SSt
+
+* 716.090 Didactics in Computer Science (LP)
+  TUGraz, 2 SSt
+
+* 716.092 Software Engeneering for mobile autonomous robots (P)
+  TUGraz, 2 SSt
+
+* 716.099 Industrial Software Development Process (LP)
+  TUGraz, 2 SSt
+
+* 710.112 Selected Topics Public Law, Informatics and Data Security (L)
+  TUGraz, 2 SSt
+
+additional courses at 4th semester
+----------------------------------
+
+[O] 705.049 Fundamentals of operating systems programming (DP)
+[O] 448.004 Technical Informatics 1 (L)
+[X] 448.004 Technical Informatics 1 (P)
+[X] 710.112 AK Informatikrecht und Datenschutz (L)
+[X] 442.070 Computational Intelligence (L)
+[O] 708.070 Computational Intelligence (P)
+[O] 447.003 Bioethics (L)
+[X] 439.026 Programming of Microprocessors (L)
+[X] 706.201 Selected Topics Business Economics (L)
+[X] 448.021 Architecture of Distributed Systems (P)
+[X] 707.000 Web Science and Web Technology (LP)
+[X] 706.009 Societal Aspects of Information Technology (LP)
+[O] 705.088 Computer- and Communication Networks (L)
+[O] 705.089 Computer- and Communication Networks (P)
+
+internal education
+------------------
+
+* A13 Erfolgreich in die Öffentlichkeit: Dos and Don'ts für den Umgang mit Medien
+* A16 Work-Life-Balance: Vom Stress zur Balance
+* AS2 Erste Hilfe Auffrischungskurs
+* BG9 Lauftraining nach Alexander Technik
+* E9 Arbeiten mit Adobe Illustrator
+* FO9 Effective Scientific Writing in English
+* FO7 Erstellung wissenschaftlicher Arbeiten mit LaTeX
+* FO8 LaTeX für Fortgeschrittene: ausgewählte Themen
+* F2 Englisch für allgemeine Bedienstete - Oberstufe 4
+* SA1 Kompetenztraining für StudienassistentInnen: Gruppenführung, Kommunikation, Teamarbeit und Motivation

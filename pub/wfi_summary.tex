@@ -1,0 +1,828 @@
+\documentclass[a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\tuple}[1]{\left(#1\right)}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Exp}{Exp}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+\author{Lukas Prokop}
+\title{Wahrscheinlichkeitstheorie für Informatikstudien}
+
+\begin{document}
+\maketitle
+
+\section{Basisdefinitionen}
+
+\begin{description}
+  \item[$\Omega$] Grundmenge (mögliche Ausgänge)
+  \item[$\mathcal{A}$] Ereignisraum
+  \item[$(\Omega, \mathcal{A})$] Stichprobenraum
+  \item[$\{w_i\}$] Elementarereignisse
+    (Ausgänge eines Zufallsexperiments)
+  \item[$A (\in \mathcal{A})$] Ereignis
+  \item[Statistische Regularität] Gesetz der großen Zahlen
+  \item[Population, Grundgesamtheit]
+    mögliche Ereignisse und ihre Wahrscheinlichkeit
+  \item[Stichproben] Teilmengen der Population
+  \item[Wahrscheinlichkeitsraum] \hfill{} \\
+    $\{\Omega, A, P\}, A \leftarrow P(A),
+        A (\in \mathcal{A}) \subseteq \Omega$
+  \item[$\sigma$-Algebra] \hfill{} \\
+    $\mathcal{A} \subseteq P(\Omega)$ \\
+    $\Omega \in \mathcal{A}$, $A \in \mathcal{A} \Rightarrow \bar{A} \in
+    \mathcal{A}$ \\
+    $A_n \in \mathcal{A} \Rightarrow \bigcup_{n=1}^\infty A_n \in
+    \mathcal{A}$ \\
+    \dots ist $\sigma$-Algebra bei $\Omega \neq \emptyset$
+  \item[C] Combination
+  \item[V] Variation
+  \item[$A\cap B$] Durchschnitt (''intersection'')
+  \item[$A\cup B$] Vereinigungsmenge (''union'')
+\end{description}
+
+\section{Basismodell}
+
+\[
+    \frac{\mbox{günstig}}{\mbox{möglich}} \Rightarrow
+        \frac{\mbox{Maß(A)}}{\mbox{Maß}(\Omega)}
+\]
+
+Angenommen $A$ und $B$ seien zwei Ereignisse ($A, B \in \mathcal{A}$).
+Die Wahrscheinlichkeit, dass eines der beiden Ereignisse eintritt, ist:
+
+\[
+    P(A\cup B) = P(A) + P(B)
+\]
+
+Die Wahrscheinlichkeit, dass beide Ereignisse eintreten sind:
+
+\[
+    P(A\cap B) = P(A)\cdot P(B)
+\]
+
+Bedingte Wahrscheinlichkeit (von $A$ unter $B$):
+
+\[
+    P_B(A) := P(A|B) := \frac{P(A\cap B)}{P(B)}
+\]
+
+In LAPLACE Wahrscheinlichkeitsräumen (alle Ereignisse treten mit der selben
+Wahrscheinlichkeit ein) reduziert sich die Berechnung der
+günstigen Fälle mit ihrer Wahrscheinlichkeit auf kombinatorische
+Zählprobleme.
+
+\[
+    {n \choose k} = \frac{n!}{(n-k)!\cdot k!}
+        \hspace{15pt} 0 \leq k \leq n
+\]
+
+\section{Totale Wahrscheinlichkeit}
+
+Die Wahrscheinlichkeit, dass Ereignis $B$ eintritt ist gleich dem
+Aufsummieren aller Ereignisse $A$ unter $B$ als Bedingung. Dies entspricht
+am Wahrscheinlichkeitsbaum: Die Wahrscheinlichkeit eines Knoten ist gleich
+der Summe aller darunterliegenden Knoten.
+
+\[
+    H_k \cap H_t = \emptyset, k \neq l, \bigcup_{i=1}^n H_i = \Omega
+\] \[
+    \Rightarrow \forall b \in B: P(b) = \sum_{i=1}^n P(H_i) \cdot P(b|H_i)
+\]
+
+\section{Systeme}
+
+Seriell (eine Komponente muss ausfallen):
+
+\[
+    P(R_S) = P\left(\bigcap_{i=1}^n R_i\right) \leq \min_i P(R_i)
+\]
+
+Parallel (alle Komponenten müssen ausfallen):
+
+\[
+    P(R_S) = P\left(\bigcup_{i=1}^n R_i\right) \geq \max_i P(R_i)
+\]
+
+\section{Intervalle}
+
+\begin{align}
+    (a,b) & = & ]a,b[ & = \{x\in\mathbb{R}\,|\,a<x<b\} \\
+    [a,b) & = & [a,b[ & = \{x\in\mathbb{R}\,|\,a\le x<b\} \\
+    (a,b] & = & ]a,b] & = \{x\in\mathbb{R}\,|\,a<x\le b\} \\
+    [a,b] &   &       & = \{x\in\mathbb{R}\,|\,a\le x\le b\}
+\end{align}
+
+\section{Summenformeln}
+
+\[
+    \sum_{i=1}^{n}c = n \cdot c
+\] \[
+    \sum_{i=m}^{n}c = (n-m+1) \cdot c
+\] \[
+    \sum_{i=m}^{n}c \cdot a_i = c \cdot \sum_{i=m}^{n}a_i
+\] \[
+    \sum_{i=m}^{n}(a_i + b_i) = \sum_{i=m}^{n}a_i + \sum_{i=m}^{n}b_i
+\] \[
+    \sum_{i=1}^n i = \frac{n(n+1)}{2}
+\] \[
+    \sum_{i=m}^n i = \frac{(n+m)(n-m+1)}{2}
+\] \[
+    \sum_{i=1}^n (2i-1) = n^2
+\] \[
+    \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}
+\] \[
+    \sum_{i=1}^n i^3 = \left(\frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}
+\] \[
+    \sum_{i=1}^n i^4 = \frac{n(n+1)(2n+1)(3n^2+3n-1)}{30}
+\] \[
+    \sum_{i=1}^n i^5 = \frac {1}{12} n^2 \left(n + 1\right)^2 \left(2n^2 + 2n -1\right)
+\] \[
+    \sum_{i=0}^n k^i = \frac{k^{n+1} -1}{k-1}
+\] \[
+    \sum_{i=0}^{\infty} k^i = \frac{1}{1-k} \qquad \text{mit} \quad |k|<1
+\] \[
+    \sum_{i=1}^n k^i = \frac{k^{n+1} -k}{k-1}
+\] \[
+    \sum_{i=1}^n k^{-i} = \frac{1-k^{-n}}{k-1}
+\]
+
+\newpage
+\section{Kombinatorik}
+
+In der Kombinatorik können wir vom Basisfall ausgehen, welcher eine
+Funktion definiert:
+
+\[
+    f: A \rightarrow B
+\] \[
+    A = \tuple{a_1, a_2, \ldots, a_k}
+\] \[
+    B = \set{t_1, t_2, \ldots, t_l}
+\] \[
+    t_i = \tuple{w_1, w_2, \ldots, w_r}
+\]
+
+Dabei sieht unser Modell so aus, dass die Beziehung zwischen $a_i$ und
+$w_i$ beliebig sein kann. Die Tupel in $B$ sind jedoch homogen
+($|w_i| = |w_j|$). Es wird aus einem gegebenen Tupel $A$ eine
+Menge an Tupel $B$ generiert. Bezüglich dieser Generation sind 3
+Basisfragen zu stellen:
+
+\begin{itemize}
+  \item Ist die \emph{Reihenfolge} der erzeugten Tupelelemente
+        $w_{1\ldots r}$ relevant?
+  \item Darf ein Element \emph{wiederholt} im Tupel $t_i$ vorkommen?
+  \item \emph{Unterscheiden} sich die Kardinalitäten (Größen) von
+        $A$ und Tupel in $B$?
+\end{itemize}
+
+Zuerst definieren wir die Begriffe:
+
+\begin{description}
+  \item[mit Wiederholung] \hfill{} \\
+    ''mit WH'', ''mit Zurücklegen'', ''mehrfach vorkommen'' \\
+    \[
+        w_i = w_{i+n} \quad n > 0
+    \]
+    gegenteilig auch ''ohne Wiederholung'' \\
+  \item[Reihenfolge relevant] \hfill{} \\
+    ''Reihenfolge wichtig'', ''geordnet'' \\
+    \[
+        (w_1, w_2, w_3) \neq (w_1, w_3, w_2)
+    \]
+    gegenteilig auch ''Reihenfolge irrelevant''
+  \item[Unterschiedlichkeit] \hfill{} \\
+    \[
+        |A| \neq |B_1|
+    \]
+  \item[Unterscheidbarkeit] \hfill{} \\
+    ''Unterscheidbarkeit der Elemente'' \\
+    \[
+        \notin a_i \neq a_{i+n} \quad n > 0
+    \]
+\end{description}
+
+Dabei ist Unterscheidbarkeit für die Ursprungsmenge $A$ das, was Wiederholung
+für die Abbildungsmenge $B$ ist. Die einzige Begründung für die
+Unterscheidung dieser Begriffe (und fehlende Verallgemeinerung) ist, dass
+Unterscheidbarkeit die Probleme wesentlich komplexer macht und die
+allgemeinen Formeln nicht bekannt sind. Die Formeln für Unterscheidbarkeit
+können wir damit nicht betrachten; wir nehmen Unterscheidbarkeit in allen
+Formel an. Wir werden aber vereinzelt Formeln für unterschiedliche Kardinalitäten
+betrachten. Der Spezialfall ''alle Elemente sind ununterscheidbar'' fällt
+mit dem Begriff ''mit Wiederholung'' zusammen.
+
+Wir können wir den Begriff der ''Reihenfolge'' direkt in zwei
+Begriffe der Kombinatorik umsetzen: Variation (V, ''Reihenfolge relevant'')
+und Kombination (C, ''Reihenfolge irrelevant''). Eine $r$-Variation
+bezeichnet, dass die erzeugten Tupel aus $A$ $r$-elementig sind
+($|t_i| = r$). $n$ bezeichnet die Kardinalität der Ursprungsmenge $A$.
+
+\section{Permutation}
+
+Unter Permutation versteht man die Annahme, dass aus einem bereits erzeugten
+Tupel $t_i$ alle möglichen Variationen erzeugt. Dies entspricht genauso
+der Abbildung $f$, wenn man die Basisfragen wie folgt beantwortet:
+
+\begin{itemize}
+  \item Die Reihenfolge ist relevant.
+  \item Eine Wiederholung ist nicht möglich (alle Elemente der
+        Ursprungsmenge müssen genau einmal wiederverwendet werden).
+        Damit ist $n=r$.
+  \item Die Ursprungsmenge ist gleich der Abbildungsmenge. Damit ist
+        die Kardinalität ident.
+\end{itemize}
+
+Damit ist die Permutation ein Spezialfall der Variation ohne Wiederholung.
+Mögliche Permutationen einer Menge $\set{A, B, C}$ sind:
+
+\[
+    \begin{array}{c}
+      \{\tuple{A, B, C}, \tuple{A, C, B}, \tuple{B, A, C}, \\
+        \tuple{B, C, A}, \tuple{C, A, B}, \tuple{C, B, A}\} \\
+    \end{array}
+\]
+
+Dabei kann die Größe aller Permutationen mittels der Formel $n!$ berechnet
+werden ($3! = 6$). Herleitung:
+
+\[
+    V(n, n) = \frac{n!}{(n-n)!} = n!
+\]
+
+Die folgende Frage erfragt eine modifizierte Version
+der Permutationsformel; man spricht auch von der ''Permutation mit
+Wiederholung'', wobei hier ''Wiederholung'' anders verwendet wird):
+
+Gegeben sei ein Tupel von Elementen. Dabei sind $x$ der $n$ Elemente nicht
+voneinander unterscheidbar (siehe Mississippi-Beispiel unten):
+
+\[
+    P_w(n; k_1, \ldots, k_m)
+        = \frac{n!}{k_1! \cdot k_2! \cdot \ldots \cdot k_m!}
+\]
+
+wobei $k$ die Anzahl aller eindeutigen Elemente ist und $k_i$ für die Anzahl
+der identen Elemente ihrer Art ist.
+
+\subsection{Beispiel für $n=|\set{1,2,3}|, r=2$}
+
+\begin{tabular}{c|c|c}
+                &       mit WH        &      ohne WH      \\
+    \hline
+    V           & $\begin{array}{ccc}
+                  (1,1) & (1,2) & (1,3) \\
+                  (2,1) & (2,2) & (2,3) \\
+                  (3,1) & (3,2) & (3,3) \\
+                  \multicolumn{3}{c}{V_w(n,r) = n^r} \\
+                  \end{array}$
+                                      & $\begin{array}{ccc}
+                                        (1,2) & (1,3) & (2,1) \\
+                                        (2,3) & (3,1) & (3,2) \\
+                                        \multicolumn{3}{c}{
+                                            V(n,r) = {n \choose r} k!
+                                        } \\ \end{array}$ \\
+    \hline
+    C           & $\begin{array}{ccc}
+                  (1,1) & (1,2) & (1,3) \\
+                  (2,2) & (2,3) & \\
+                  (3,3) &       & \\
+                  \multicolumn{3}{c}{C_w(n,r) = {n+r-1 \choose r}} \\
+                  \end{array}$
+                                      & $\begin{array}{ccc}
+                                        (1,2) & (1,3) & (2,3) \\
+                                        \multicolumn{3}{c}{C(n,r)
+                                            = {n \choose r}}
+                                        \end{array}$ \\
+\end{tabular}
+
+\vspace{10pt}
+Wir lösen Binomialkoeffizienten auf:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+                &       mit WH        &      ohne WH      \\
+    \hline
+    V           & $ n^r $             & $\frac{n!}{(n-r)!} $ \\
+    \hline
+    C           & $\frac{(n - 1 + r)!}{(n-1)! r!}$
+                                      & $\frac{n!}{r! (n - r)!}$ \\
+\end{tabular}
+\end{center}
+\vspace{10pt}
+
+In der Programmiersprache \emph{python}:
+
+\begin{description}
+  \item[r-Variation mit WH]    itertools.product(n, repeat=r)
+  \item[Permutation]           itertools.permutations(n, r)
+  \item[r-Kombination ohne WH] itertools.combinations(n, r)
+\end{description}
+
+
+\section{Anwendung der Formeln}
+\newcommand{\Q}[1]{\noindent\textbf{Q:} #1\\}
+\newcommand{\A}[1]{\noindent\textbf{A:} #1\\}
+
+\Q{Wählen Sie für das Lottospiel 6 aus 49 Zahlen (''49 über 6'').}
+\A{$C(n, r) = {49 \choose 6} = 13983816$}
+
+\Q{Aus n Elementen wir r-mal mit Zurücklegen gezogen}
+\A{$V_w(n, r)$}
+
+\Q{Gegeben sei eine Menge $\set{A, B, C}$. Wieviele Möglichkeiten gibt
+    es diese Menge anzuordnen?}
+\A{$3! = 6$}
+
+\Q{Gegeben sei ein Anordnungsproblem: r nicht unterscheidbare Bälle
+    werden in n numerierte Zellen gelegt}
+\A{$C_w(n, r)$}
+
+\Q{Wieviele Varianten gibt es $x$ Plätze in $y$ Gruppen zu teilen?}
+\A{${x+1 \choose y+1}$}
+
+\Q{Wieviele Permutationen des Worts MISSISSIPPI gibt es?}
+\A{$n=11$ mit der Permutationsformel $\frac{n!}{k_1!\cdot\ldots\cdot k_n!}
+    = \frac{11!}{4!\cdot 4!\cdot 2!} = 34650$}
+
+\Q{Wieviele Kleinbuchstabenwörter mit der Länge 5 gibt es?}
+\A{$V_w(30, 5) = 30^5 = 24300000$}
+
+\Q{6 verschiedenfarbige Kästchen mit jeweils 1 gleichfarbigen Kugel.
+   Wieviele Möglichkeiten gibt es die Kugeln in andersfarbige Kästchen
+   zu verteilen?}
+\A{Subfakultät $!n = !6 = 265$}
+
+\Q{Wieviele Möglichkeiten gibt es 5 Objekte in 3 Schachteln zu legen,
+    wobei Schachtel 1 3 Objekte besitzen soll und die anderen 1?}
+\A{Multinomialkoeffizient ${n \choose k_1,\ldots,k_r} = {5 \choose 3,1,1}
+    = 20$}
+
+\newpage
+\section{Verteilungsmodelle}
+
+Wir können für die meisten Aufgabenstellungen unser Problem in ein
+Verteilungsmodell geben, welches uns dann gefragte Parameter leichter
+errechnen lässt. Wir unterscheiden dabei zwischen diskreten und stetigen
+Modellen.
+
+Als erstes Werkzeug definieren wir eine Zufallsvariable $X$ über eine
+Funktion $X: \Omega \rightarrow \mathbb{R}$. $P_X$ nennt sich die
+\emph{Verteilung von $X$}.
+Dabei ist $x = X(w), w \in \Omega$ die \emph{Realisation} von $X$.
+
+\[
+    P(\Omega, \mathcal{A})
+        \rightarrow P_X(\mathbb{R}, \mathcal{B})
+\]
+
+Die Funktion $F_X:\mathbb{R} \rightarrow [0,1]$
+
+\[
+    F_X(x) = P(X \leq x) \forall x \in \mathbb{R}
+\]
+
+ist die Verteilungsfunktion der Zufallsvariablen $X$.
+
+Für diskrete Modelle gilt: Es können endlich oder abzählbar unendlich viele
+Werte angenommen werden.
+
+\[
+    p_i := P(X=i) \qquad i = 0,1,2,\ldots
+\]
+
+Für stetige Modelle gilt: $f_X \geq 0$ und $f_X$ heißt Dichtefunktion
+von $X$.
+
+\[
+    F_X(x) = \int_{-\infty}^x f_X(t)\, dt
+\]
+
+Wir möchten jetzt wissen, wie sich das Modell verhält, wenn $X$ einen
+bestimmten Wert annimmt oder in einem bestimmen Intervall liegt.
+Durch die Zuordnung können wir Techniken der Analysis für die
+Wahrscheinlichkeitstheorie verwenden.
+
+\subsection{Modellanwendung}
+
+\[
+    P(a < X \leq b) = F_X(b) - F_X(a) \quad ,a < b
+\] \[
+    P(-\infty < X \leq b) = F_X(b)
+\] \[
+    P(a < X < \infty) = 1 - F_X(a)
+\] \[
+    P(X=b) = F_X(b) - \lim_{\epsilon\downarrow 0} F_X(b-\epsilon)
+\] \[
+    F(x) = \sum_{i=0}^{\lfloor x\rfloor} p_i
+\] \[
+    \sum_{i=0}^\infty p_i = 1
+\] \[
+    P(a \leq X \leq b) = \int_a^b f_X(x)\,dx
+\]
+
+\section{Kenngrößen}
+
+\subsection{Steiner'scher Verschiebungssatz}
+
+\[
+    \Var{(X)} = \E(X^2) - \E^2(X)
+\]
+
+\subsection{Erwartungswert}
+\[
+    E(g(X)) := \left\{\begin{array}{ll}
+        \int_{-\infty}^\infty g(x) f(x)\,dx & \text{für $X$ stetige ZV} \\
+        \sum_{i=0}^\infty g(i) p_i & \text{für $X$ diskrete ZV} \\
+    \end{array}\right.
+\] \[
+    \mu_k = E(X^k) \Rightarrow \mu = \E(X)
+\]
+
+\subsection{Varianz}
+\[
+    \sigma^2 = \Var(X) = E((X - \mu)^2)
+\]
+
+\subsection{Standardabweichung}
+\[
+    \sigma = \sqrt{\Var(X)}
+\]
+
+\subsection{Schiefe}
+\[
+    \gamma_1 = \frac{E((X - \mu)^3)}{(\Var(X))^{3/2}}
+\]
+\begin{center}
+  \begin{tabular}{ll}
+    $\gamma_1(X) = 0$ & symmetrisch \\
+    $\gamma_1(X) < 0$ & linksschief \\
+    $\gamma_1(X) > 0$ & rechtsschief \\
+  \end{tabular}
+\end{center}
+
+\subsection{Kurtosis / Exzess}
+\[
+    \gamma_2(X) = \frac{E((X - \mu)^4)}{(\Var(X))^2} - 3
+\]
+
+\section{Binomialverteilung}
+
+\begin{itemize}
+  \item Diskret, Bernoulli-Experimente
+  \item Analog zu Ziehen mit Zurücklegen
+  \item Das Experiment wird $n$ mal durchgeführt und jede Wiederholung ist
+        unabhängig und führt mit $p$ zu Erfolg. $\Rightarrow$ Parameter $n$
+        und $p$. $q = 1-p$. ''$X$ ist binomialverteilt mit n und p'':
+        \[
+            X \sim B(n, p)
+        \]
+\end{itemize}
+
+\[
+    B(k;n,p) = P(X=k) = {n \choose k} p^k (1 - p)^{n-k}
+\] \[
+    k = 0,1,\ldots,n \qquad 0 < p < 1
+\]
+
+Wir nehmen ein Modell an, in dem nur Erfolge und Misserfolge möglich sind.
+Solche Prozesse nennen sich Bernoulli-Prozesse. Dabei sind die einzelnen
+Erfolge gleichartig und unabhängig voneinander. Dabei ist $n$ ist Anzahl
+der Versuche und $p \in [0,1]$ die Erfolgswahrscheinlichkeit.
+
+\begin{itemize}
+  \item $\E(X) = n\cdot p$
+  \item $\Var(X) = n\cdot p\cdot q$
+  \item $\gamma_1(X) = \frac{1-2p}{\sqrt{npq}}$
+  \item $\gamma_2(X) = \frac{1-6pq}{npq}$
+  \item $P(a\leq X\leq b) = \sum_{k=a}^b {n\choose k} p^k q^{n-k}$
+\end{itemize}
+
+\section{Geometrische Verteilung}
+
+\begin{itemize}
+  \item Diskret, Bernoulli-Experimente
+  \item $X = \#(\text{Anzahl der Fehlversuche bis ersten Erfolg})$
+  \item Wahrscheinlichkeit $p$
+        \[
+            X \sim G(p)
+        \]
+  \item $Y = X + 1 = \#(\text{Anzahl der Versuche})$
+\end{itemize}
+
+\begin{itemize}
+  \item $\E(X) = \frac{q}{p}, E(Y) = \frac{1}{p}$
+  \item $\Var(X) = \frac{q}{p^2}, \Var(Y) = \frac{q}{p^2}$
+  \item $\gamma_1(X) = \gamma_1(Y) = \frac{1 + q}{\sqrt{q}}$
+  \item $P(X=k) = pq^k \qquad 0 < p < 1, k = 0,1,\ldots$
+\end{itemize}
+
+\newpage
+
+\section{Hypergeometrische Verteilung}
+
+\begin{itemize}
+  \item Diskret
+  \item Analog zu Urnenmodell \emph{ohne} Zurücklegen
+  \item $X = \#(\text{Rote Kugeln})$
+  \item Anzahl der gezogenen Kugeln $n$,
+        Anzahl aller Kugeln $N$,
+        Anzahl roter Kugeln $M$.
+        X ist hypergeometrisch verteilt:
+        \[
+            X \sim H(N,M,n)
+        \]
+\end{itemize}
+
+\[
+    h(N,M,n) := P(X=k) = \frac{{M \choose k} {N-M \choose n-k}}
+        {{N\choose n}}
+\] \[
+    \max(0,n-(N-M))\leq k\leq \min(M,n)
+\]
+
+\begin{itemize}
+  \item $\E(X) = n\frac{M}{N}$
+  \item $\Var(X) = n\frac{M}{N} \left(1 - \frac{M}{N}\right)
+                    \frac{N-n}{N-1}$
+  \item $\gamma_1(X) = \frac{(1 - 2\frac{M}{N})(1 - 2\frac{n}{N})}
+                            {\sqrt{\Var(X)}(1 - \frac2{N})}$
+\end{itemize}
+
+\section{Poisson-Verteilung}
+
+\begin{itemize}
+  \item Diskret, Bernoulli-Experimente
+  \item Anzahl der Versuche $n$ sehr groß,
+        Erfolgswahrscheinlichkeit $p$ sehr klein
+  \item Binomialverteilung kann approximiert werden
+        (nur mehr 1 Parameter $\lambda$).
+        \[
+            X \sim P(\lambda)
+                \qquad \lambda = np
+        \]
+\end{itemize}
+
+\[
+    p_k := P(X = k) = \frac{\lambda^k}{k!} e^{-\lambda}
+\] \[
+    \lambda > 0, k = 0,1,2,\ldots
+\]
+
+\begin{itemize}
+  \item $\E(X) = \lambda$
+  \item $\Var(X) = \lambda$
+  \item $\gamma_1(X) = \frac{1}{\sqrt{\lambda}}$
+  \item $\gamma_2(X) = \frac{1}{\lambda}$
+\end{itemize}
+
+\section{Gleichverteilung}
+
+\begin{itemize}
+  \item Stetig
+  \item Zufällige Auswahl eines Teilintervalls (alle mit gleicher
+        Wahrscheinlichkeit) der Länge $\delta x$ in einem Intervall $(a,b)$.
+  \item $X$ ist gleichverteilt: $X \sim U(a,b)$
+\end{itemize}
+
+\[
+    f_X(x) = \left\{\begin{array}{ll}
+        \frac1{b-a} & a < x < b \\
+        0           & \text{sonst} \\
+    \end{array}\right.
+    a,b \in \mathbb{R}, a < b
+\] \[
+    F_X(x) = \left\{\begin{array}{ll}
+        0 & x < a \\
+        \frac{x-a}{b-a} & a \leq x < b \\
+        1 & x \geq b \\
+    \end{array}\right.
+\]
+
+\begin{itemize}
+  \item $\E(X) = \frac{a+b}{2}$
+  \item $\Var(X) = \frac{(b-a)^2}{12}$
+  \item $\gamma_1(X) = 0$
+  \item $\gamma(X) = -1.2$
+\end{itemize}
+
+\section{Exponentialverteilung}
+
+\begin{itemize}
+  \item Stetig
+  \item Werte können nicht $0$ werden. zB Lebensdauer.
+  \item Standardform der Exponentialverteilung ist $\E(1)$
+  \item $X$ ist exponentialverteilt $X\sim\Exp(\lambda)$
+        mit dem Skalierungsparameter $\lambda$.
+\end{itemize}
+
+\[
+    f_X(x) = \left\{\begin{array}{ll}
+        \lambda e^{-\lambda x} & x > 0, \lambda > 0 \\
+        0                      & \text{sonst.} \\
+    \end{array}\right.
+\] \[
+    F_X(x) = \int_0^x \lambda e^{-\lambda t}\,dt
+\] \[
+    \Rightarrow F_X(x) = 1 - e^{-\lambda x}, \quad x > 0
+\]
+
+\begin{itemize}
+  \item $\E(X) = \frac1{\lambda}$
+  \item $\Var(X) = \frac1{\lambda^2}$
+  \item $\gamma_1(X) = 2$
+  \item $\gamma_2(X) = 6$
+\end{itemize}
+
+\section{Normalverteilung}
+
+\begin{itemize}
+  \item Stetig
+  \item Gauß'sche Glockenkurve
+  \item Im Intervall der Abweichung $\pm 2\sigma$
+        sind 95\% der Werte zu finden
+  \item Lokalisationsparameter $\mu$,
+        Skalierungsparameter $\sigma$
+  \item $X$ ist normalverteilt: $X \sim N(\mu, \sigma)$
+\end{itemize}
+
+\[
+    f_X(x) = \frac{1}{\sqrt{2\pi}\sigma}
+        e^{-\frac12 \left(\frac{x-\mu}\sigma\right)^2}
+\] \[
+    -\infty < x < \infty, \mu \in \mathbb{R}, \sigma > 0
+\] \[
+    F_X(x) = \frac{1}{\sqrt{2\pi}\sigma}
+        \int_{-\infty}^x e^{-\frac12 \left(\frac{t-\mu}\sigma\right)^2}\,dt
+        = \Phi\left(\frac{x-\mu}{\sigma}\right)
+\]
+
+$\Phi(x)$ ist die Verteilungsfunktion von $N(0,1)$:
+
+\[
+    \Phi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac12 t^2}\,dt
+\]
+
+\begin{itemize}
+  \item $N(0,1): \E(X) = 0, N(\mu, \sigma^2): E(Y) = \mu$
+  \item $\Var(X) = \sigma^2$
+\end{itemize}
+
+\section{Gammaverteilung}
+
+\begin{itemize}
+  \item Stetig
+  \item Lebensdauer von Industriegütern
+  \item Gestaltparameter $a$ und Skalierungsparam. $\lambda$
+  \item Standardform: $Z = \lambda X \Rightarrow \gamma(a,1)$
+  \item $X$ ist gammaverteilt: $X \sim \gamma(a,\lambda)$
+\end{itemize}
+
+\[
+    f_X(x) = \left\{\begin{array}{ll}
+        \frac{\lambda^a x^{a-1}}{\Gamma(a)} e^{-\lambda x}
+                    & x > 0, a > 0, \lambda > 0 \\
+        0           & \text{sonst}
+    \end{array}\right.
+\] \[
+    \Gamma(a) := \int_0^\infty x^{a-1} e^{-x}\,dx
+\]
+
+\begin{itemize}
+  \item $E(X) = \frac{a}\lambda$
+  \item $\Var(X) = \frac{a}{\lambda^2}$
+  \item $\gamma_1(X) = \frac2{\sqrt{a}}$
+  \item $\gamma_2(X) = \frac6{a}$
+\end{itemize}
+
+\newpage
+\section{Erzeugende Funktion}
+
+Die Erzeugende Funktion ist durch die Verteilung von $X$
+eindeutig festgelegt.
+
+\[
+    G_X(s) = E(s^X) = \sum_{i=0}^\infty P(X = i) s^i
+\] \[
+    \Rightarrow G_X(0) = P(X=0) \quad G_X(1)
+        = \sum_{i=0}^\infty P(X=i) = 1
+\] \[
+    \E(X) = G_X'(1)
+\]
+
+\section{Skriptum}
+
+Approximationen S. 74 \\
+Approximation $H$ zu $B$ S. 50 \\
+Normalverteilung Wertetabelle S. 68
+
+\section{Zufallsvektoren}
+
+Wir erweitern den Wahrscheinlichkeitsraum auf weitere Dimensionen
+(hier: auf eine zweite).
+
+\[
+    (X,Y): (\Omega, \mathcal{A}) \longrightarrow (\mathbb{R}^2,\mathcal{B}^2)
+\] \[
+    F_{X,Y}(x,y) := P(X \leq x, Y \leq y)
+        \quad \forall x,y \in \mathbb{R}
+\] \[
+    F_{X,Y}(x,y) = \sum_{i\leq\floor{x}} \sum_{j\leq\floor{y}} p_{ij}
+        \quad \text{diskret}
+\] \[
+    F_{X,Y}(x,y) = \int_{-\infty}^x \infty_{-\infty}^y f_{X,Y}(u,v)\,dv\,du
+        \quad \text{stetig}
+\]
+
+\subsection{Randverteilungen}
+
+Diskreter Zufallsvektor $(X,Y)$:
+\[
+    P(X=i) = \sum_{j=0}^\infty P(X=i, Y=j)
+        \quad \text{W-Funktion von X}
+\] \[
+    P(Y=j) = \sum_{i=0}^\infty P(X=i, Y=j)
+        \quad \text{W-Funktion von Y}
+\]
+
+Stetiger Zufallsvektor $(X,Y)$:
+\[
+    f_X(x) = \int_{-\infty}^\infty f_{X,Y}(x,y)\,dy
+        \quad \text{Randdichte von X}
+\] \[
+    f_Y(y) = \int_{-\infty}^\infty f_{X,Y}(x,y)\,dy
+        \quad \text{Randdichte von Y}
+\]
+
+\subsection{Unabhängigkeit}
+
+Diskreter Zufallsvektor $(X,Y)$. $X,Y$ sind stochastisch unabhängig, wenn
+\[
+    P(X=i,Y=j) = P(X=i) P(Y=j) \quad\forall i,j
+\]
+
+Stetiger Zufallsvektor $(X,Y)$. $X,Y$ sind stochastisch unahängig, wenn
+\[
+    f_{X,Y}(x,y) = f_X(x) f_Y(y)
+\]
+
+\subsection{Erwartungswert}
+
+\[
+    E(g(X,Y)) =
+        \sum_{i=0}^\infty \sum_{j=0}^\infty g(i,j) p_{ij}
+        \quad \text{diskret}
+\] \[
+    E(g(X,Y)) =
+        \int_{-\infty}^\infty \int_{-\infty}^\infty
+            g(x,y) f_{X,Y}(x,y)\,dx\,dy
+        \quad \text{stetig}
+\]
+
+\newpage
+\section{Ableitung}
+
+\[
+    \left(a\right)' = 0
+\] \[
+    (a\cdot f)' = a\cdot f'
+\] \[
+    \left(g \pm h\right)' = g' \pm h'
+\] \[
+    (g\cdot h)' = g' \cdot h + g \cdot h'
+\] \[
+    \left(\frac{g}{h}\right)' = \frac{g' \cdot h - g \cdot h'}{h^2}
+\] \[
+    \left(x^n\right)' = n x^{n-1}
+\] \[
+    (g \circ h)'(x) = (g(h(x)))' = g'(h(x))\cdot h'(x)
+\] \[
+    f(x)=g(x)^{h(x)} \Rightarrow f'(x) = \left(h'(x)\ln(g(x)) + h(x) \frac{g'(x)}{g(x)}\right) g(x)^{h(x)}
+\] \[
+    (fg)^{(n)} = \sum_{k=0}^n {n \choose k} f^{(k)} g^{(n-k)}
+\] \[
+    (\ln{u})' = \frac{u'}{u}
+\] \[
+    (\sqrt{x})' = (x^{\frac12})' = \frac12 x^{-\frac12}
+\] \[
+    (\sin{x})' = \cos{x}
+\] \[
+    (\ln{x})' = \frac1{x}
+\] \[
+    (\frac1{x})' = -\frac{1}{x^2}
+\]
+
+\section{Integrale}
+
+\[
+    \int e^{ax} = \frac{e^{ax}}{a} + c
+\] \[
+    \int \lambda e^{-\lambda t}\,dt = -e^{\lambda (-t)} + c
+\]
+
+\end{document}

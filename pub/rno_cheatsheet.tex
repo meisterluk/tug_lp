@@ -1,0 +1,383 @@
+%\input{../../pattern.tex}
+\documentclass[a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Ra}{\Rightarrow}
+
+\title{Rechnernetze und -organisation}
+\date{11.10.26}
+\author{Lukas Prokop}
+%{Prof. Posch Karl-Christian}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Terminology}
+
+\begin{description}
+  \item[word] fixed size sequence of bits defining a unit.
+        Basically word defines the amount of bits to be processed
+        at one time in an operation.
+  \item[compilation] translation of a program from source language
+        to target language (eg. C to machine code)
+  \item[32bit system] Machine runs with memory addresses consisting
+        of 32 bits
+  \item[x86] Well-known family of Intel instruction set architectures
+        which is deprecated nowadays in favor of amd64 / x86\_64.
+  \item[stack] data structure implementing the LIFO (last in, first out)
+        principle
+\end{description}
+
+\section{GNU Compiler Collection}
+
+\subsection{Compilation order}
+
+\begin{enumerate}
+  \item Write
+  \item Compile
+  \item Assemble
+  \item Link
+  \item Load
+  \item Execute
+\end{enumerate}
+
+\subsection{Procedure results}
+
+\begin{enumerate}
+  \item[1.] source code   $\ra$ C
+  \item[2.] preprocessing $\ra$ C
+  \item[3.] compilated    $\ra$ ASM
+  \item[4.] assembled     $\ra$ object file
+  \item[5.] linked        $\ra$ executable
+\end{enumerate}
+
+\subsection{GCC options}
+
+\begin{description}
+  \item[-E] create preprocessed code (step 1 and 2)
+  \item[-S] create assembler code.s (step 1, 2 and 3)
+  \item[-c] create object file.o (step 1, 2, 3 and 4)
+  \item[-o] specify output filename explicitly (not a.out)
+  \item[-I] Add the directory dir to the list of directories to be
+            searched for header files.
+  \item[-Wall] Turn on all optional warnings
+  \item[-x] specify programming language explicitly
+  \item[-std=gnu89] specify C standard to use
+  \item[-O{$[$1230s$]$}] Optimization modes
+  \item[-static] Static linking
+  \item[-dynamic] Dynamic linking
+  \item[-m32] use 32bit architecture instead of current one
+  \item[-mbig-endian] Generate code for a big endian target (IA-64 only)
+\end{description}
+
+See also ld, cpp, objdump, gdb, as, ar, ranlib and readelf.
+
+\section{x86}
+
+\subsection{Stack subroutine call}
+
+Stack runs against address 0 (in following figure: top is 0).
+
+\begin{table}[ht!]
+  \begin{center}
+    \begin{tabular}{| c |}
+      (ESP-1$\rightarrow$) local var 2 \\
+    \hline
+      local var 1 \\
+    \hline
+      (EBP$\rightarrow$) old EBP \\
+    \hline
+      old EIP \\
+    \hline
+      arg1 \\
+    \hline
+      arg2 \\
+    \hline
+      arg3 \\
+    \end{tabular}
+  \end{center}
+  \caption{Stack dump before subroutine call}
+\end{table}
+
+\subsubsection{Call (\texttt{call})}
+
+\begin{enumerate}
+  \item store current EIP/PC on stack (ESP)
+  \item store old EBP on stack
+  \item allocate bytes for local variables
+  \item Let EIP/PC be pointer to subroutine
+  \item EBP is pointing to old EBP
+\end{enumerate}
+
+\subsubsection{Return (\texttt{ret})}
+
+\begin{enumerate}
+  \item EBP = old EBP
+  \item EIP/PC = return address (old EIP/PC)
+  \item ''remove'' function arguments from stack \\
+        ESP = ESP + args
+\end{enumerate}
+
+\subsubsection{In words}
+
+All storage will be done on a new ''partition (frame)'' on top of the stack.
+Therefore save the old EBP on top of stack. Let ESP be the new EBP (EBP =
+ESP). Subtract as many memory address from ESP to allocate memory for local
+variables. ESP has to keep the \textbf{top} of the stack.
+
+\subsubsection{Callee vs Caller cleanup}
+
+Callee cleanup
+
+\begin{itemize}
+  \item + probably more space efficient
+  \item - no variadic functions
+\end{itemize}
+
+\noindent
+Caller cleanup
+
+\begin{itemize}
+  \item + variadic functions
+  \item + default for x86 C compilers
+\end{itemize}
+
+\subsection{x86 registers}
+
+\subsubsection{List}
+
+8 general purpose registers:
+
+\begin{description}
+  \item[EAX] arithmetic results data
+  \item[EBX] (mov) pointer to data in data segment
+  \item[ECX] counter register for string operations
+  \item[EDX] port address for I/O -- extending EAX for I/O
+  \item[ESI] source index
+  \item[EDI] destination index
+  \item[EBP] base pointer
+  \item[ESP] stack pointer
+\end{description}
+
+2 special registers:
+
+\begin{description}
+  \item[EIP] instruction pointer, program counter (PC)
+  \item[EFLAGS] results from comparisons/tests (implicit usage)
+\end{description}
+
+\subsubsection{Description}
+
+\begin{description}
+  \item[ESP (Stack pointer)]
+        push \& pop \\
+        points to top element of stack
+  \item[EBP (Base/Frame pointer)]
+        references memory of current frame you are in \\
+        has to be manipulated explicitly
+  \item[EIP (Instruction pointer)]
+        holds address of next instruction \\
+        Manipulated by jumps and call instructions
+\end{description}
+
+\subsection{x86 addressing modes}
+
+\begin{description}
+  \item[indexed] In ''x(e)'' you take the register behind x and jump as much
+                 bytes forward as register e is telling you
+  \item[based] Like indexed, but x is a constant
+  \item[immediate] Use parameter value of instruction directly / immediately
+\end{description}
+
+In direct mode a register is directly addressed (with its name). In indirect
+mode the content of a register is read (by surrounding parentheses).
+
+\subsection{ASM syntax}
+
+x86 is written in Intel syntax (Windows platform) or AT\&T syntax
+(UNIX/Linux). We use the second. The following is a short cheatsheet:
+
+\begin{description}
+  \item[op C(\%A, \%B, D)]  op *(\%A + C + (\%B * D))
+  \item[op C(\%A, \%B)]     op *(\%A + C + \%B)
+  \item[op C(\%A), \%B]     op \%A + C, \%B
+  \item[op C(,\%A,D), \%B]   op C + \%A * D, \%B
+\end{description}
+
+\subsection{Suffixes}
+
+\begin{description}
+  \item[q] quad-word  (64bit)
+  \item[l] long       (32bit)
+  \item[w] word       (16bit)
+  \item[b] byte       (8bit)
+\end{description}
+
+\subsection{Assembly directives}
+
+\begin{description}
+  \item[.string]      Allocate space for a global null-terminated string
+  \item[.space]       Allocate bytes for a global
+  \item[.rept / endr] Make allocations between .rept and .endr
+                      multiple times (according to the parameter)
+  \item[.long]        Allocate space for a global long
+  \item[.equ]         Define equivalence (two names referring to the same)
+  \item[.data]        Data section following. Defines global allocations.
+  \item[.file]        Define metadata filename.
+  \item[\_start]      Label (for UNIX linker) of program entry point
+  \item[.globl]       declare label as global
+  \item[.text]        Text section following. Contains program logic.
+  \item[.byte]        Allocate a single byte as a global
+\end{description}
+
+\subsection{GNU assembler}
+
+\begin{description}
+  \item[-a] Write to stdout
+  \item[{-}-gstabs] include debugging information to output file.
+                  Can eg. be used as additional information for gdb.
+\end{description}
+
+Undefined symbols include references to other routines / functions
+which will be bound later on by the linker. Defined symbols are labels
+and routines already known to the compiler.
+
+\section{Sample boot program}
+
+\begin{enumerate}
+  \item check for signature
+  \item exit if signature not found
+  \item read start address
+  \item create temporary copy of start address
+  \item read amount of words to load
+  \item loop: read all words and store them to RAM
+  \item jump to start address
+  \item execution loop
+\end{enumerate}
+
+\section{Computation theory}
+
+\subsection{Mealy automaton}
+
+current\_state = f(prev\_state) \\
+output = out(input, current\_state)
+
+\subsection{Moore automaton}
+
+current\_state = f(prev\_state) \\
+output = out(current\_state)
+
+\section{Abstraction}
+
+\begin{enumerate}
+  \item User
+  \item Application
+  \item Operating system
+  \item Architectural
+  \item Register transfer
+  \item Logical
+  \item Electrical
+  \item Physical
+\end{enumerate}
+
+\section{Pipelining}
+
+\subsection{Dependencies}
+
+\begin{description}
+  \item[Data dependency] If the first instruction is storing a value to a
+                         register which is used in the second instruction,
+                         the result is not going to be ready on time.
+  \item[Control dependency] If the first instruction includes a conditional
+                         jump, the following instruction might not be the
+                         one to be executed.
+\end{description}
+
+\subsection{Possible solutions to pipelining chaos}
+
+\begin{itemize}
+  \item Compiler adds ''No operation'' instructions
+  \item Reorder machine instructions to avoid dependencies
+\end{itemize}
+
+\section{Caches}
+
+\subsection{Replacement policies}
+
+\begin{description}
+  \item[LRU] Overwrite the least recently used element.
+  \item[FIFO] Overwrite the oldest element.
+  \item[LFU] Overwrite the least frequently used element.
+\end{description}
+
+\section{Questions}
+
+Questions, you should be able to answer:
+
+\begin{enumerate}
+  \item Which registers does x86 define? How can you address the first
+        8 bits of a register? What are EFLAGS?
+  \item Which syntaxi are in use to write x86 assembler? What does the
+        suffix ''l'' stand for? What is a word? What do the various modes
+        look like syntactically?
+  \item How is an array stored at hardware level? Explain the following
+        assembler directives:
+
+        \begin{itemize}
+          \item .string
+          \item .data
+          \item .space
+          \item .file
+          \item .rept / .endr
+          \item .long
+          \item .globl
+          \item .text
+          \item .byte
+          \item .equ
+          \item \_start
+        \end{itemize}
+
+  \item Explain the ''-a'' and ''-gstabs'' options of GNU assembler
+        (''as'' on CLI). What parts of the ASM source code will occur
+        at the \emph{defined} and the \emph{undefined} symbols section.
+  \item What's the 10-complement of 89, 9 and 2 (each with 2 digits)?
+        What the 2-complement of 15, 7 and 5 (with 4 digits)?
+  \item What's the difference between (5 bytes) and (1 long with a word)
+        at hardware layer?
+  \item Describe the procedure of a function call with a stack dump.
+        How are function parameters and local variables assigned?
+        What are the commands push, pop, call and ret for?
+  \item Describe the following assembler operations:
+
+        \begin{itemize}
+          \item movl
+          \item addl
+          \item decl
+          \item cmpl
+          \item call
+          \item ret
+          \item jnz
+          \item jz
+          \item jge
+          \item js
+          \item jmp
+        \end{itemize}
+
+    \item What is each of the following programs doing in the compilation
+          or software development process? readelf, objdump, ar, ranlib, ld,
+          gdb, gcc.
+    \item Name a command to link several object files to an executable.
+    \item How can state be stored at hardware level? Explain it using a diagram
+          of a latch and a flip flop.
+    \item Which software and hardware layers do you know?
+    \item Describe the fetch and execute algorithm.
+    \item Describe the dependencies making work with pipelining difficult
+          and discuss possible solutions.
+    \item What are caches? Which cache size is recommended? Describe the
+          principle of locality. Describe possible replacement policies.
+          What is direct and associative mapping?
+    \item Describe the idea of a DMA.
+\end{enumerate}
+
+\end{document}

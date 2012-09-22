@@ -1,0 +1,568 @@
+\documentclass[a4paper,twocolumn]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+
+% TODO: complete relational algebra
+% TODO: SQL syntax tutorial and differences between postgresql, mysql,
+%       sqlite, ...
+
+\author{Lukas Prokop}
+\title{Databases and relations}
+\date{26th of January 2012}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Databases}
+
+\textbf{Note.} Based on lectures ''Databases 1'', ''Databases 2'', ''New
+Information systems'' and ''Object-oriented analysis and design'' I visited.
+
+\subsection{Information Systems}
+
+An \emph{information model} describes the problem (ie. application) domain,
+which gets reduced in the software development process to the domain of
+interest. This domain captures only relevant parts of the application and
+provides a focus.
+
+A \textbf{data object} is a collection of attribute-value pairs that model
+an individual entity. A database is an information model of the real world.
+
+\subsection{Database design}
+
+Database design consists of three phases:
+%
+\begin{itemize}
+  \item Conceptual design (DBMS independent)
+  \item Logical design (transactions independent)
+  \item Physical design (schema for a particular DBMS and transactions)
+\end{itemize}
+
+Conceptual design relates in some kind to the requirement analysis phase in
+a software development process. The goals of a conceptual design are:
+%
+\begin{itemize}
+  \item to identify data objects
+  \item to identify all attributes of data objects
+  \item to identify relationships between data objects
+  \item to identify integrity constraints
+\end{itemize}
+
+Quality attributes for the conceptual design are:
+%
+\begin{itemize}
+  \item integrability
+  \item learnability and memorability
+  \item completness
+  \item visualability
+\end{itemize}
+
+\subsection{DataBase Management System (DBMS)}
+
+A DBMS' goal is to keep its data integrity while applying operations to create,
+modify and access data in the database. A DBMS represents a data model and
+separates a database structure (\emph{database schema}) from its contents
+(\emph{database}).
+
+\begin{itemize}
+  \item A \emph{data model} consists of a collection of data structure types,
+        a collection of operators and rules and a collection of general
+        integrity rules (implicitly and explicitly).
+  \item \emph{Database transactions} have to be
+        ACID (atomic, consistent, isolated and durable).
+        Transactions are a logical unit of work and are an application-specified
+        sequence of data manipulation operations to avoid inconsistent state
+        after an error half-way through the sequence. Therefore a transaction
+        is either executed in its entirety or totally aborted.
+\end{itemize}
+
+\subsection{Database Languages}
+
+\begin{description}
+  \item[Data Description Language (DDL)]
+    A DDL is used to define database schemas. Its syntax is a collection of
+    statements for the description of data types.
+  \item[Data Manipulation Language (DML)]
+    A DML allows the user to manipulate data objects and relationships
+    between them. It's a collection of operators that can be applied to
+    data objects. Manipulation includes insertion, deletion and modification
+    of tuples.
+  \item[Query Language (QL)]
+    A QL uses queries as parameters to select and project data set from
+    one or several relations.
+\end{description}
+
+There are different approaches to use DDL/DML/QLs:
+%
+\begin{description}
+  \item[Self-Contained Language]
+    For example SQL. It's command-oriented, english-like
+    and can become complex.
+  \item[Embedded Host Language]
+    For example C++. The program uses a DML (eg. SQL) from an application
+    backend perspective to manipulate the data. A possible approach is to
+    make simple queries (QL) to the database and resolve its relationships
+    within the application programming language.
+\end{description}
+
+\subsection{Roles in a DBMS}
+
+\begin{description}
+  \item[Database Administrator (DBA)]
+    A DBA is capable of using a DDL to create and maintain a
+    consistent set of database schemas to satisfy the needs of the
+    problem domain.
+  \item[Application Developers (AD)]
+    An AD uses an interface from the application to communicate to the
+    database using a DML. He develops specific functions around the database
+    and manipulates the data.
+  \item[End User] The end user does not get in contact with the structure of
+    a database and only gets an user interface to enter data. The
+    application resolves that data to DML queries.
+\end{description}
+
+\subsection{Protections}
+
+Data protection is crucial to an application.
+%
+\begin{description}
+  \item[Physical Protection]
+    It addresses protection against physical loss of data.
+    This loss can be caused by natural disasters, theft or accidental damage
+    to equipment.
+
+  \item[Operational Protection]
+    Operational Protection prevents human errors on the databases'
+    integrity. Integrity constraints specified by a DBA in the database
+    schema can help to protect from these errors.
+
+  \item[Authorisational Protection]
+    Read and write access to the databases should only be given to
+    authorised users to ensure confidentiality and correctness.
+\end{description}
+
+\subsection{Data Manipulation Facilities}
+
+Can be done using a DML.
+%
+\begin{itemize}
+  \item insert or add new tuples into the relation
+  \item delete or erase existing tuples from the relation
+  \item modify or change data in an existing relation.
+        assignment or computation (readed, computed, stored)
+\end{itemize}
+
+\section{Relational Database Model}
+
+\subsection{Terminology}
+
+\begin{description}
+  \item[attributes]
+    distinct columns in a relation.
+    Each attribute has a associated domain.
+  \item[cardinality]
+    number of rows in a table
+  \item[degree]
+    number of columns in a table
+  \item[domain]
+    a set of different values with the same property types (''data type'').
+    The NULL value is possible if not explicitly stated otherwise.
+  \item[relation]
+    a table (visual view) with a unique name.
+    a two dimensional, inhomogeneous matrix (mathematical view).
+    The ordering of tuples in a relation is important.
+  \item[schema]
+    schema of a relation refers to the permanent characteristics
+    of a relation
+  \item[tuple]
+    the set of values in a row.
+    Those values are instances of the attribute domain.
+\end{description}
+
+\subsection{Keys}
+
+The definition of a relation includes the definition of attributes,
+domains, a primary key and additional constraints. The definition
+of primary keys per relation allows us to simply refer entries in
+other relations.
+
+\begin{description}
+  \item \emph{Keys} are unique.
+  \item Keys shall be kept small to reduce the foreign key table
+        in terms of storage size. Furthermore a small key allows
+        fast and efficient index lookups.
+  \item \emph{Superkeys} are attributes identifying a tuple uniquely.
+  \item A \emph{candidate key} is a superkey with a minimal set of
+        attributes and candidate for a primary key.
+  \item One of the candidate keys is declared as \emph{primary key}
+        and satisfies the relation constraint and does not contain a
+        NULL value.
+  \item A \emph{foreign key} is an attribute which holds the primary key of
+        another relation.
+\end{description}
+
+\paragraph{Possible notation \\}
+
+\textless relation name\textgreater:
+    (\textless attribute name 1\textgreater,
+     \textless attribute2\textgreater,
+     \textless attribute3\textgreater
+    ) \\
+relation: (\textbf{primary key}, attribute,
+    \textit{foreign key}) \\
+Customer: (\textbf{cid}, name, age, \textit{userRightsId})
+
+\subsection{Constraints}
+
+\subsubsection{Integrity constraints}
+
+\emph{Integrity} is the reliability through imposition of constraints
+during data manipulation (data integrity).
+
+\begin{itemize}
+  \item implicit
+    \begin{description}
+      \item[entity integrity] A primary key cannot be set to NULL.
+      \item[referential integrity] A foreign key can have only two
+        possible values either the relevant primary key or NULL value.
+    \end{description}
+  \item explicit (examples are given)
+    \begin{description}
+      \item[domain] upper/lower limits for integer values
+      \item[tuple] if attr1 $==$ x then y has to be $< 50$
+      \item[relation] no duplicates as primary keys
+    \end{description}
+\end{itemize}
+
+\section{Normalization}
+
+\subsection{Anomalies}
+
+\begin{description}
+  \item[Update anomaly] Data inconsistency or loss of data integrity
+    can arise from data redundancy or repetition and partial update
+  \item[Insertion anomaly]
+    Data cannot be added because some other data is absent.
+  \item[Deletion anomaly]
+    Data maybe unintentionally lost through the deletion of other data.
+\end{description}
+
+\subsection{Terminology}
+
+\begin{itemize}
+  \item A \emph{determinant} is an attribute or a set of non-redunant
+    attributes which can act as a unique identifier of (a set of)
+    another attribute of a given value. So if two tuples have the same
+    value for $A$, it's required to have the same value for $B$ in both
+    tuples.
+    $A \rightarrow B$ (''A determines B'' or ''A is a determinant of B'').
+    The opposite is $A \nrightarrow B$ (''A does not determine B'').
+  \item If $A$ determines $B$ then $B$ is \emph{functionally dependent}
+    on $A$. \emph{Full functional dependency} is given if $A$ determines
+    $B$ and no subset of $A$ determines $B$.
+  \item The relation $(A \rightarrow B \land B \rightarrow C) \Rightarrow
+    A \rightarrow C$ describes transitivity. Transitivity is called
+    \emph{indirect dependency}.
+\end{itemize}
+
+\subsection{1. Normal Form (1NF)}
+
+A relation in 1NF has to be free of repeating groups. Even though this
+definition is considered differently by various researchers, it basically
+means that no value contains more than one value and there are no duplicate
+tuples. Codd also makes references to the concept of atomicity:
+%
+\begin{quote}
+    values in the domains on which each relation is defined are required to
+    be atomic with respect to the DBMS.
+\end{quote}
+
+\subsection{2. Normal Form (2NF)}
+
+A table is in 2NF if it is in 1NF and no attribute---that is not a part
+of any candidate key of the table---is dependent on any proper subset of
+any candidate key of the table.
+
+So 2NF can be achieved by taking a relation in 1NF and eliminating all
+partial key dependencies.
+
+\subsection{3. Normal Form (3NF)}
+
+A table is in 3NF if it is in 2NF and every non-key attribute is fully and
+directly dependent on the primary key. So 3NF can be achieved by taking a
+relation in 2NF and eliminating all indirect dependencies on the primary
+key.
+
+\section{Relational Algebra}
+%
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{rl}
+      $\sigma$ & selection \\
+      $\pi$    & projection \\
+      $\cup$   & union \\
+      $-$      & difference \\
+      $\times$ & cartesian product \\
+      $\rho$   & rename \\
+      $\bowtie$& join \\
+      $\ltimes$& left semi join \\
+      $\rtimes$& right semi join \\
+      $\cap$   & intersection \\
+      $\div$   & division \\
+    \end{tabular}
+  \end{center}
+\end{table}
+%
+Relation Algebra is a procedural relationally complete language.
+A language that can define any relation definable in relational calculus
+is relationally complete. Using this algebra we perform set operations
+on relations.
+
+\subsection{Selection $\sigma$}
+
+A selection is a unary operation to select tuples from relations.
+
+\begin{verbatim}
+select <source relation name>
+where <predicate>
+giving <result relation name>
+\end{verbatim}
+
+\begin{itemize}
+  \item \texttt{predicate} might be any kind of propositional formula
+        using the logical operators AND, OR or NOT. NOT has to be prefixed;
+        other operators get infixed.
+        The precedence is defined as followed: NOT, AND, OR.
+  \item intension (schema) stays the same.
+  \item the result is a horizontal subset of source.
+  \item \texttt{giving} clause can be ommitted to use the result inline.
+\end{itemize}
+
+\subsection{Projection $\pi$}
+
+The projection is an operation to reduce a relation containing containing
+only specified columns. All duplicate result tuples will be removed.
+
+\begin{verbatim}
+project <source relation name>
+over <list of attribute names>
+giving <result relation name>
+\end{verbatim}
+
+The list of attribute names shall be given as comma separated list.
+
+\subsection{Rename $\rho$}
+
+The rename operation renames an attribute of a relation to a new name.
+
+\begin{verbatim}
+Rename <attribute name> <target name>
+\end{verbatim}
+
+\subsection{Natural join $\bowtie$}
+
+A natural join of two tables combines those tables i.e. extends the tuples of
+one relation with their counterparts. Two tuples (of each table) will be
+contactenated if their shared (specified) attributes match. It ommits tuples
+which don't have an associated tuple in the other relation.
+
+\begin{verbatim}
+join <first relation> AND <second relation>
+over <list of attribute names>
+giving <result relation name>
+\end{verbatim}
+
+The list of attribute names shall be given as comma separated list.
+
+\subsection{Division $\div$}
+
+A division builds sets of tuples that are identical in their non-shared
+attributes and filters sets, which don't contain all corresponding shared
+values of the divisor. All shared values are dropped and resulting
+duplicates get removed.
+
+\begin{verbatim}
+divide <source relation name>
+by <divisor relation name>
+giving <result relation name>
+\end{verbatim}
+
+The divisor relation has to share attributes with the source relation.
+
+\subsection{Union $\cup$}
+
+The union operation combines two tuple-sets and ommits duplicates.
+Two tuples are union-compatible, if they have identical
+intensions.
+
+\begin{verbatim}
+<first source relation>
+union <second source relation>
+giving <result relation>
+\end{verbatim}
+
+\subsection{Intersection $\cap$}
+
+The intersection outputs all tuples which are in both source relations.
+
+\begin{verbatim}
+<first source relation>
+intersect <second source relation>
+giving <result relation>
+\end{verbatim}
+
+\subsection{Difference $\setminus$}
+
+This operation outputs all tuples from the first relation,
+which are not also in the second relation.
+
+\begin{verbatim}
+<first source relation>
+minus <second source relation>
+giving <result relation>
+\end{verbatim}
+
+\subsection{NULL values}
+
+Any comparison involving NULL returns FALSE.
+
+\begin{itemize}
+  \item So in a selection operation tuples with NULL values
+        in condition attributes are omitted in the resulting
+        relation.
+  \item In a projection, the resulting tuples with NULL values
+        are not considered to be duplicates and therefore do
+        not get reduced.
+  \item A join operation with tuples containing NULL in a
+        shared attribute excludes those tuple from the list
+        of tuples to concatenate.
+  \item A division operation will fail if there is a NULL value
+        in the divisor (because not tuple set will match). The
+        result is an empty relation.
+  \item For other operations (union, intersection, difference)
+        tuples containing NULL are considered to be different.
+\end{itemize}
+
+\subsection{Relational algebra example}
+
+For example, the SQL SELECT statement combines the operators Selection,
+Projection, Join and the Cartesian Product of relational algebra.
+
+\begin{verbatim}
+select Movie
+where m_title = 'x' or m_title = 'y'
+giving XYMovie;
+
+project XYMovie
+over m_id
+giving XYMovieId;
+
+divide Role
+by XYMovieId
+giving XYRole;
+
+join XYRole and Human
+over h_id
+giving XYHuman;
+
+project XYHuman
+over h_first_name, h_last_name
+giving Result;
+\end{verbatim}
+
+\section{Glossary}
+
+\begin{description}
+  \item[RDBMS] Relational Database Management System
+  \item[DBMS] Database Management System
+  \item[DDL] Data Description Language
+  \item[DML] Data Manipulation Language
+  \item[DBA] Database Administrator
+\end{description}
+
+\section{Entity Relationships}
+
+\subsection{Entities}
+
+An entity in ER is an instance of a more abstract idea. It's a
+''thing'' or an ''object'' in the real world that is distinguishable
+from other objects.
+
+\begin{itemize}
+  \item Each entity occurrence is presented as a number of attributes
+  \item Each attribute has a name and domain.
+  \item Domains specify the set of permitted values for attributes.
+\end{itemize}
+
+An \emph{entity type} is a set of similar entity occurrences.
+The term ''similar'' can be perceived as ''presenting with different
+values of the same domains''. The model always operates on ''entities''
+and ''entity types''; so those terms are used synonymously.
+
+\subsection{Relationships}
+
+Relationships describe associations between an arbitrary number of
+entity occurences. Each relationship has a name and may have zero
+or more attributes. A relationship type is a set of similar
+relationship instances. The term ''similar'' can be simply seen
+as ''relationshipy between occurrences of the same entity types,
+having one and the same name and set of attributes''.
+Accordingly the model operates on ''relationship types'' so the terms
+are used synonymously. Pragmatically, we understand the term
+''relationship'' as a description of common properties of a set
+of relationship instances (name of the relationship, members, attributes).
+
+\subsection{Constraints}
+
+Cardinality constraints define the number of entity occurrences to which
+an other entity occurrence can be associated via a relationship instance.
+
+\subsubsection{Cardinality constraints}
+
+A one-to-one relationship can be visualized by a simple line between
+the first entity instance and the relationship and another line between
+the relationship and the second instance.
+
+A one-to-many or many-to-many relationship can be visualized by using a
+split symbol at the end of the line before it ends into the corresponding
+instance. The line has to be split into three straight lines.
+
+\subsection{Terminology}
+
+\begin{description}
+  \item[relationships with total participation]
+        occurrences of a certain entity must obligatory participate
+        in such relationships (for example, an employee has to
+        participate in a relationship ''works\_at'').
+  \item[relationships with partial participation]
+        occurrences of a certain entity may optionally participate
+        in such relationships (for example, an employee may
+        participate in a relationship ''is\_manager'').
+  \item[weak entity]
+        The primary key of an entity is defined by an attribute
+        and an attribute of a foreign entity.
+\end{description}
+
+\subsection{Entity Relationship Diagrams}
+
+Entity Relationship Diagrams (ER) are a graphical notation for the
+Entity Relationship Model introduced before.
+
+\begin{itemize}
+  \item Entities are represented by rectangulars.
+  \item Attributes are represented by ellipses with a line to its
+        associated entity
+  \item Relationships are represented by diamonds.
+  \item Attributes of a relationship are represented by ellipses with
+        a line to its associated entity
+  \item Primary key attributes are underlined in the diagram.
+  \item Total participation of an entity in a relationship is
+        represented by double (thick) lines connection
+        the relationship and the entity.
+\end{itemize}
+
+
+\end{document}

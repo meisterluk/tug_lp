@@ -1,0 +1,805 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[pdfborder=0 0 0 0]{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\title{
+    Summary of course Software architecture \\
+    \small{\url{http://kmi.tugraz.at/staff/denis/courses/sa/index.html}}
+}
+\author{Lukas Prokop}
+\date{8th of Dec 2011}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Software architecture}
+
+The following summary shall give you a general framework how to progress
+from a software analysis process over a design phase to a final
+implementation goal. However, in difference to courses like OAD, we will
+focus on the various architectures which can be chosen for the
+implementation.
+
+\section{Requirements}
+
+In the first phase we will receive customer wishes which are informal and
+unprecise. It's our task to formalize them and define corresponding
+requirements.
+
+\subsection{Requirements}
+
+There are three types of requirements:
+
+\begin{itemize}
+  \item non-functional (quality attributes, runtime-related or not)
+  \item functional (structured language, use cases, description by
+            formal methods like state diagrams)
+  \item contextual (technology to be used, law / expertise / customer needs
+            / customer experience)
+\end{itemize}
+
+Each of the non-functional requirements addresses one of the quality
+attributes, which are described in two different lists: MeTRiCS and
+PURS. Please remember that we are not talking about components, classes
+and design decisions yet. Specifically quality attributes are not component
+specific.
+
+Using those requirements addressing quality attributes, we can identify
+the key concepts of the application domain. Identifying it will help us
+to keep attention to the customer's wishes and understanding his
+requirements.
+
+Those requirements can be defined in multiple iterations.
+
+\subsection{PURS}
+
+\begin{itemize}
+  \item Performance
+    \begin{itemize}
+      \item Database design
+      \item Choice of algorithms
+      \item Communication
+      \item Resource management
+    \end{itemize}
+
+  \item Usability
+  \item Reliability
+    \begin{itemize}
+      \item MTTF: mean time to failure
+      \item MTBF: mean time between failures
+      \item MTTR: mean time to repair
+      \item For web systems: $\text{MTTF} \to\infty$
+      \item Acceptability of bugs depends
+    \end{itemize}
+
+  \item security
+    \begin{itemize}
+      \item Authentication and Authorization
+      \item ACL (Access Control List)
+      \item RBAC (Role-Based Access Control)
+        \begin{itemize}
+          \item resolves many-to-many relationship between user \& person
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{MeTRiCS}
+
+\begin{itemize}
+  \item Maintainability
+    \begin{itemize}
+      \item Code comments
+      \item OOP design principles
+      \item consistency
+      \item documentation
+      \item Don't be afraid of refactoring, redesigning and rewriting!
+      \item throw-away prototypes
+      \item keep innovative
+    \end{itemize}
+  \item Evolvability
+  \item Testability
+  \item Reusability
+  \item Integratability
+  \item Configurability
+  \item Scalability
+\end{itemize}
+
+\section{Analysis}
+
+Requirements $\Rightarrow$ Key concepts $\Rightarrow$ application domain.
+
+\section{Design}
+
+Design consists of creating models. There 2 kinds of models:
+
+\begin{itemize}
+  \item Structural model \\
+        is a static model of the system (ie. division of the system into
+        components and connectors).
+  \item Behavior model \\
+        is a dynamic model of the system (ie. component interactions)
+\end{itemize}
+
+Functionality is what the system can do and behavior is the activity
+sequence. Each component has a set of responsibilities.
+Behavior is the way how these responsibilities are exercised to respond to
+some event. An event may be an action of the user or an event from an
+external system. A particular behavior is an event plus a response in the
+form of a sequence of component responsibilities.
+
+Design can be codified by box-and-lines diagrams and comparing the model to
+OOP classes.
+
+There are two major approaches how to identify components:
+
+\begin{description}
+  \item[noun method] underline keywords (ie. key concepts)
+  \item[categorization] of possible concepts in
+    \{
+        Data\footnote{one component},
+        Function\footnote{many components},
+        Stakeholder\footnote{no components}, 
+        system\footnote{external systems; are probably 1 component}, 
+        hardware\footnote{one physical component}, 
+        abstract concept\footnote{rarely components}
+    \}
+\end{description}
+
+\section{Architectural views}
+
+\begin{description}
+  \item[Conceptual] Components are sets of responsibilities and connectors
+                    are flows of informations.
+  \item[Executional] Components are execution units (processes) and
+                     connectors are messages between processes.
+  \item[Implementation] Components are libraries, source code, \dots and
+                        connectors are protocols \& APIs
+\end{description}
+
+\section{Methodology}
+
+A methodology for software development shall be chosen after the definition
+of requirements but before the software design process.
+
+\begin{itemize}
+  \item rational
+  \item spiral
+  \item agile
+  \item evolutionary rapid
+\end{itemize}
+
+
+
+
+\chapter{Execution architecture}
+
+Many quality attributes are explicitly addressed by the execution
+architecture. Execution architecture focuses on the system structure
+(eg. performance, security, reliability) and addresses concurrent
+components, which are always simply summed up to components up to now.
+In a single-computer, single-process and single-thread environment, the
+execution architecture is very simple.
+
+Executation architecture becomes very important whenever you design
+network-based systems, multi-core or multiprocessing units, multi-threaded
+systems or event-based GUIs. Components are considered to be either
+hardware, concurrent subsystems, processes or threads. Connectors indicate
+either synchronous, asynchronous calls or callback mechanisms.
+
+Each model in Executation architecture is a model at a specific level of
+granularity. Subsystems can be quite complex.
+
+\section{Concurrent subsystems}
+
+\begin{itemize}
+  \item Always long-lived
+  \item Creation means start of the service,
+        Closing means shutdown of the service
+  \item Operates through lifetime
+\end{itemize}
+
+\section{Process model}
+
+\begin{itemize}
+  \item Restricting a concurrency model to processes
+  \item depicts the execution structure
+  \item Do not go into details on external subsystems
+\end{itemize}
+
+\section{Execution stereotypes}
+
+\begin{description}
+  \item[user initiated]
+    This stereotype describe systems where the events are controlled by the
+    user. All UI components are always of this kind of stereotype. There
+    might be a separate even thread listening to user input events.
+  \item[active]
+    components generate activity internally. This might be eg. a crawler of a
+    search engine.
+  \item[services]
+    wait for requests of other components. They typically perform complex
+    tasks and have a clear communication protocol. Example includes
+    databases and the web.
+\end{description}
+
+\section{Comparison to CA}
+
+There are \emph{no rules} how to decide where conceptual components reside
+in the execution architecture (described by term ''Binding execution and
+conceptual models'').
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{lll}
+      Element & Conceptual architecture & Execution architecture \\
+    \hline \hline
+      Components & Domain-level responsibilities & Unit of concurrent
+      activity \\
+
+      Connectors & Information flow & Invocation \\
+      Views & Single & Multiple \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+
+
+
+
+\chapter{Implementation architecture}
+
+IA focuses on \emph{how} the system is built. It defines a set of
+technological elements for the implementation. This includes software
+packages, libraries, frameworks and classes. IA is a number of
+implementation models. It addresses non-runtime quality attributes.
+
+Components and connectors reflect software entities and relationships
+(connectors describe a ''uses'' relationship). Each IA focuses on one of the
+concurrent subsystems or processes from the execution view.
+
+\section{Application components}
+
+An application component is implementing domain-level responsibilities,
+which can be found in the conceptual architecture. But also a number of
+conceptual components can be mapped to a single application component.
+Realization takes place by source code, files or binaries. UI components
+typically map onto a single application component.
+
+\section{Infrastructure components}
+
+Infrastructure components are necessary for the running system, but do not
+relate to the application functionality. Sometimes they act as an container
+for several application components.
+
+A container component provides an execution environment for the contained
+components. So typical container components include frameworks, servers,
+generic clients and off-the-shelf components.
+
+''Impact Maps'' might help to illustrate dependencies between components.
+
+\section{Connectors}
+
+Connectors in an IA are API calls, callbacks, network protocols and signals.
+
+\section{Infrastructure selection}
+
+The selection of infrastructure is heavily influenced by the different
+philosophies of the development team members.
+
+\begin{itemize}
+  \item Conceptual issues: MVC, component-based, service-based
+  \item Executational issues: Spawning of external components
+  \item Implementation issues: programming languages
+  \item Contextual issues: Commercial products, OpenSource
+  \item Organizational issues: Know-How, Team
+\end{itemize}
+
+\subsection{Algorithm (''Weighted Scoring method'')}
+
+For each of those issues you have to identify and weigh criteria.
+There are $n$ alternatives ($A_1\ldots A_n$) and $m$ different criteria
+($C_1\ldots C_m$). Each alternative is for each criterion with score
+$S_{ij}$. Each criterion has a weight relative to its importance
+$W_1\ldots W_m$. The final score for $A_i$ is:
+
+\[
+    S(A_i) = \sum_{j=1}^m S_{ij} \cdot W_j
+\]
+
+\section{IA definition procedure}
+
+\begin{enumerate}
+  \item Find application components
+  \item Find infrastructure components
+  \item Design interfaces
+  \item Define behavior design and verification
+\end{enumerate}
+
+We need a clear interface between all components. In best case, those
+interface are already standardized (eg. HTTP). In behavior design we have
+to go into detail for IA and use case maps not precise enough for it;
+sequence diagrams are recommended.
+
+Prototypes will help us to verify our final IA.
+
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{llll}
+      Element & CA & EA & IA \\
+    \hline \hline
+      Components & Domain-level resp. & Unit of concurrent activity & Impl. module \\
+
+      Connectors & Information flow & Invocation & ''Uses'' relationship \\
+      Views & Single & Multiple & Split \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+
+
+
+\chapter{OO Design principles}
+
+Design is the process of modeling new software entities to satisfy
+requirements. Software entities might be different things depending on the
+level of granularity and programming paradigm. Design is not an exact
+entity and therefore not measureable.
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{llll}
+    \hline
+      Procedural    & OOP \\
+    \hline \hline
+      producedures  & classes \\
+      variables     & objects \\
+                    & relationships \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+We have discuss 4 OO design principles:
+
+\begin{enumerate}
+  \item Open-Closed
+  \item ''Design by contract'' or ''Liskov substitution principle''
+  \item Single responsibility principle
+  \item Law of Demeter
+\end{enumerate}
+
+\section{Open-Closed}
+
+''Software should be open for extension but closed for modification''
+
+\begin{itemize}
+  \item You should be able to extend a class without modifying it
+  \item Reason for this principle: abstraction (fixed design but limitless
+        behaviors)
+  \item Early design decision: Fixed vs expandable system parts
+        (clear interfaces)
+  \item We can test components finally and extend them without modifications
+  \item Example violation of this rule: usage of \texttt{instanceof} operator
+        (destroys polymorphism)
+\end{itemize}
+
+\section{Design by Contract}
+
+''Define a contract between a class and its users''
+
+\begin{itemize}
+  \item Preconditions and postconditions for methods (you might want to
+        insert tests for those conditions using \texttt{assert}) \\
+        Invariants for the class (technical view of pre- and postconditions)
+  \item Liskow Substitution Principle (related to ''Design by Contract'')
+        \begin{itemize}
+          \item ''If for each object o1 of type S there is an object o2 of
+                  type T such that for all programs P defined in terms of T,
+                  the behavior of P is unchanged when o1 is substituted for
+                  o2 then S is a subtype of T.''
+          \item Polymorphism does it anyway, but we are talking about
+                implemented methods in the sub- and superclass
+          \item Example violation of this rule:
+                return value is null object and no real object.
+          \item Allowed within this rule:
+                Weaken preconditions, strengthen postconditions
+          \item Cannot satisfy this rule? Refactor class hierarchy!
+        \end{itemize}
+\end{itemize}
+
+\section{Single responsibility principle}
+
+''One entity (class, object), one responsibility'' (separation of concerns)
+
+\begin{itemize}
+  \item A responsibility is in fact a reason to change
+  \item Example violation of this rule: Student is reading from DB
+        \emph{and} printing HTML
+\end{itemize}
+
+\section{Law of Demeter}
+
+''A method of an object should only invoke methods of itself, its
+parameters, objects it creates and its members''
+
+\begin{itemize}
+  \item Chaining of method calls across various objects is evil.
+\end{itemize}
+
+
+
+\chapter{Architectural styles}
+
+An architectural style is a particular pattern that focuses on the
+large-scale structure of a system typically described by the common
+vocabulary.
+
+Variants of architectural style:
+
+\begin{itemize}
+  \item Data-centered architecture
+  \item Data-flow architecture
+  \item Abstraction-layer architecture
+  \item N-tier architecture
+  \item Notification architecture
+  \item Remote invocation and service architecture
+  \item Heterogeneous architecture
+\end{itemize}
+
+\section{Data-centered architecture (DCA)}
+
+Systems in which the access and update of a widely accessed data store is the
+primary goal. Basically it is just a centralized data storage with a number
+of clients. This architecture requires three protocols: communication, data
+definition and data manipulation. This architecture has two subtypes:
+
+\begin{description}
+  \item[Repository] client sends a request, system executes
+  \item[Blackboard] system spread notifications / data to subscribers
+\end{description}
+
+\begin{itemize}
+  \item ensures data integrity
+  \item reliable, secure
+  \item testability guaranteed
+  \item Clients are independent $\rightarrow$ performance and usability
+        at clientside good
+  \item problems with scalability
+    \begin{itemize}
+      \item shared repositories
+      \item replication; but increases complexity
+    \end{itemize}
+\end{itemize}
+
+Example implementations:
+
+\begin{enumerate}
+  \item RDBMS (repository with database schemas and SQL for communication)
+  \item Web architecture (hypermedia data model, pages with links, HTTP
+        for communication, integrity not guaranteed [404 error], extremely
+        scalable)
+\end{enumerate}
+
+See also: resource oriented architectures
+
+\section{Data-flow architectures (DFA)}
+
+An architectural style to improve the quality of reuse and modifiability.
+We are viewing the system as a sequence of transformations on successive
+pieces of input data. Finally this data is assigned to its destination.
+There are two variations:
+
+\begin{description}
+  \item[structural variation]
+    more complex topologies like loops, branches, more than 1 input
+  \item[communicational variation]
+    synchronous behavior
+\end{description}
+
+\begin{itemize}
+  \item Maintainability
+  \item Modularity
+\end{itemize}
+
+Example implementations:
+
+\begin{enumerate}
+  \item UNIX pipes (pipes for communication, probably concurrent processing of incremental data)
+  \item any kind of filter
+\end{enumerate}
+
+\section{Abstract layer architectures}
+
+Abstract layer architectures introduce a layering system where each layer is
+on top of another one and there are well-defined interfaces between them.
+
+\begin{itemize}
+  \item reduces complexity
+  \item improves modularity
+  \item reusability
+  \item maintainability
+\end{itemize}
+
+Example implementations:
+
+\begin{enumerate}
+  \item Operating systems
+  \item Virtual machine (interface between compiler \& real machine,
+          improves portability)
+  \item Network protocol stack
+\end{enumerate}
+
+\section{N-tier architectures}
+
+N-tier architectures evolved from business applications and can nowadays be
+widely seen in client-server models for the web. They try to separate
+presentation, application and data storage components.
+
+\begin{description}
+  \item[2-tier]
+    Rich clients run application and server stores data
+  \item[3-tier]
+    Rich clients, application server and data server
+  \item[Rich clients]
+    Clients which have full knowledge of application.
+    Either they implement a standard application and/or protocol
+    or a custom one.
+  \item[Thin clients]
+    Small clients like in X-server architecture of UNIX-based operating
+    systems
+\end{description}
+
+\section{Notifications architecture}
+
+Information and activity gets propagated by a notification mechanism
+(listener and callbacks). It's basically a more abstract view of the
+blackboard data-centric architectures. Clients can ''register'' to receive
+notifications and receive data either when data is relevant for them
+(''interested user'') or always (''broadcast'').
+
+Example implementations:
+
+\begin{enumerate}
+  \item GUI event handling
+\end{enumerate}
+
+\section{Remote invocation and service architectures}
+
+This architecture involves distributed processing components and a client
+invokes a function on a remote component.
+
+\begin{itemize}
+  \item Increased performance through distributed computation
+  \item Tightly coupled components
+\end{itemize}
+
+\emph{Service architectures} store where services are registered.
+
+\section{Heterogeneous architectures}
+
+No real system follows strictly only a single style. Therefore architectures
+might be structurally heterogeneous:
+
+\begin{itemize}
+  \item Overall architecture follows one style
+  \item Single components follows other style
+\end{itemize}
+
+Example implementations:
+
+\begin{itemize}
+  \item Web has 2-tier architecture (browser and server) and browser has
+        notification architecture (user events)
+  \item Web-based search engine \\
+        Conceptually: data-centric, layered, 3-tier \\
+        Structurally: layered (network), 3-tier, notification \\
+        Execution: distributed, service-oriented, \dots
+\end{itemize}
+
+\chapter{Web architecture}
+
+\emph{Two views:} Is the web an application platform or a huge distributed
+database?
+
+The Web started as a static information system. \emph{Hypermedia} are
+documents linked into a web. The user is able to retrieve documents by
+following uni-directional links. It's major advantage is that it only
+requires simple components and everything is based on HTTP, HTML and
+URL standards (cross-platform, global scope).
+
+\begin{quote}
+    Web's major goal was to be a shared information space
+    through which people and machines could communicate \\
+    ---Tim Berners Lee
+\end{quote}
+
+\begin{itemize}
+  \item Usability: easy to create, structure and reference information.
+        voluntary participation, very error forgiving
+  \item Simple: easy implementation, text-based components, only a
+        ''simple'' HTML parser required
+  \item Extensibility: requirements changed, forms were introduced
+  \item Scalability: anarchic, dezentralized
+\end{itemize}
+
+Constraints were introduced on the web architecture to obtain an optimal
+solution to the requirements and quality attributes.
+
+\begin{itemize}
+  \item Client-server model (separation of concerns)
+  \item stateless architecture (client-side sessions)
+    \begin{itemize}
+      \item Improves visibility, reliability, scalability
+    \end{itemize}
+  \item information can be labeled as cacheable
+    \begin{itemize}
+      \item Improves efficiency, scalability, user-perceived performance
+    \end{itemize}
+  \item Uniform interface
+    \begin{itemize}
+      \item Identification of resources (URL)
+      \item manipulation of resources through representations (HTML/XML)
+      \item self-descriptive message (GET, POST, PUT, DELETE)
+      \item layered system (scalability by proxies, shared-caches and
+            gateways; also load-balancing)
+      \item Code on demand (Java applets, flash, Javascript)
+    \end{itemize}
+\end{itemize}
+
+Web's specifics:
+
+\begin{enumerate}
+  \item User requirements
+  \item User interface and usability
+  \item Application state and hypertext
+  \item Addressability
+  \item Architecture
+\end{enumerate}
+
+\section{Application state on the Web: Hypertext}
+
+\begin{itemize}
+  \item HTTP is stateless (connection-less)
+  \item Application logic manages sessions
+  \item AJAX problems: recovery of states in new session impossible, browser
+            back button problem
+  \item server state vs client state = scalability problems vs recovery
+            problems
+  \item Eg. Google Maps: permalinks for states (second addressbar)
+\end{itemize}
+
+\section{Addressability}
+
+\begin{itemize}
+  \item URLs: good usability and meaninful links
+  \item bookmarks
+  \item linking of services is possible
+\end{itemize}
+
+\section{User-oriented DB applications}
+
+\begin{itemize}
+  \item traditionally built with N-tier architecture (started with $N=2$)
+  \item DBMS layer (Relational Database) and app/presentation (scripts) layer \\
+        Major issue: Changes in application logic leads to changes in
+        presentation functionality
+  \item Solution is a 3-layer system:
+        Separation between Application and Presentation \\
+        introduction of AJAX $\rightarrow$ application logic either on
+        client or server
+  \item MVC models since GUIs got introduced \\
+        (especially popular in web applications)
+\end{itemize}
+
+\section{Data management}
+
+\begin{itemize}
+  \item Data Access Object
+  \item ORM (Object Relational Mapper)
+  \item Information retrieval by fulltext search and/or link analysis
+  \item Metadata (taxonomy/folksonomy)
+  \item Data in Web is organized in simple node-link model
+  \item Each node is a data item with a unique address and representation
+  \item Programmers combine a number of services to achieve a desired
+        functionality and create a distributed system (eg. mashups)
+\end{itemize}
+
+\subsection{User-centric view}
+
+What is Google? A \emph{service} to query a massive database (Web search
+index). \\
+What is web application? A \emph{service} offering a specific functionality
+(remotely) \\
+What is a web site? A \emph{service} offering specific human consumable
+information.
+
+\subsection{The Programmable Web}
+
+\begin{quote}
+    ''Programmers follow the architectural style to integrate and combine
+    services to achieve a desired functionality''
+\end{quote}
+
+HTTP is used for data transportation, XML for data representation, but
+services also offer HTML, JSON, plain text and binary data.
+
+\subsubsection{Classification}
+
+How to transmit method information (what to do):
+
+\begin{itemize}
+  \item HTTP methods (standardized, not extensible)
+  \item URL/GET parameter (not standardized, extensible, eg. Flickr)
+  \item SOAP and WSDL
+\end{itemize}
+
+How to transmit scoping information (where to do):
+
+\begin{itemize}
+  \item URL/GET parameter
+  \item SOAP
+\end{itemize}
+
+\subsubsection{Competing architectures in practice}
+
+\begin{itemize}
+  \item RESTful, Resource-Oriented architectures
+  \item RPC-style architectures
+  \item REST-RPC hybrid architectures
+\end{itemize}
+
+\section{Remote Procedure Call (RPC)}
+
+Server receives a request envelope with all necessary data to perform a
+certain task. Server sends back a similar envelope.
+
+Protocols: SOAP, XML-RPC
+
+Problems:
+
+\begin{itemize}
+  \item RPC implies an API
+  \item APIs tend to enforce a tight coupling of modules and systems
+  \item Where is all the nice Web architecture gone?
+\end{itemize}
+
+\section{Resource Oriented Architectures}
+
+\begin{itemize}
+  \item method information in HTTP method
+  \item scoping information in URL
+\end{itemize}
+
+4 features of ROA (resource oriented architectures):
+
+\begin{enumerate}
+  \item addressability
+  \item statelessness
+  \item uniform interface
+  \item connectedness
+\end{enumerate}
+
+\emph{Idempotence:} same operation has same effect however often it is applied.
+
+\section{Designing RESTful services}
+
+REST originated from a PhD thesis by Roy Fielding.
+
+\begin{enumerate}
+  \item Figure out data set
+  \item Split data set into resources
+  \item For each resource: define URL
+  \item Expose a subset of the uniform interface
+  \item Design representations accepted from the client
+  \item Design representations served to the client
+  \item Integrate this resource into other resources using links
+  \item Consider possible application states
+  \item Consider possible error states
+\end{enumerate}
+
+Software packages: Java Restlet, Plugin for ruby on rails, Django in python
+
+\end{document}

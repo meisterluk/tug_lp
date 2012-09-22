@@ -1,0 +1,901 @@
+\documentclass[a4paper,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{textcomp}
+
+\usepackage[dvips,pdftex]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{pifont}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\ld}{ld}
+
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\io}[2]{{\par\noindent\textbf{Input:} #1 \\}{\textbf{Output:} #2 \\}}
+\newcommand{\wa}[1]{\textbf{Wolframalpha:} $#1$ \\}
+\newcommand{\scriptref}[1]{\textbf{Skriptum.} page #1 \\}
+\newcommand{\dt}[1]{\textbf{Deutsch } #1 \\}
+
+\begin{document}
+\tableofcontents
+
+\section{Basic Linear Algebra}
+
+\[
+    0 := \begin{pmatrix}
+        0 & \ldots & 0 \\
+        \vdots & \ddots & \vdots \\
+        0 & \ldots & 0 \\
+    \end{pmatrix}
+\] \[
+    A = B \Leftrightarrow a_{ij} \in A = b_{ij} \in B
+\] \[
+    A + 0 = 0 + A = A
+    \qquad
+    A + (-A) = 0
+\] \[
+    A \cdot x = b
+    \quad\Rightarrow\quad
+    x = A^{-1} \cdot b
+\] \[
+    a_{ij} \in A \Leftrightarrow (-a_{ij}) \in (-A)
+\] \[
+    A + (B + C) = (A + B) + C
+    \qquad
+    A(BC) = (AB)C
+\] \[
+    (\lambda + \mu) \cdot A = \lambda \cdot A + \mu \cdot A
+\] \[
+    A \text{ has $m$ rows and $n$ columns}
+        \Leftrightarrow A \in M(m\times n)
+\]
+
+A linear system of equations can be translated to matrizes
+directly.
+%
+\[
+    \begin{array}{cccccc}
+        -3x & + & -3y & -3z & = & -3 \\
+        -2x & + &  2y &   z & = & 0 \\
+          x & + & -3y &  3z & = & 0 \\
+    \end{array}
+\] \[
+    \Rightarrow
+    A = \left(\begin{array}{cccc}
+        -3 & -3 & -3 & -3 \\
+        -2 &  2 &  1 & 0 \\
+         1 & -3 &  3 & 0 \\
+    \end{array}\right)
+\]
+
+To create an extended coefficient matrix, you have to add the solutions
+as the most right column (thus $\{A, b\}$).
+If you want to solve this system, you have to find $x$ in
+$A\times x = b$, where $A$ are the coefficients of the system and
+$b$ are the solutions.
+
+This can be done by performing arithmetic row-wise operations.
+An example is taking the third row minus $\frac12$ times the second
+row. The result is a tuple $(0, -4, 2.5, 0)$ which can replace . Each operation returns
+a factor (here: $-\frac12$); we will need this for decompositions.
+Okay, the result can be taken as new second row. So how is the general
+algorithm?
+
+\subsection{Gaussian elimination}
+\io{Invertible square matrix}{triangular form}
+\wa{\operatorname{RowReduce}[A]}
+\scriptref{9}
+
+In a $m\times n$ matrix ($m$ rows, $n$ columns), we want to reach
+the structure of an upper triangular matrix. So if the result of such
+an operation is $(0, -4, 2.5, 0)$, we will prefer to use it as the
+second row (because of the one zero to the left). We will perform operations
+until we reach the expected structure; the ''triangular form'' (numerical
+analysis) or ''row echelon form'' (abstract algebra).
+%
+\[
+    \left(\begin{array}{cccc}
+        -3 & -3 &   -3 & -3 \\
+        0  & -4 &  2.5 &  0 \\
+        0  &  0 & -0.5 & -1 \\
+    \end{array}\right)
+\]
+
+This structure can be easily transformed to the solution of the linear
+system.
+%
+\begin{minipage}{0.2\textwidth}\[
+    -0.5z = -1
+\] \[
+    -4y + 2.5 \cdot (-1) = 0
+\] \[
+    y = \frac54
+\]
+\end{minipage}\begin{minipage}{0.3\textwidth}
+\[
+    -3x - \frac{15}{4} = \frac{12}{4}
+\] \[
+    x = -\frac94
+\]\end{minipage}
+
+Otherwise we can continue the elimination algorithm to create an
+identity matrix on the left side (columns 1--3 here). This way
+we can read the variable values immediately. This algorithm is
+called Gauss-Jordan Elimination.
+
+\subsection{Notes}
+
+\begin{itemize}
+  \item Pivot elements are the most-left numbers of the rows.
+        $-3$, $-4$ and $-0.5$ in the  previous example.
+  \item $\rank{A}$ is the number of rows with non-zero pivot elements
+        in the triangular matrix of $A$. $\rank{A} = 3$ in the
+        previous example.
+  \item Sometimes swapping rows is necessary to reach a triangular
+        structure.
+  \item If there are only non-zero pivots, there is only one solution
+        for the linear system. Otherwise we don't know anything about
+        solutions.
+  \item There are 3 operations that can be performed (elementary row
+        operations):
+    \begin{itemize}
+      \item Swapping rows
+      \item multiplication of a row with $\lambda \neq 0$
+      \item addition of row i with row j
+    \end{itemize}
+  \item If there is only one solution the equivalent equation
+        ($A\cdot x = 0$) can only be solved by $x = 0$.
+  \item The system $Ax = b$ has a solution if 
+        \[
+            \rank{\left(A\mid b\right)} = \rank{(A)}
+        \]
+  \item There is one unique solution if
+        \[
+            \rank{\left(A\mid b\right)} = \rank{(A)} = n
+        \]
+  \item There is one unique solution in a quadratic system if
+        $\det{(A)} \neq 0$.
+\end{itemize}
+
+\subsection{Matrix multiplication}
+
+\io{Two matrices $A$ and $B$ where
+    number of $\text{columns}(A) =$ number of $\text{rows}(B)$
+}{One matrix $C$}
+\wa{A * B}
+\scriptref{5}
+%
+\[
+    A \cdot B = C
+\] \[
+    \begin{pmatrix}
+        2 & 3 & 6 \\
+        4 & 5 & 3 \\
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+        1 & 3 \\
+        2 & 4 \\
+        7 & 8 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        50 & 66 \\
+        35 & 56 \\
+    \end{pmatrix}
+\]
+
+$50$ is the sum of $2\cdot1 + 3\cdot2 + 6\cdot7$.
+Matrix multiplication is \emph{not} commutative.
+
+\subsection{Arithmetic matrix operations}
+
+Matrix additions or operations with a scalar happen element-wise.
+
+\subsection{Set operations}
+
+See figure~\ref{fig:set_operations}. Copyright Wikipedia.
+%
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.5]{set_operations.pdf}
+    \caption{
+        Basic set operations from left to right:
+        first row: Intersection ($\cap$), union ($\cup$).
+        second row: relative complement ($A \setminus B$),
+            complement $U \setminus A$ (U is universal set),
+            symmetric difference ($A \Delta B = (A\setminus B) \cup (B
+            \setminus A)$)
+    }
+    \label{fig:set_operations}
+  \end{center}
+\end{figure}
+
+\subsection{Transposed matrix}
+
+\io{A matrix $A \in M(m\times n)$}{Matrix $A^T \in M(n\times m)$}
+\wa{\operatorname{Transpose}[A]}
+\scriptref{6}
+%
+\[
+    \begin{pmatrix}
+        12 & 6 \\
+        2  & 3 \\
+        4  & 8 \\
+    \end{pmatrix}^T
+    =
+    \begin{pmatrix}
+        12 & 2 & 4 \\
+        6 & 3 & 8 \\
+    \end{pmatrix}
+\] \[
+    (a_{ij})^T = (a_{ji})
+\] \[
+    (A + B)^T = A^T + B^T
+\] \[
+    (A\cdot B)^T = B^T\cdot A^T
+\] \[
+    A = A^T \Leftrightarrow A\text{ is a ''symmetrical matrix''}
+\]
+
+\subsection{Inverse matrix}
+
+\io{$A \in M(n\times n), \rank{A} = n$}{$C \in M(n\times n)$ if $A$ is regular}
+\wa{A^{-1}}
+\scriptref{16}
+
+If $A$ has an inverse matrix, $A$ is called ''regular matrix'';
+''singular'' otherwise.
+%
+\[
+  \begin{array}{lrcl}
+    A\text{ is regular}: & (A \cdot B)^{-1} &=& B^{-1} \cdot A^{-1} \\
+    A^{-1}\text{ is regular}: & (A^{-1})^{-1} &=& A \\
+    A^T\text{ is regular}: & (A^T)^{-1} &=& (A^{-1})^T \\
+  \end{array}
+\]
+%
+\[
+    A \in M(n\times n) \quad \Rightarrow A\cdot A^{-1} = I
+\]
+
+The inverse matrix of $A$ is $A^{-1}$. This matrix can be found by
+solving the system:
+%
+\[
+    (A, I) = \left( \begin{array}{ccc|cccc}
+        a_{11} & \ldots & a_{1n} & 1 & 0 & \ldots & 0 \\
+        a_{21} & \ldots & a_{2n} & 0 & 1 & \ldots & 0 \\
+        \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & \ldots & a_{nn} & 0 & 0 & \ldots & 1 \\
+    \end{array} \right)
+\]
+
+Once there is an identity matrix on the left side (by elementary row-wise
+operations), the inverse matrix can be read from the right side of the
+separator.
+
+\section{Decompositions}
+
+\begin{description}
+  \item[LUP decomposition]
+    $
+        PA = LU
+    $
+  \item[LDU decomposition]
+    $
+        A = LDU
+    $
+  \item[LU decomposition with full pivoting]
+    $
+        PAQ = LU
+    $
+\end{description}
+
+\subsection{LU decomposition}
+
+\io{$A \in M(m\times n)$}{$L$ and $U$ with $A=LR$}
+\wa{\operatorname{LUDecomposition}[]}
+\scriptref{18}
+%
+\[
+    A = L \cdot U
+    \quad\text{(without swapped rows)}
+\]
+%
+\begin{itemize}
+  \item U is matrix A in triangular form
+  \item L is a quadratic matrix with ones in the diagonal and below
+        negative factors created by row-wise operations performed before.
+\end{itemize}
+
+\[
+    A = P^T \cdot L \cdot R
+    \quad\text{(with swapped rows)}
+\]
+%
+\begin{itemize}
+  \item U is matrix A in triangular form
+  \item L is a quadratic matrix with ones in the diagonal and below
+        negative factors created by row-wise operations performed before.
+        While swapping rows, you have to swap all components of the rows
+        left to the right ones accordingly.
+  \item Permutation matrix $P$ can be created by constructing an identity
+        matrix and swapping all rows you did with L. $P^T = P^{-1}$.
+\end{itemize}
+
+A solution for $Ax = b$ can be found by applying
+\[
+    L\cdot y = b
+\] \[
+    R\cdot x = y
+\]
+
+\subsection{QR decomposition}
+
+\io{$A \in M(m\times n), m \geq n$ and linear independent column vectors}
+    {$Q(m\times n)$ and $R(n\times n)$ with $A = QR$}
+\wa{\operatorname{QRDecomposition}[A]}
+\scriptref{58}
+%
+\begin{enumerate}
+  \item Apply Gram-Schmidt-Process to column vectors
+  \item $Q = \{q_1, q_2, \ldots\}$
+  \item $Q^T A = R \Rightarrow R$
+\end{enumerate}
+\[
+    a
+\]
+
+$Q$ is a matrix of orthonormal column vectors and $R$ is an invertible upper
+triangular matrix.
+
+\section{Determinant}
+
+\io{$A \in M(n\times n)$}{a scalar}
+\wa{\operatorname{Det}[A]}
+\scriptref{21}
+%
+\[
+    n=1: \det{A} = (a,) := a
+\] \[
+    n=2: \det{A} := \begin{vmatrix}
+        a_{11} & a_{12} \\
+        a_{21} & a_{22} \\
+    \end{vmatrix} :=
+    a_{11}\cdot a_{22} - a_{12}\cdot a_{21}
+\]
+
+For $n=3$, it's recommended to evaluate the determinant by using
+the rule of Sarrus.
+This can be done by adding as many column duplicates as necessary to
+get valid diagonals (simply $2m - 1$). This structure allows you to simply
+read all necessary addition and subtraction operations
+(see figure~\ref{fig:sarrus}).
+%
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=150pt]{sarrus.pdf}
+    \caption{Rule of sarrus}
+    \label{fig:sarrus}
+  \end{center}
+\end{figure}
+
+\[
+    \det{A} = 1\cdot 1\cdot 1 + 2\cdot 3\cdot(-1) + (-1)\cdot 0\cdot 2
+\] \[
+    - [(-1) \cdot 1 \cdot (-1)] - [1\cdot 3\cdot 2] - [2\cdot 0\cdot 1]
+    = -12
+\]
+%
+The algebraic complement $A_{ij}'$ of $A$ is the determinant
+of the $(n-1)\times(n-1)$ matrix created by removing row $i$
+and column $j$.
+%
+\[
+    A = (a_{ij}) \in M(n\times n)
+\] \[
+    \det{A} = \sum_{j=1}^n (-1)^{1+j} a_{1j} A_{ij}'
+\]
+%
+\begin{itemize}
+  \item $\det{A^T} = \det{A}$
+  \item Entire row or column is zero $\Rightarrow \det{A} = 0$
+  \item $A\in M(n\times n), \lambda \in \mathbb{K}:
+        \det{(\lambda A)} = \lambda^n \det{A}$
+  \item Two rows or columns are identical: $\det{A} = 0$
+  \item $\det{(A\cdot B)} = \det{A}\cdot\det{B}$
+  \item $\det{(A + B)} \neq \det{A} + \det{B}$
+\end{itemize}
+%
+\[
+    A \text{ is regular}
+    \Leftrightarrow
+    \rank{A} = n
+    \Leftrightarrow
+    \det{A} \neq 0
+\]
+
+\section{Vectors}
+
+\wa{\{\{1\},\{2\},\{3\}\}}
+\scriptref{24}
+%
+\[
+    \lambda, \mu \in \mathbb{R}
+\]
+%
+\begin{itemize}
+  \item Vector $\vec{v}$ with $\|\vec{v}\| = 0$ is called Null vector.
+  \item Vector $\vec{v}$ with $\|\vec{v}\| = 1$ is called Unit vector.
+  \item $\vec{a} + 0 = \vec{a}, \quad \vec{a} \cdot 0 = 0$
+  \item $\vec{a} + \vec{b} = \vec{b} + \vec{a}$
+  \item $(\vec{a} + \vec{b}) + c = \vec{a} + (\vec{b} + c)$
+  \item $\|\lambda\cdot \vec{a}\| = |\lambda| \cdot \|\vec{a}\|$
+  \item $\lambda\cdot (\vec{a} + b) = \lambda\cdot \vec{a} + \lambda\cdot b$
+  \item $(\lambda + \mu)\cdot \vec{a} = \lambda\cdot \vec{a}
+        + \mu\cdot \vec{a}$
+  \item $\|\vec{a} + \vec{b}\| \leq \|\vec{a}\| + \|\vec{b}\|$
+\end{itemize}
+
+\section{Norm (length) of a vector}
+%
+\io{A vector $\vec{v}$}{A scalar}
+\wa{\operatorname{Norm}[\{2,3\}]}
+%
+\[
+    \|\vec{v}\| = \sqrt{\sum_i v_i^2}
+\]
+
+\section{Products of vectors}
+
+\subsection{Dot product (of vectors)}
+
+\io{2 arbitrary vectors $\vec{a}$ and $\vec{b}$}{A scalar}
+\wa{\operatorname{vector}\{1,2,3\} . \operatorname{vector}\{2,3,4\}}
+\scriptref{26}
+\dt{''Skalarprodukt''}
+%
+\[
+    \langle a, b\rangle = \|a\|\cdot\|b\| \cdot \cos{\varphi}
+\]
+%
+\begin{itemize}
+  \item $\langle \vec{a}, \vec{b}\rangle = \langle \vec{b}, \vec{a}\rangle$
+  \item $\langle \vec{a}, \vec{b}+\vec{c}\rangle = \langle \vec{b},
+        \vec{a}\rangle + \langle \vec{a},\vec{c}\rangle$
+  \item $\langle \vec{a}, \vec{b}\rangle = 0 \Leftrightarrow
+        \vec{a}\bot \vec{b}$
+  \item $\langle \vec{a}, \vec{a}\rangle = \|\vec{a}\|^2$
+  \item $\vec{a} \in \mathbb{R}^3:
+        \langle \vec{a},\vec{b} \rangle = a_1b_1 + a_2b_2 + a_3b_3$
+  \item $\vec{a} \in \mathbb{R}^3:
+        \|\vec{a}\| = \sqrt{\langle \vec{a}, \vec{a}\rangle}
+        = \sqrt{a_1^2 + a_2^2 + a_3^3}$
+\end{itemize}
+
+\subsection{Cross product}
+
+\io{2 arbitrary vectors $\vec{a}$ and $\vec{b}$}{A scalar $c$}
+\wa{\{1,2,3\} \operatorname{cross} \{2,3,4\}}
+\scriptref{27}
+\dt{''Vektorprodukt''}
+%
+\[
+    \vec{a}, \vec{b}\in\mathbb{R}^3:
+        \quad c := \vec{a}\times \vec{b}
+\] \[
+    c := \|\vec{a}\| \cdot \|\vec{b}\| \cdot \sin{\varphi}
+\]
+%
+Example:
+%
+\[
+    \begin{pmatrix} 2 \\ 4 \\ 5 \end{pmatrix}
+        \times
+    \begin{pmatrix} 3 \\ 6 \\ 1 \end{pmatrix}
+    =
+    \begin{pmatrix}
+        4\cdot1 - 5\cdot6 \\
+        -(2\cdot1 - 5\cdot3) \\
+        2\cdot6 - 4\cdot3 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        -26 \\
+        13 \\
+        0 \\
+    \end{pmatrix}
+\]
+
+\subsection{Triple product}
+
+\io{3 arbitrary vectors $\vec{a}$, $\vec{b}$ and $\vec{c}$}{A scalar}
+\wa{\{1,2,3\} \operatorname{cross} \{2,3,4\}}
+\scriptref{27}
+\dt{''Spatprodukt''}
+%
+\[
+    \vec{a}, \vec{b}, \vec{c} \in \mathbb{R}^n
+\] \[
+    |\langle \vec{a}\times \vec{b}, \vec{c}\rangle|
+        = \|\vec{a}\times \vec{b}\| \cdot \|\vec{c}\| \cdot
+        \cos{\angle(\vec{a}\times \vec{b}, \vec{c})}
+\]
+
+\section{Linear maps}
+
+\begin{itemize}
+  \item injective (injections can be undone)
+        \[
+            \forall x_1, x_2 \in A: f(x_1) = f(x_2)
+                \Leftrightarrow x_1 = x_2
+        \]
+  \item surjective (each element has a root):
+        \[
+            \forall y \in B: \exists x \in A:
+                f(x) = y
+        \]
+  \item bijective = injective and surjective
+\end{itemize}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.5]{set_relations.pdf}
+    \caption{Relations of sets (top to bottom)
+        1. injective
+        2. surjective
+        3. bijective
+    }
+    \label{fig:set_relations}
+  \end{center}
+\end{figure}
+
+\section{Vector spaces}
+
+$\mathbb{K}$ is either $\mathbb{R}$ or $\mathbb{C}$.
+$\mathbb{P}_m$ is vector space of polynomials with degree
+$m$ at maximum.
+A non-empty set $V$ is called vector space of $\mathbb{K}$ if
+
+\begin{enumerate}
+  \item The sum of $a, b \in V$ is defined and in $V$
+  \item The product of $\lambda \in \mathbb{K}$ and $a \in V$
+        ($= \lambda \cdot a$) is defined and an element of $V$
+\end{enumerate}
+
+\begin{itemize}
+  \item null vector: $0 \in V, \forall a \in V: a + 0 = a$
+  \item unit vector: $1 \in V, \forall a \in V: a \cdot 1 = a$
+  \item negative vector: $(-a) \in V, a + (-a) = 0$
+  \item Is $V$ a vector space of $K$. A non-empty subspace $U \subset V$
+        is called ''linear subspace of $V$'' if $\lambda \in K$ and
+        $a, b \in U$ with
+        \[
+            a + b \in U,
+                \quad \lambda \cdot a \in U
+        \]
+  \item A line in $\mathbb{R}^2$ and $\mathbb{R}^3$ containing the origin
+        are linear subspaces.
+  \item A plane in $\mathbb{R}^3$ containing the origin is a linear
+        subspace of $\mathbb{R}^3$.
+\end{itemize}
+
+\section{Linear independency}
+
+A non-empty subset $U \subset V$ is called \emph{linear independent} if
+a finite number of vectors in $U$ are linear independent.
+%
+\[
+    \lambda_1, \ldots, \lambda_m \in K,
+    \quad a_1, \ldots, a_m \in V
+\]
+
+A vector like
+%
+\[
+    a = \lambda_1 a_1 + \ldots + \lambda_m a_m
+\]
+%
+is called linear combination of vectors ($a_1,\ldots,a_m$). A linear
+combination is \emph{trivial} if $\lambda_1 = \ldots = \lambda_m = 0$.
+
+Vectors $a_1,\ldots,a_m$ are linear dependent if there is a non-trivial
+linear combination with
+%
+\[
+    \lambda_1 a_1 + \ldots + \lambda_m a_m = 0
+\]
+%
+These vectors are linear independent if 
+%
+\[
+    \lambda_1 = 0, \ldots, \lambda_m = 0
+\]
+
+Is $U \subset V$ is a non-empty subspace. The set of all linear combinations
+of vectors of $U$ ($= L(U)$) is called the spanned space by $a_i \in U$.
+
+\[
+    L(U) = \left\{ a = \sum_i \lambda_i a_i,
+            \lambda_i \in K, a_i \in U\right\}
+\]
+
+Is $U = \{a_1,\ldots,a_m\}$:
+
+\[
+    L(U) = L(a_1, \ldots, a_m)
+\]
+
+\section{Base of a vector space}
+
+$V$ is a vector space of $K$. A subspace $U \subset V$ of linear
+independent vectors is called basis of $V$ if $L(U) = V$.
+A vector space with a finite basis is called finite-dimensional.
+
+All bases in a finite-dimensional vector space $V$ have the same number
+of vectors. This number is called dimension ($\dim{V}$).
+
+\begin{itemize}
+  \item The base of $\mathbb{R}^n$ is $\set{e_1,\ldots,e_n}$.
+        $\dim{\mathbb{R}^n} = n$
+  \item The base of $\mathbb{P}^m$ is $\set{1, x,\ldots,x^m}$.
+        $\dim{\mathbb{P}_m} = m + 1$
+\end{itemize}
+
+$V$ is a vector space with basis $B = \set{v_1,\ldots,v_n}$. Each vector
+$v \in V$ can be created by unique scalars $\lambda_1,\ldots,\lambda_n$.
+%
+\[
+    v = \lambda_1 v_1 + \ldots + \lambda_n v_n
+\]
+
+\section{Diagonalisation}
+
+\io{A diagonalisable matrix $A \in M(n\times n)$}
+   {diagonal matrix $D$ with $B = C^{-1}DC$}
+\wa{\operatorname{Diagonalize}[A]}
+\scriptref{63}
+
+The eigenvalues of a diagonal matrix are the diagonal elements.
+$A$ is diagonalisable if $A$ has $n$ linear independent eigenvectors.
+$C$ can be created by linear independent eigenvectors of $A$ as
+columns in $C$. This structure satisfies $D = C^{-1} AC$.
+
+\section{Eigenvalues}
+
+\io{$A \in M(n\times n)$}{a scalar $\lambda$}
+\wa{eigenvalues[A]}
+\scriptref{59}
+%
+\[
+    \det{(A - \lambda I)} = 0
+\]
+with $\lambda$ as unknown variable. If you resolve the determinant,
+you will get a polynomial you want to know the Zero of. This polynomial
+is called ''characteristic polynomial of $A$''. In a polynomial of
+degree $n$ you will get $n$ solutions and therefore $n$ eigenvalues
+$\lambda$.
+Row swapping is allowed.
+
+$\lambda$ satisfies:
+\[
+    A\cdot v = \lambda\cdot v
+\]
+
+\section{Eigenvectors}
+
+\io{$A \in M(n\times n)$ and eigenvalues $\sigma_{1,\ldots,n}$}
+   {$n$ linear independent vectors}
+\wa{\operatorname{eigenvectors}[A]}
+\scriptref{59}
+
+If $\sigma_{i} \neq \sigma_j \quad\forall i, j \in [1,n], i \neq j$
+then linear independence is given for eigenvectors for sure.
+
+\[
+    (A - \lambda_i I) \cdot v_i = 0
+\]
+Solve this equation system for $v_i$ which will be your eigenvector.
+
+\section{Gram-Schmidt process}
+
+\io{2 or more vectors}{as many vectors as given by input}
+\wa{\operatorname{Orthogonalize}[\{A,B,C\}]}
+\scriptref{56}
+%
+\[
+    w_1 = \frac{1}{\| v_1\|}\cdot v_1
+\] \[
+    w_i = \frac{1}{\| u_i\|}\cdot u_i, \quad i = 2,\ldots,n
+\] \[
+    u_i = v_i - \sum_{k=1}^{i-1} \langle v_i, w_k\rangle w_k, \quad i = 2,\ldots,n
+\]
+
+\section{Pseudoinverse}
+
+\io{Matrix $A \in M(m\times n)$}{$A^{\#} \in M(n\times m)$}
+\wa{\operatorname{PseudoInverse}[A]}
+\scriptref{92}
+\textbf{More precise name:} Moore-Penrose-Inverse
+
+\begin{enumerate}
+    \item Evaluate $A^T\cdot A$
+    \item Evaluate $(A^T\cdot A)^{-1}$
+    \item Evaluate $(A^T\cdot A)^{-1} \cdot A^T = A^\#$
+\end{enumerate}
+%
+Probably the evaluation of the inverse is impossible. In this case,
+the pseudoinverse might be possible to evaluate using the singular
+value decomposition (SVD):
+\[
+    A = U\Sigma V^T
+        \Rightarrow A^\# = V\Sigma^\# U^T
+\]
+%
+$\Sigma^\#$ can be created by inverting all singular values
+in D: $\sigma_1^{-1}$, $\sigma_2^{-1}$, $\sigma_i^{-1}$.
+
+\section{Singular value decomposition}
+
+\io{Matrix $A \in M(n\times n)$}{Matrices $U$, $\Sigma$, $V$
+    where $A = U\Sigma V^T$}
+\wa{\operatorname{SVD}[A]}
+\scriptref{68}
+\dt{Singulärwertzerlegung}
+%
+\[
+    A(m\times n) = U(m\times m) \cdot \Sigma(m\times n)
+        \cdot V(n\times n)^T
+\]
+If $A$ is positiv definit and symmetrical, the procedure is the same like
+orthogonal diagonalisation.
+%
+\begin{enumerate}
+    \item Evaluate $A^T\cdot A$
+    \item Evaluate die eigenvalues of
+          $A^T\cdot A: \lambda_1, \lambda_2, \ldots$
+    \item Sort the eigenvalues by value
+    \item The singular values $\sigma_1, \sigma_2, \ldots$
+          are the squareroots of the eigenvalues $\sqrt{\lambda_1},
+          \sqrt{\lambda_2}, \ldots$
+    \item Evaluate the eigenvectors $v_1, v_2, \ldots$
+    \item Normalize the eigenvectors ($\leftarrow$ length is 1)
+    \item Combine the eigenvectors as column vectors $\{v_1, v_2, \ldots\} = V$
+    \item Create a $n\times n$ matrix and insert the $\sigma_i$ as
+          diagonals:
+          \[
+            \Sigma = 
+            \begin{pmatrix}
+                \sigma_1 & 0 & 0 \\
+                0 & \sigma_2 & 0 \\
+                0 & \vdots   & 0 \\
+                0 & 0 & \sigma_n \\
+            \end{pmatrix}
+          \]
+    \item Evaluate $u_i = \frac{1}{\sigma_i} \cdot A \cdot v_i$ or find
+          other orthonormal vectors
+    \item Combine the vectors as column vectors $\{u_1, u_2, \ldots\} = U$
+    \item Evaluate $V^T$
+\end{enumerate}
+%
+$U$ and $V$ are not unique.
+
+\section{Gauss-Seidel Iteration}
+
+\io{Linear equation system $(A\mid b)$ and start vector $x_0$}
+   {A vector close to the solution of the equation system}
+\scriptref{87}
+
+If no start vector is given, $\begin{pmatrix} 1 \\ 0 \\ 1 \end{pmatrix}$ is
+prefered.
+
+The Gauss-Seidel-Iteration converges if
+\begin{itemize}
+  \item either $A$ is positive definit
+  \item or for each eigenvector $\lambda$ of $S^{-1} T$
+        it states $|\lambda| < 1$
+\end{itemize}
+
+\section{Spectral radius}
+
+\io{$A$ of an iteration algorithm}{a scalar}
+\scriptref{86}
+
+In the context of iteration algorithms, $A$ is typically
+$S^{-1}T$.
+%
+\[
+    \rho(A) := \max_i{|\lambda_i|}
+\]
+%
+with $\lambda_i$ as eigenvalue of $A$.
+
+\section{Condition number}
+
+\io{regular matrix $A \in M(n\times n)$}{a scalar}
+%\wa{N/A}
+\scriptref{82}
+
+\[
+    \operatorname{cond}(A) := \|A^{-1}\| \cdot \|A\|
+\] \[
+    \|A\|_\infty = \max{\left\{
+        \sum_{j=1}^n |a_{ij}|  \mid i = 1,\ldots,n
+    \right\}}
+\]
+
+\section{Interpolation and Approximation}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.4]{interpolation.png}
+    \caption{Interpolation}
+    \label{fig:interpolation}
+  \end{center}
+\end{figure}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.4]{approximation.png}
+    \caption{Approximation}
+    \label{fig:approximation}
+  \end{center}
+\end{figure}
+
+\section{Cubic Spline Interpolation}
+
+\io{List of $\{x,y\}$ pairs}{A polynomial}
+\wa{\operatorname{BSplineCurve}[pts, SplineDegree\rightarrow3]}
+\scriptref{115}
+
+\textbf{Is S(x) a cubic spline interpolation?} \\
+\begin{itemize}
+  \item The function has to be continous. So all functions must stop
+        at the same value at the borders.
+  \item $f_i'(x_i) = f_{i+1}'(x_i)$ must be satisfied for all $i$
+\end{itemize}
+
+\section{Glossary}
+
+\begin{description}
+  \item[identity matrix] $a_{ii} := 1, 0$ otherwise
+  \item[positiv definit] $A$ is positiv definit if \emph{one} of
+    the following requirements is satisfied:
+    \begin{equation}
+        x^T A x > 0 \quad \forall x \in \mathbb{R}^n, x\neq 0
+    \end{equation} \begin{equation}
+        \lambda_i > 0 \quad \forall \lambda_i \text{ of } A
+    \end{equation} \begin{equation}
+        m > 0 \quad \forall m \text{ as minor of } A
+    \end{equation} \begin{equation}
+        d_i > 0 \quad \forall d \in A_t
+    \end{equation}
+    with $d$ as the pivot elements of the triangular form
+    (\emph{without} row swapping) of $A$.
+  \item[regular matrix] $M(m\times n)$ has an inverse matrix
+  \item[singular matrix] $M(m\times n)$ has no inverse matrix
+  \item[similar matrix] $A, B \in M(n\times n)$ are similar
+        if $C \in M(n\times n)$ in $B = C^{-1} AC$ exists;
+        $A$ and $B$ have the same characteristic polynomial and
+        the same eigenvalues
+  \item[spectral radius] $\rho(S^{-1}T) := \max_i{|\lambda_i|}$
+  \item[strongly diagonal dominant] \hfill{}
+    \[
+        |a_{ii}| > \sum_{\substack{j=1 \\ j\neq i}}^n
+        |a_{ij}| \quad \forall i = 1,\ldots,n
+    \]
+  \item[symmetrical matrix]
+    $a_{ij} = a_{ji} \quad\forall a \in M(m\times n)$
+  \item[permutation] An identity matrix where the same
+    elementary row operations of the Gaussian algorithm
+    have been applied on
+  \item[triangular form]
+    %elements below or above diagonal line are all 0
+    $a_{ij} = 0 \quad\forall i > j$ or $\forall i < j$
+  \item[quadratic matrix] $A \in M(n\times m): n = m$
+\end{description}
+
+\end{document}

@@ -1,0 +1,451 @@
+RNO Prüfungsfragen Beispiele 2010 Ausarbeitung
+==============================================
+
+:author:        meisterluk
+:date:          11.06.23, 11.10.12
+:license:       GPL
+
+Zu Teil A 1
+-----------
+
+Bei der TOY‐CPU gibt es drei Typen von Load‐Befehlen. Wie heißen diese und
+worin besteht der Unterschied zwischen diesen?
+
+ • LOAD (LD): lädt einen Wert aus dem *Speicher* in ein Register
+ • LOAD indirect (LDI): lädt einen Wert aus dem Speicher auf den ein
+        *Register* zeigt in ein Register
+ • LOAD immediate (LDA): lädt einen Wert aus *imm* in ein Register
+
+Zu Teil A 2
+-----------
+
+Wie ist beim TOY‐Computer das Problem „Input/Output“ gelöst? 
+
+Bei TOY wird I/O über sogenanntes Memory Mapped I/O erreicht. Dabei entspricht
+das Schreiben eines Speicherbereichs (konkret: 0xFF) dem Senden der Daten an ein
+I/O Device. Das Laden entspricht dem Empfangen. Der Begriff Mapping ergibt sich
+durch die statische Zuordnung des I/O Geräts zu einem Speicherbereich. Auf 
+Hardwareebene lässt sich dieses Funktionsprinzip implementieren, indem man mit 
+einem Adresskodierer Multiplexer entsprechend schaltet (sprich: wenn die 
+angefragte Adresse den Speicherbereich des I/O Devices matcht), der das Signal 
+an das I/O Gerät weiterleitet und die Kommunikation mit dem I/O Gerät steuert. 
+Zur Synchronisation der Taktsignale zw. Trennung der Taktdomänen sind weitere 
+Konzepte wie Handshake notwendig.
+
+Zu Teil A 3
+-----------
+
+Schreiben Sie ein TOY‐Programm in Assemblersprache, welches 4 Zahlen
+zusammen zählt. Die 4 Zahlen werden vom Standard‐Input eingelesen und
+die Summe wird am Standard‐Output ausgegeben.
+
+Kein Overflowcheck irgendeiner Art:
+
+    LD R1, 0xFF
+    LD R2, 0xFF
+    LD R3, 0xFF
+    LD R4, 0xFF
+    ADD R5, R1, R2
+    ADD R5, R5, R3
+    ADD R5, R5, R4
+    ST R5, 0xFF
+
+Anderer Ansatz (fälschlicherweise in Maschinencode):
+
+    // R1 = 1
+    // R2 = where to write chars to
+    // R3 = chars read
+    // R4 = tmp value of stdin
+    // R5 = sum
+
+    00: 0030   (0000 0000 0011 0000,     48) 
+    01: 0004   (0000 0000 0000 0100,      4) 
+
+    // epilog
+    10: 7101   R[1] <- 0001                  
+    11: 8200   R[2] <- mem[00]               
+    12: 8301   R[3] <- mem[01]               
+    // read from stdin
+    13: 84FF   read R[4]                     
+    14: 1545   R[5] <- R[4] + R[5]           
+    15: 1221   R[2] <- R[2] + R[1]           
+    16: 2331   R[3] <- R[3] - R[1]           
+    17: D313   if (R[3] > 0) goto 13         
+    18: 95FF   write R[5]                    
+
+Zu Teil A 4
+-----------
+
+Übersetzen Sie das Assemblerprogramm aus dem obigen Beispiel in
+TOY‐Maschinensprache.
+
+In Maschinencode und Registertransfersprache:
+
+    10: 81FF   read R[1]
+    11: 82FF   read R[2]
+    12: 83FF   read R[3]
+    13: 84FF   read R[4]
+    14: 1512   R[5] <- R[1] + R[2]
+    15: 1553   R[5] <- R[5] + R[3]
+    16: 1554   R[5] <- R[5] + R[4]
+    17: 95FF   write R[5]
+
+Zu Teil A 5
+-----------
+
+Wozu braucht man Assembler‐Direktiven? Geben Sie Beispiele. 
+
+Unter Assembler Direktiven versteht man Instruktionen, die im Assemblercode
+stehen, allerdings vom Assembler interpretiert werden und nicht von der CPU
+zur Laufzeit. Unter diese Definition fallen etwa Labels und zahlreiche
+Kommandos, die in GAS-Syntax mit einem Punkt beginnen.
+
+    .file "helloworld.c"
+
+Diese Direktive speichert etwa mit, dass das Programm durch die C-Datei
+helloworld.c erzeugt wurde. Diese Information kann dann beim Auftreten
+von Fehlern für Fehlermeldungen (Debugging) verwendet werden.
+
+    .globl _start:
+    _start:
+
+Die Direktive .globl weist den Assembler an, das "_start" global zu
+behandeln. Damit kann jeder Gültigkeitsbereich (Scope) im Programm (also
+auch Subroutinen) darauf zurückgreifen.
+
+    str:
+        .ascii "Hello World\0"
+
+Durch Direktiven wie .ascii kann im Vorfeld ein Array an Zeichen angelegt
+werden auf welches später über das Label "str" zugegriffen werden kann.
+Essenziell sind weiters die Direktiven .data und .text die angeben, dass
+nachfolgend Daten (nur lesen) und Text (zu exekutierende Instruktionen)
+zu finden sind.
+
+Zu Teil A 6
+-----------
+
+Welche Information steckt in einer TOY‐Object‐Datei? 
+
+In einer Objectdatei befindet sich das Programm in binärer Form. Es ist
+dabei systemabhängig und muss noch den "linking stage" durchwandern, um alle
+Referenzen auf externe Programmroutinen aufzulösen.
+
+In einer Objectdatei lässt sich weiters bereits die notwendige Speichergröße des
+Programms im Hauptspeicher ermitteln und Labels wurden in
+Hauptspeicher-Referenzen aufgelöst.
+
+Zu Teil A 7
+-----------
+
+Worin besteht der Unterschied zwischen einer Object‐Datei und einer
+exekutierbaren Datei?
+
+Eine exekutierbare Datei (ist offensichtlich) exekutierbar und kann damit
+direkt dem Betriebsystem zur Verarbeitung übergeben werden. Ein Objectfile
+hat hingegen den "linking stage" des Kompliationsprozesses noch nicht
+durchwandert und muss noch alle Referenzen auf externe Programmroutinen
+auflösen. Beispielweise können zwei Objectfiles (die sich gegenseitig
+benötigen) gemeinsam gelinkt werden und daraus entsteht dann eine
+exekutierbare Datei. Die exekutierbare Datei enthält eine Liste an
+Instruktionen, die von der CPU ausgeführt werden können.
+
+Zu Teil B 1
+-----------
+
+Sie starten den GAS‐Assembler mit einer Datei, welche Assembler‐Code
+beinhaltet. Zum Beispiel so: „as -a test.s“. Das Resultat von GAS zeigt
+unter anderem den Begriff „UNDEFINED SYMBOLS“.  Was bedeutet das?
+Geben Sie ein Assembler‐Code‐Beispiel dazu.
+
+Für einen ASM Source Code
+
+    .text
+        movl %eax, %ebx
+        call x
+
+Gilt bei einem Aufruf "as -a test.s":
+
+    GAS LISTING test.s          page 1
+
+
+       1                .text
+       2 0000 89C3          movl %eax, %ebx
+       3 0002 E8000000      call x
+       3      00
+
+    GAS LISTING test.s          page 2
+
+
+    NO DEFINED SYMBOLS
+
+    UNDEFINED SYMBOLS
+    x
+
+Der Aufruf von "x" enthält einen dem Assembler unbekannten Namen.
+Vermutlich handelt es sich um eine Routine, die erst später hinzugelinkt
+wird. Unter den Bereich "Symbols" fallen somit alle Referenzen (notiert in ASM
+durch Labels), die Programmroutinen oder Daten definieren.
+
+Zu Teil B 2
+-----------
+
+Was passiert, wenn Sie in einem Assemblerprogramm den Befehl „ret“ einfügen
+ohne dass Sie einen dazu passenden Befehl „call“ haben? Fällt dies dem
+Assembler auf? Was passiert, wenn Sie 2 Befehle „ret“ hintereinander stehen 
+im Assembler‐Code haben? Wie würde die CPU Maschinenprogramme, wo obige
+beide Fälle vorkommen, ausführen?
+
+Bei dem Befehl "call" wird (nach dem Anlegen von Parametern am Stack) der
+aktuelle EIP/PC und der EBP auf dem Stack gespeichert. Weiters wird Platz
+für lokale Variablen reserviert (ESP erniedrigt). EIP/PC wird auf die neue
+Subroutine gesetzt. Der EBP wird auf den neuen Frame gesetzt.
+
+Bei einem Befehl "ret" wird "call" zurückgerechnet und damit der EBP und
+EIP/PC vom Stack gelesen. Weiters wird der ESP erhöht und damit gehen
+lokale Variablen verloren.
+
+Aus diesen Gegebenheiten folgt, dass der Assembler versuchen wird, das
+aktuelle Datum vom Stack als EBP und EIP/PC zu lesen. Im Idealfall kommt es
+nur zu einem segmentation fault, weil versucht wird auf einen unerlaubten
+Speicherbereich zuzugreifen. Dem Assembler wird dieser Fehler nicht
+auffallen und er wird den Befehl wie notiert ausführen.
+
+Zu Teil B 3
+-----------
+
+Was bedeuten folgende beiden Kommandos? 
+as -a --gstabs -o x.o x.s
+ld -o x x.o
+Was passiert, wenn diese beiden Kommandos ausgeführt werden.  
+Was bedeuten die Schalter „a“, „-gstabs“ und  „o“? 
+Was macht „as“? Was macht „ld“? 
+
+Bei as handelt es sich um einen Assembler, welcher helfen kann Assemblercode
+zu verstehen. Durch die Option "a" gibt er den Assemblercode und die
+Maschineninstruktionen auf stdout aus. Durch "gstabs" wird eine zusätzliche
+Symbol-Tabelle angelegt und im Sourcecode der Objectdatei gespeichert. Diese
+kann später für Debuggingzwecke verwendet werden (zB gdb kann sie lesen).
+
+Beim Programm ld handelt es sich um einen Linker, welcher zB mehrere
+Objectfiles zusammenfügen kann. Im konkreten Fall wird die Datei "x.o"
+zu einem executable verarbeitet und als Datei mit dem Namen "x" (Option "o")
+gespeichert.
+
+Zu Teil B 4
+-----------
+
+Was versteht man unter einem „Breakpoint“. Geben Sie ein kleines Beispiel
+unter Verwendung von GDB. Wofür sind „Breakpoints“ praktisch?
+
+    $ gdb total
+    (gdb) b done
+    Breakpoint 1 at 0x804808b: file total.s line 33
+    (gdb) r
+    Starting program: /home/k/kposch/rno/Teil_B_neu/total
+    Breakpoint 1, done () at total.s:33
+    [...]
+    (gdb) info registers ebx
+    ebx    0x1a 26
+    (gdb) x/5w &x
+    0x8049094 <x>:   0x00000001  0x00000005  0x00000002  0x00000012
+    0x80490A4 <sum>: 0x00000000
+    (gdb) x/12c &x
+    [...]
+
+Über den GDB Befehl "b <label>" kann ein Breakpoint beim Label "label"
+gesetzt werden. Ein Breakpoint stellt einen Zeiger auf eine Instruktion
+im Quelltext dar, bei der die Programmausführung stehen bleibt und der
+aktuelle Stand zB des Speichers mit dem "x"-Befehl [eXamine] überprüft werden
+kann (Debugging) oder Registerinhalte mit "info registers" ausgelesen werden
+können.
+
+Zu Teil B 5
+-----------
+
+Was ist ein „Stack“? Was versteht man unter „dem Stack“? Wozu wird er
+verwendet. Nennen Sie drei typische Gründe.
+
+Bei einem Stack handelt es sich um eine Datenstruktur mit der grundsätzlich
+zwei Operationen assoziiert werden: Push und Pop. Daten werden mit Push
+"auf" den Stack gelegt. Mit Pop kann das oberste Element (top) wieder
+entnommen werden. Die Funktionsweise entspricht damit LIFO (Last In, First
+Out). Eine Gefahr stellt der BufferOverflow dar (gepushtes Element hat
+keinen Platz mehr am Stack; der Stack hat beschränkte Kapazität). Im Sinne
+der x86 Architektur werden Funktionsaufrufe und die Arbeit mit Variablen
+auf einem Stack erledigt, weil er sich für diese Tätigkeiten im
+RAM eignet.
+
+3 Anwendungsfälle des x86 Stack:
+
+• Parameterübergabe bei Funktionsaufrufen
+• Implementierung von Gültigkeitsbereichen
+• Ermöglichen der Rückkehr nach Aufruf einer Subroutine
+
+Zu Teil B 6
+-----------
+
+Wie werden bei einem Funktionsaufruf auf Maschinenebene Parameter übergeben?
+Erläutern Sie dies anhand der Funktion „func(int a, int* bp)“. Wie kann die
+aufgerufene Funktion auf die übergebenen Parameter zugreifen?
+
+Die Parameter werden in umgekehrter Reihenfolge (zuerst bp, dann a) auf den
+Stack gepusht. Nachfolgend kommen der (nun alte) EIP/PC und EBP. Danach
+werden lokale Variablen angelegt. Sobald der neue EIP/PC und EBP gesetzt
+wurden, werden die Instruktionen der Subroutine "func" abgearbeitet. Nach
+der Abarbeitung der Funktion werden der alte EIP/PC und EBP wieder gelesen
+und der komplette Inhalt des Funktionsaufrufs verworfen (pop).
+
+Im Hauptbereich der Subroutine kann auf die Parameter mittels Subtraktion eines
+Wertes vom EBP zugegriffen werden. Wenn beispielweise ein Integer (Annahme:
+4 bytes) als einziger Parameter am Stack liegt, kann er mit EBP-4 adressiert
+werden (wenn der Stack gegen 0 läuft). Je nach Fall (Call by Value oder Call by
+reference) handelt es sich um die Zahl selbst oder eine Referenz auf eine Zahl.
+Aus diesem Grund steht in C auch in der Funktionssignatur, ob es sich um Pointer
+oder um Variablen selbst handelt.
+
+Zu Teil B 7
+-----------
+
+EBP (Base Pointer) ist ein general-purpose Register der x86 Architektur.
+Es handelt sich um eine Referenz auf das aktuelle Frame am Stack auf welchem
+gearbeitet wird. Alle Daten, die kleiner (oder gleich) dem EBP sind, gehören
+zum aktuellen Gültigkeitsbereich (wenn der Stack gegen 0 läuft). Als Gesetz
+gilt, dass der EBP stets größer oder gleich dem ESP ist.
+
+Zu Teil C 1
+-----------
+
+Wie werden Daten in einem Ethernet Netzwerk kodiert? Wie kann das Taktsignal
+dabei rückgewonnen werden? Welche Kodierungsverfahren kennen Sie noch
+(Vorteile/Nachteile)? Was bedeutet Bitstuffing? 
+
+Ethernet definiert die Verwendung des Manchester Encodings. Das Manchester
+Encoding ist sehr simpel zu implementieren, indem man ein XOR-Gatter mit den
+Eingängen Daten und Taktsignal verwendet. Der Ausgang wird versandt und der
+Kommunikationspartner kann an den erhaltenen Daten und einem korrekt gewählten
+Taktsignal die Präambel des Ethernet Pakets erkennen (die Präambel stellt eine
+Überprüfung dar).
+
+Andere Variante wären es das Taktsignal parallel in einer separaten Leitung
+zu übertragen (Nachteil: hoher Hardware Aufwand) oder per Bitstuffing das
+Taktsignal in den Daten zu kodieren (Anwendungsfall: USB).
+
+Zu Teil C 2
+-----------
+
+Wie können Kollisionen in einem Ethernet Netzwerk erkannt werden? Erklären Sie
+das Prinzip des Verfahrens. Was bedeutet Exponential Backoff?
+
+Das Verfahren kann mit dem folgenden Algorithmus beschrieben werden:
+
+    1. Überprüfe, ob aktuell eine (fremde) Datenübertragung stattfindet.
+       Wenn ja, gehe zu Schritt 2, sonst Schritt 3.
+
+    2. Sende Daten und überprüfe, ob es wohl zu keiner Kollision kam.
+       Wenn ein Fehler auftrat, sende ein Jam-Signal und gehe zu Schritt 3.
+       Sonst reiche die Daten an ein höhere OSI-Layer weiter und gehe zu 5
+
+    3. Warte eine Zeit lang und probiere den vorigen Schritt danach nochmals.
+       Die Zeit wird durch eine Zufallszahl zwischen 0 und 2^c - 1, wobei c die
+       Anzahl der bisherigen Versuche darstellt, bestimmt. Diesen Verfahren
+       nennt sich Exponential Backoff, da der Wartezeitraum typischerweise
+       exponentiell mit der Anzahl der Versuche wächst.
+       Wenn ein gewisses Maximum an Versuchen überschritten wird, gehe zu
+       Schritt 4.
+
+    4. Abbruch. Daten konnten nicht gesandt werden.
+
+    5. Erfolgreich. Ende der Übertragung.
+
+Zu Teil C 3
+-----------
+
+Erklären Sie den Unterschied zwischen Hubs und Switches. Auf welcher
+Netzwerkschicht im OSI Model arbeiten diese? Skizzieren Sie dabei die 7
+Schichten des OSI Modells und beschreiben Sie diese kurz. Wozu benötigt der
+Switch eine Source Address Table und was wird in dieser gespeichert? 
+
+Das OSI Modell definiert verschiedene Ebenen:
+
+7. Application      }                    }
+6. Präsentation     } Daten              } zB HTTP
+5. Session          }                    }
+4. Transport         } Segment/Datagram  zB TCP/UDP
+3. Netzwerk         } Paket              zB IP/ICMP
+2. Datenverbindung   } Frame             }
+1. Physikalisch     } Bit                } zB Ethernet
+
+Ein Hub arbeitet auf OSI-Layer 1 und verbindet seine Clients dabei in einer
+Stern- und Bustopologie (er verteilt das Signal in einem Stern, aber da es eine
+einkommenden Signalkanal gibt, handelt es sich logisch um einen Bus). Ein
+einkommendes Signal wird einfach mit dem Flooding-Algorithmus auf alle
+angebundenen Kommunikationspartner verteilt. Dies erhöht zwar den Traffic im
+Netzwerk, jedoch sind die Herstellungskosten für Hubs sehr gering. Der Hub muss
+das einkommende Signal also nur für alle Teilnehmer verstärken.
+
+Der Switch arbeitet auf OSI-Layer 2 und versteht damit bereits Frames.
+Er verwaltet eine sogenannte Source Address Table (SAT), die sich eine
+Assoziation zwischen Anschluss und Mac-Adresse merkt. Diese Tabelle muss
+aber erst aufgefüllt werden und bei einer unbekannten Mac-Adresse wird ein
+Broadcast durchgeführt. Die Mac-Adresse wird dem Frame des Datenverkehrs
+entnommen.
+
+Zu Teil C 4
+-----------
+
+Wie funktioniert die Adressauflösung im Internet? Welches Service kann verwendet
+werden um IP Adressen in Domainnamen zu übersetzen? Was bedeutet
+Reverse DNS Lookup? Erklären Sie den hierarchischen Aufbau und dessen
+Funktionsweise (Skizze).
+
+Im Protokoll des DNS (Domain Name Service) ist eine hierarchische Struktur
+definiert über die Servernamen gesucht & gefunden werden. Dabei bildet man als
+Client bei der Anfrage selbst einen Knoten. Die Anfrage wird dann an den
+Provider (ISP) weitergereicht dessen DNS Server je nach Top-Level-Domain die
+Anfrage an einen übergeordneten Server weiterreicht. Über alle Ebenen des Baums
+nach unten wird die zugeordnete Mac-Adresse für TLD, Domain, Subdomain und
+der Webserver gefunden. Daraus resultiert jetzt eine Zuordnung von IP-Adresse
+zu einer Domain. Aufgrund dieses DNS-Lookups kann jetzt die Kommunikation
+zwischen Client und Server stattfinden. Dieses DNS System wurde eingeführt,
+da das Merken von IP Adressen ein Usability Problem darstellte.
+
+Beim DNS Reverse Lookup wird genau der umgekehrte Mechanismus eingesetzt: Zu
+einer IP Adresse sucht man die zugehörte Domain.
+
+Zu Teil C 5
+-----------
+
+Was ist der Unterschied zwischen MAC und IP Adressen? Kann man MAC Adressen 
+verwenden um Pakete durch das Internet zu routen? Wie stellt man sicher, dass 
+unzustellbare IP Pakete nicht ewig durch das Netzwerk „geistern“? Wird der
+Sender von der Unzustellbarkeit informiert? Wenn ja, welches Protokoll wird
+dafür verwendet? 
+
+MAC Adressen sind im OSI Layer auf Level 2 definiert und werden deshalb auch von
+Geräten verwendet, die keine Kenntnisse über IP besitzen. MAC Adressen sind eine
+eindeutige Identifikationsnummer einer Hardware. IP Adressen hingegen sind auf
+OSI Layer 3 und werden verwendet um einen Client innerhalb eines Netzwerks
+eindeutig zu identifizieren. IP Adressen können über das DHCP dynamisch
+zugewiesen werden. Aktuell findet ein Wechsel von IPv4 (32bit Adressen) auf
+IPv6 (128bit Adressen) statt.
+
+Da nur das lokale Netz eine Zuordnung einer Mac-Adresse zu einem Client kennt,
+ist das Versenden von Paketen über das gesamte Internet nicht möglich.
+
+IP Pakete besitzen eine sogenannte TTL (Time To Live). Bei jedem Knoten den das
+Paket passiert, wird diese TTL dekrementiert. Wird dieser Wert 0, so wird das
+Paket verworfen. Auf diese Weise werden fehlerhaft adressierte Pakete verworfen.
+Das traceroute Programm macht Nutzen von diesem Mechanismus um die Knoten zu
+ermitteln, da beim Verwerfen der Nachricht eine Fehlermeldung per ICMP an den
+ursprünglichen Absender des Pakets gesandt wird (und traceroute damit alle
+Knoten kennen lernt).
+
+Zu Teil C 6
+-----------
+
+Wofür wird ARP verwendet und wie funktioniert es? Auf welcher Netzwerkschicht
+arbeitet das Protokoll? Was wird in der ARP Tabelle gespeichert?
+
+Das ARP (Address Resolution Protocol) arbeitet auf OSI Layer 2 und findet zu
+einer IP Adresse die zugehörige MAC Adresse.

@@ -1,0 +1,516 @@
+\documentclass[11pt]{article}
+\usepackage{euler}
+\usepackage{xltxtra}
+\usepackage{amsmath}
+%\usepackage{amssymb}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{listings}
+%\setmainfont[Mapping=tex-text]{Ubuntu}
+%{FreeSerif}
+%{DejaVu Serif}
+
+\date{26th of June 2012}
+\author{Lukas Prokop}
+\title{Software paradigms exam 27.6.2011}
+
+% Definitions by Daniel Gruß
+% https://github.com/lava2/swp/blob/master/commands.tex
+% various operators
+\DeclareMathOperator {\id}{id}
+\DeclareMathOperator*{\ggt}{ggT}
+\DeclareMathOperator*{\kgv}{kgV}
+\DeclareMathOperator {\ord}{ord}
+\DeclareMathOperator {\fmod}{mod}
+\DeclareMathOperator*{\trace}{tr}
+\DeclareMathOperator {\nil}{nil}
+\DeclareMathOperator*{\supp}{Supp}
+\DeclareMathOperator {\lm}{lm}
+\DeclareMathOperator {\lt}{lt}
+\DeclareMathOperator {\lc}{lc}
+\DeclareMathOperator*{\rest}{rest}
+\DeclareMathOperator*{\tmult}{\:{mult}\:}
+\DeclareMathOperator*{\tplus}{\:{plus}\:}
+\DeclareMathOperator*{\tminus}{\:{minus}\:}
+\DeclareMathOperator*{\tnull}{\:{null}\:}
+\DeclareMathOperator*{\teins}{\:{eins}\:}
+\DeclareMathOperator*{\tif}{\:{if}\:}
+\DeclareMathOperator*{\telse}{\:{else}\:}
+\DeclareMathOperator*{\tthen}{\:{then}\:}
+\DeclareMathOperator*{\tlt}{\:{lt?}\:}
+\DeclareMathOperator*{\teq}{\:{eq?}\:}
+\DeclareMathOperator*{\tumult}{\:\u{mult}\:}
+\DeclareMathOperator*{\tuplus}{\:\u{plus}\:}
+\DeclareMathOperator*{\tuminus}{\:\u{minus}\:}
+\DeclareMathOperator*{\tunull}{\:\u{null}\:}
+\DeclareMathOperator*{\tueins}{\:\u{eins}\:}
+\DeclareMathOperator*{\tuif}{\:\u{if}\:}
+\DeclareMathOperator*{\tuelse}{\:\u{else}\:}
+\DeclareMathOperator*{\tuthen}{\:\u{then}\:}
+\DeclareMathOperator*{\tult}{\:\u{lt?}\:}
+\DeclareMathOperator*{\tueq}{\:\u{eq?}\:}
+\DeclareMathOperator {\End}{end}
+\DeclareMathOperator*{\rang}{rang}
+\DeclareMathOperator*{\dist}{d}
+\DeclareMathOperator*{\real}{Re}
+\DeclareMathOperator*{\imag}{Im}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\weight}{weight}
+
+% graphics and sectioning
+\newcommand{\skizze}[1]{$ $ \begin{center}\includegraphics[scale = 0.33]{images/#1.png}\end{center}}
+\newcommand{\mychapter}[1]{\chapter{#1}}
+\newcommand{\mysection}[1]{\section{#1}}
+\newcommand{\mysubsection}[1]{\subsection{#1}}
+\newcommand{\separate}{\begin{center}*\:*\:*\end{center}}
+
+% definition and proof tools
+\newcommand{\proofdone}{\hfill \ensuremath{\Box}}
+\newcommand{\mathdone}{\tag*{\ensuremath{\Box}}}
+
+\newcommand{\defas}{\mathrel{\mathop:}=}
+\newcommand{\asdef}{=\mathrel{\mathop:}}
+
+\newcommand{\there}{``$\Rightarrow$'' \;}
+\newcommand{\back}{``$\Leftarrow$'' \;}
+
+\newcommand{\then}{\: \Rightarrow \:}
+\newcommand{\ifonlyif}{\: \Leftrightarrow \:}
+\renewcommand{\u}[1]{\underline{#1}}
+\newcommand{\tu}[1]{\text{\underline{#1}}}
+
+\newcommand{\tobe}{\overset{!}{=}}
+\newcommand{\isit}{\overset{?}{=}}
+
+% referencing
+\newcommand{\tagstar}{\tag*{$\star$}}
+\newcommand{\refstar}{\ensuremath{(\star)}}
+\newcommand{\alrefstar}{\tag*{(\star)}}
+\newcommand{\tagstarn}[1]{\tag*{$\star_{#1}$}}
+\newcommand{\refstarn}[1]{\ensuremath{(\star_{#1})}}
+\newcommand{\alrefstarn}[1]{\tag*{(\star_{#1})}}
+
+% mathtext
+\newcommand{\sonst}{\text{sonst}}
+\newcommand{\const}{\mathrm{const}}
+
+% braces
+\newcommand{\abs}[1]{\left\lvert{#1}\right\rvert}
+\newcommand{\norm}[1]{\left\lVert{#1}\right\rVert}
+\newcommand{\angled}[1]{\left\langle{#1}\right\rangle}
+\newcommand{\tangled}[1]{\langle{#1}\rangle}
+\newcommand{\braced}[1]{\left( {#1} \right)}
+\newcommand{\sbraced}[1]{\left\{#1\right\}}
+\newcommand{\bbraced}[1]{\left[#1\right]}
+
+\newcommand{\bbinom}[2]{\genfrac[]{0pt}{0}{#1}{#2}}
+\newcommand{\cbinom}[2]{\genfrac{\{}{\}}{0pt}{0}{#1}{#2}}
+\newcommand{\ebinom}[2]{\genfrac{}{}{0pt}{0}{#1}{#2}}
+
+\newcommand{\gausslo}[1]{\left\lfloor {#1} \right\rfloor}
+\newcommand{\gausshi}[1]{\left\lceil {#1} \right\rceil}
+\newcommand{\gaussround}[1]{\left\lfloor {#1} \right\rceil}
+
+% under/overlining
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\un}[1]{\underline{#1}}
+\newcommand{\vek}[1]{\vec{#1}}
+
+% relations
+\newcommand{\sm}{\setminus}
+\newcommand{\se}{\subseteq}
+\newcommand{\nse}{\nsubseteq}
+\newcommand{\sne}{\nsubseteq}
+\newcommand{\ise}{\supseteq}
+\newcommand{\nise}{\nsupseteq}
+\newcommand{\sneq}{\subsetneqq}
+\newcommand{\isneq}{\supsetneqq}
+
+\newcommand{\subideal}{\trianglelefteq}
+\newcommand{\isubideal}{\trianglerighteq}
+
+\newcommand{\divs}{\mathrel\vert}
+\newcommand{\ndivs}{\nmid}
+\newcommand{\iso}{\simeq}
+
+\newcommand{\nequiv}{\not\equiv}
+
+% sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\primes}{\mathbb{P}}
+\newcommand{\potenz}{\mathcal{P}}
+
+\newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\erw}{\mathbb{E}}
+\newcommand{\variance}{\mathbb{V}}
+
+% greek symbols
+\newcommand{\fee}{\varphi}
+\newcommand{\eps}{\varepsilon}
+
+% various tools
+\newcommand{\where}{\mathrel\big\vert}
+\newcommand{\limited}{\big\vert}
+
+% complexity theory
+\newcommand{\ordn}{\mathcal{O}}
+\newcommand{\oh}{\mathcal{O}}
+
+% analysis
+\newcommand{\de}{\, \dd}
+\newcommand{\dd}{\mathrm{d}}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\newcommand{\rbr}[1]{\left(#1\right)}
+\newcommand{\ebr}[1]{\left[#1\right]}
+\newcommand{\sbr}[1]{\left<#1\right>}
+\newcommand{\gbr}[1]{\left\{#1\right\}}
+\renewcommand{\det}[1]{\text{det}\left(#1\right)}
+\renewcommand{\u}[1]{\underline{#1}}
+\renewcommand{\o}[1]{\overline{#1}}
+\renewcommand{\b}[1]{\textbf{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+%\newcommand{\I}{\mathbb{I}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\dx}{\text{d}x}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\kA}{\mathcal{A}}
+\newcommand{\kC}{\mathcal{C}}
+\newcommand{\kP}{\mathcal{P}}
+
+\newcommand{\Lra}{\:\Leftrightarrow\:}
+\newcommand{\lra}{\:\leftrightarrow\:}
+\newcommand{\Ra}{\:\Rightarrow\:}
+\newcommand{\ra}{\:\rightarrow\:}
+\newcommand{\La}{\:\Leftarrow\:}
+\newcommand{\la}{\:\leftarrow\:}
+
+\newcommand{\limi}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\mceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\mfloor}[1]{\left\lfloor #1 \right\rfloor}
+
+\DeclareMathOperator{\ggT}{ggT}
+\DeclareMathOperator{\kgV}{kgV}
+
+\DeclareMathOperator{\RR}{R}
+\DeclareMathOperator{\notdivides}{\nmid}
+
+\newcommand{\lng}[1]{\mathcal{#1}}
+\newcommand{\kwu}[1]{\text{\:\u{#1}\:}}
+\newcommand{\kw}[1]{\text{\:{#1}\:}}
+\newcommand{\I}[3]{I_{\lng{#1}}\left(#2,\tu{#3}\right)}
+\newcommand{\Iu}[3]{I_{\lng{#1}}\left(#2,#3\right)}
+
+\newcommand{\twedge}{\text{$\wedge$}}
+\newcommand{\tforall}{\text{$\forall$}}
+\newcommand{\texists}{\text{$\exists$}}
+\newcommand{\tvee}{\text{$\vee$}}
+\newcommand{\tto}{\text{$\to$}}
+\newcommand{\tneg}{\text{$\neg$}}
+% End Definitions
+
+\DeclareMathOperator*{\s}{s}
+\DeclareMathOperator*{\binStack}{binStack}
+\DeclareMathOperator*{\add}{add}
+\DeclareMathOperator*{\len}{len}
+\newcommand{\Null}{\text{null}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+\lstdefinelanguage{EXP}%
+  {keywords={if,then,else},%
+%   emph={plus,minus,mult,add0,add1,sub,build,rest,first,second,reverse,depth,max,nth,lt?,eq?,is0?,is1?,isEmpty?,atom?},
+   moreemph={null,eins,0,1,[]},% epsilon is missing
+   emphstyle=\emph,
+   mathescape={true}%
+  }%
+\newcommand{\NE}{\text{NE:}\hspace{5pt}}
+\newcommand{\NR}{\text{NR:}\hspace{5pt}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+%
+\section{Exercise 1}
+%
+%\begin{table}
+  \begin{tabular}{lcccc}
+           &    S     &    A    &   B   &   C \\ \hline
+    \textsc{FIRST}  & $\set{\u{a}}$ & $\set{\u{a}}$ & $\set{\u{b}, \u{c}, \u{a}}$ & $\set{\u{c}, \varepsilon}$ \\
+    \textsc{FOLLOW} & $\set{\$}$ & $\set{\$, \u{b}, \u{c}, \u{a}}$ & $\set{\$, \u{b}, \u{c}, \u{a}}$ & $\set{\u{a}}$ \\
+  \end{tabular}
+%\end{table}
+%
+\section{Exercise 2a}
+%
+%\begin{table}
+  \begin{tabular}{lcccc}
+      &    $\u{a}$     &    $\u{b}$    &   $\u{c}$   &   \$ \\
+  \hline
+    S & $S \to A$      & $S \to A$     & $S \to A$   & \\
+    A & $A \to AB, A \to \u{a}$ &      &             & \\
+    B & $B \to CA$     & $B \to \u{b}$ & $B \to CA$  & \\
+    C & $C \to \varepsilon$ &          & $C \to \u{c}D, C \to \u{c}$ & \\
+    D &                & $D \to \u{b}$ & $D \to \u{c}$ & \\
+  \end{tabular}
+%\end{table}
+
+$(A, \u{a})$ contains a left recursion.
+$(C, \u{c})$ contains an ambiguity.
+%
+\section{Exercise 2b}
+%
+\begin{align*}
+  S &\to IR \\
+  R &\to CIR \\
+  R &\to \varepsilon \\[7pt]
+  I &\to \u{a}J \\
+  J &\to \u{b}J \\
+  J &\to \varepsilon \\[7pt]
+  C &\to \u{c}D \\
+  C &\to \varepsilon \\
+  D &\to \u{c} \\
+  D &\to \u{b} \\
+  D &\to \varepsilon
+\end{align*}
+%
+%\begin{table}
+ \begin{center}
+  \begin{tabular}{lcccc}
+      & $\u{a}$ & $\u{b}$ & $\u{c}$ & \$ \\
+  \hline
+    S & $S \to IR$ &      &         &  \\
+    R & $R \to CIR$ &     & $R \to CIR$ & $R \to \epsilon$ \\
+    I & $I \to \u{a}J$ &  &         &  \\
+    J & $J \to \varepsilon$ & $J \to \u{b}J$ & $J \to \varepsilon$ & $J \to \varepsilon$ \\
+    C & $C \to \varepsilon$ & & $C \to \u{c}D$ & \\
+    D & $D \to \varepsilon$ & $D \to \u{b}$ & $D \to \u{c}$ & \\
+  \end{tabular}
+ \end{center}
+%\end{table}
+%
+\section{Exercise 2c}
+%
+\begin{center}
+ \begin{tabular}{lll}
+  \textsc{Input}           & \textsc{Stack}        & \textsc{Comment} \\
+  $\u{\$abcbba}$           & $S$                   & $S \to IR$ \\
+  $\u{\$abcbba}$           & $RI$                  & $I \to \u{a}J$ \\
+  $\u{\$abcbba}$           & $RJ\u{a}$             & $J \to \u{b}J$ \\
+  $\u{\$abcbb}$            & $RJ\u{b}$             & $J \to \u{b}J$ \\
+  $\u{\$abcb}$             & $RJ\u{b}$             & $J \to \varepsilon$ \\
+  $\u{\$abc}$              & $R$                   & $R \to CIR$ \\
+  $\u{\$abc}$              & $RIC$                 & $C \to \u{c}D$ \\
+  $\u{\$abc}$              & $RID\u{c}$            & $D \to \u{b}$ \\
+  $\u{\$ab}$               & $RI\u{b}$             & $I \to \u{a}J$ \\
+  $\u{\$a}$                & $RJ\u{a}$             & $J \to \varepsilon$ \\
+  $\u{\$}$                 & $R$                   & $R \to \varepsilon$ \\
+  $\u{\$}$                 &                       & accepted \\
+ \end{tabular}
+\end{center}
+%
+\section{Exercise 3}
+%
+\lstset{language=EXP}
+\begin{lstlisting}
+factorial(x) =
+  if eq?(x, 0) then eins
+  else if eq?(x, eins) then eins
+  else mult(factorial(minus(x, eins)), x)
+\end{lstlisting}
+
+Proof by complete induction.
+
+\subsection{Induction hypothesis}
+\[
+  \forall \omega, \omega(\u{x}) \leq n, \omega(\u{x}) \in ℕ:
+    I(\delta, \omega, \u{factorial(x)}) = \omega(\u{x})!
+\]
+
+\subsection{Induction base 0}
+\[
+  \omega(\u{x}) = 0
+\] \[
+  I(\delta, \omega, \u{\text{if eq?(x, 0) then eins else if eq?}}\ldots)
+\] \[
+  \NR I(\delta, \omega, \u{\text{eq?(x, 0)}})
+    = \operatorname{eq?}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{0}))
+    = \operatorname{eq?}(\omega(\u{x}), 0)
+    = T
+\] \[
+  I(\delta, \omega, \u{\text{eins}}) = 1 = 0!
+\]
+
+\subsection{Induction base 1}
+%
+\[
+  \omega(\u{x}) = 1
+\] \[
+  I(\delta, \omega, \u{\text{if eq?(x, 0) then eins else if eq?}}\ldots)
+\] \[
+  \NR I(\delta, \omega, \u{\text{eq?(x, 0)}})
+    = \operatorname{eq?}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{0}))
+    = \operatorname{eq?}(\omega(\u{x}), 0)
+    = F
+\] \[
+  I(\delta, \omega, \u{\text{if eq?(x, 1) then eins else mult}}\ldots)
+\] \[
+  \NR I(\delta, \omega, \u{\text{eq?(x, eins)}})
+    = \operatorname{eq?}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{\text{eins}}))
+    = \operatorname{eq?}(\omega(\u{x}), 1)
+    = T
+\] \[
+  I(\delta, \omega, \u{\text{eins}}\ldots) = 1 = 1!
+\]
+
+\subsection{Induction step}
+%
+\[
+  \omega(\u{x}) = n + 1 \qquad n \geq 2
+\] \[
+  I(\delta, \omega, \u{\text{if eq?(x, 0) then eins else if eq?}}\ldots)
+\] \[
+  \NR I(\delta, \omega, \u{\text{eq?(x, 0)}})
+    = \operatorname{eq?}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{0}))
+    = \operatorname{eq?}(\omega(\u{x}), 0)
+    = F
+\] \[
+  I(\delta, \omega, \u{\text{if eq?(x, 1) then eins else mult}}\ldots)
+\] \[
+  \NR I(\delta, \omega, \u{\text{eq?(x, eins)}})
+    = \operatorname{eq?}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{\text{eins}}))
+    = \operatorname{eq?}(\omega(\u{x}), 1)
+    = F
+\] \[
+  I(\delta, \omega, \u{\text{mult(factorial(minus(x, eins)), x)}})
+    = \operatorname{mult}(I(\delta, \omega, \u{\text{factorial(minus(x, eins))}}), I(\delta, \omega, \u{x}))
+\] \[
+  \NE \omega'(\u{x})
+    = I(\delta, \omega, \u{\text{minus(x, eins)}})
+    = \operatorname{minus}(I(\delta, \omega, \u{x}), I(\delta, \omega, \u{\text{eins}}))
+\] \[
+    = \operatorname{minus}(\omega(\u{x}), 1)
+    = \operatorname{minus}(n + 1, 1) = n
+\] \[
+  \operatorname{mult}(n!, n+1) = (n+1)! \qquad \text{ corresponds to hypothesis}
+\]
+
+%
+\section{Exercise 4a}
+%
+\lstset{language=prolog}
+\begin{lstlisting}
+odd(binStack(V, R)) :- odd(R).
+odd(binStack(s(0), null)).
+\end{lstlisting}
+%
+\section{Exercise 4b}
+%
+Tables~\ref{tab:4b-def} and~\ref{tab:4b-deriv}.
+\begin{table}[h]
+  \begin{tabular}{cl}
+    Q   & $\neg \len(\binStack(0, \binStack(0, \binStack(0, \Null))), \s(\s(\s(0))))$ \\
+    C1  & $\add(X, 0, X)$ \\
+    C2  & $\add(X, \s(Y), \s(Z)) \lor \neg \add(X, Y, Z)$ \\
+    C3  & $\len(\Null, 0)$ \\
+    C4  & $\len(\binStack(V, R), E) \lor \neg \len(R, S) \lor \neg \add(\s(0), S, E)$
+  \end{tabular}
+  \caption{Rules of exercise 4b in logical notation}
+  \label{tab:4b-def}
+\end{table}
+%
+\begin{table}[h]
+  \begin{tabular}{cl}
+    Q   & $\neg \len(\binStack(0, \binStack(0, \binStack(0, \Null))), \s(\s(\s(0))))$ \\
+    C4  & $\len(\binStack(V, R), E) \lor \neg \len(R, S) \lor \neg \add(\s(0), S, E)$ \\
+    $\Theta$ & $\{ V = 0, R = \binStack(0, \binStack(0, null)), E = \s(\s(\s(0))) \}$ \\
+    R   & $\neg \len(\binStack(0, \binStack(0, \Null)), S_1) \lor \neg \add(\s(0), S_1, \s(\s(\s(0))))$ \\[10pt]%
+
+    C4  & $\len(\binStack(V, R), E) \lor \neg \len(R, S) \lor \neg \add(\s(0), S, E)$ \\
+    $\Theta$ & $\{ V_2 = 0, R_2 = \binStack(0, \Null), E_2 = S_1 \}$ \\
+    R   & $\neg \len(\binStack(0, \Null), S_2) \lor \neg \add(\s(0), S_2, S_1)
+           \lor \neg \add(\s(0), S_1, \s(\s(\s(0))))$ \\[10pt]%
+
+    C3  & $\len(\Null, 0)$ \\
+    $\Theta$ & $\{ S_3 = 0 \}$ \\
+    R   & $\neg \add(\s(0), 0, S_2) \lor \neg \add(\s(0), S_2, S_1) \lor \neg \add(\s(0), S_1, \s(\s(\s(0))))$ \\[10pt]%
+
+    C1  & $\add(X, 0, X)$ \\
+    $\Theta$ & $\{ S_2 = \s(0), X = S_2 \}$ \\
+    R   & $\neg \add(\s(0), \s(0), S_1) \lor \neg \add(\s(0), S_1, \s(\s(\s(0))))$ \\[10pt]%
+
+    C2  & $\add(X, \s(Y), \s(Z)) \lor \neg \add(X, Y, Z)$ \\
+    $\Theta$ & $\{ X_2 = \s(0), Y_2 = 0, Z_2 = A, S_1 = \s(A) \}$ \\
+    R   & $\neg \add(\s(0), 0, A) \lor \neg \add(\s(0), \s(A), \s(\s(\s(0))))$ \\[10pt]%
+
+    C1  & $\add(X, 0, X)$ \\
+    $\Theta$ & $\{ X_3 = \s(0), A = X_3 \}$ \\
+    R   & $\neg \add(\s(0), \s(\s(0)), \s(\s(\s(0)))$ \\[10pt]%
+
+    C2  & $\add(X, \s(Y), \s(Z)) \lor \neg \add(X, Y, Z)$ \\
+    $\Theta$ & $\{ X_4 = \s(0), Y_3 = \s(0), Z_3 = \s(\s(0)) \}$ \\
+    R   & $\neg \add(\s(0), \s(0), \s(\s(0)))$ \\[10pt]%
+
+    C2  & $\add(X, \s(Y), \s(Z)) \lor \neg \add(X, Y, Z)$ \\
+    $\Theta$ & $\{ X_5 = \s(0), Y_4 = 0, Z_4 = \s(0) \}$ \\
+    R   & $\neg \add(\s(0), 0, \s(0))$ \\[10pt]%
+
+    C1  & $\add(X, 0, X)$ \\
+    $\Theta$ & $\{ X_6 = \s(0) \}$ \\
+    R   & empty, query got successfully derivated. \\
+  \end{tabular}
+  \caption{Derivation of the query in exercise 4b}
+  \label{tab:4b-deriv}
+\end{table}
+%
+\section{Exercise 5}
+%
+\[
+  \pi[\text{add}](\pi(a), \pi(b)) = \operatorname{add}(a, b)
+\]
+%
+\lstset{language=EXP}
+\begin{lstlisting}
+add(a, b) =
+  if eq?(mod(a, 2), 1) then
+    if eq?(mod(b, 2), 1) then
+      sub(add(a, b), 1)
+    else
+      if gt?(a, b) then
+        sub(a, b)
+      else
+        add(sub(b, a), 1)
+  else
+    if eq?(mod(b, 2), 1) then
+      if gt?(a, b) then
+        add(sub(a, b), 1)
+      else
+        sub(b, a)
+    else
+      add(a, b)
+\end{lstlisting}
+
+\begin{enumerate}
+  \item Sign of first parameter is positive, second parameter the same
+  \item Sign of first parameter is positive, second parameter is negative
+  \item Sign of first parameter is negative, second parameter is positive
+  \item Sign of first parameter is negative, second parameter the same
+\end{enumerate}
+
+\textbf{Case both parameters are positive:} \\
+If both parameters are positive, the modulo value of both values by 2 is 1.
+Therefore the very last line of the function is evaluated. For decoded
+values the result is $a+b$, which equals to $\pi(a) + \pi(b)$ for encoded
+values as far as the sum of two even numbers is even (which represents
+a positive number).
+
+\end{document}

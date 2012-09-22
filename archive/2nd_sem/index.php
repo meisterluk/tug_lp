@@ -74,6 +74,7 @@
       <li>
         <a href="../../pub/img498.jpg">L</a><a href="../../pub/img499.jpg">ö</a><a href="../../pub/img500.jpg">s</a><a href="../../pub/img501.jpg">u</a><a href="../../pub/img502.jpg">n</a><a href="../../pub/img503.jpg">g</a><a href="../../pub/img504.jpg">e</a><a href="../../pub/img505.jpg">n</a> <a href="../../pub/img506.jpg">für</a> <a href="../../pub/img507.jpg">R</a><a href="../../pub/img509.jpg">O</a> <a href="../../pub/img510.jpg">Mus</a><a href="../../pub/img511.jpg">ter</a><a href="../../pub/img512.jpg">bei</a><a href="../../pub/img513.jpg">sp</a><a href="../../pub/img514.jpg">ie</a><a href="../../pub/img515.jpg">le</a>
       </li>
+      <li><a href="courses">Courses</a></li>
       <li><a href="../1st_sem">Previous semester</a></li>
     </ul>
 
@@ -114,7 +115,7 @@
 
     <ul>
       <li>
-        <img src="/theme/smiley/happy.gif" alt=":-)">
+        <img src="../../img/smiley/happy.gif" alt=":-)">
         <span class="lv" title="Diskrete Mathematik">DM:</span>
 
         <span class="hw done">Übung 8.3</span>
@@ -131,7 +132,7 @@
         <span class="hw done">Übung 28.6</span>
       </li>
       <li>
-        <img src="/theme/smiley/confused.gif" alt=":-/">
+        <img src="../../img/smiley/confused.gif" alt=":-/">
         <span class="lv" title="Softwareentwicklungspraktikum">SEP:</span>
 
         <span class="hw done">EX1</span>
@@ -141,7 +142,7 @@
         <span class="hw done">EX3</span>
       </li>
       <li>
-        <img src="/theme/smiley/happy.gif" alt=":-)">
+        <img src="../../img/smiley/happy.gif" alt=":-)">
         <span class="lv" title="Rechnerorganisation">RO:</span>
 
         <span class="hw done">Aufgabe 1</span>
@@ -150,7 +151,7 @@
         <span class="hw done">Aufgabe 4</span>
       </li>
       <li>
-        <img src="/theme/smiley/happy.gif" alt=":-)">
+        <img src="../../img/smiley/happy.gif" alt=":-)">
         <span class="lv" title="Rechnernetze &amp; -Organisation">RNO:</span>
 
         <span class="hw done">Assignment 1</span>
@@ -158,13 +159,13 @@
         <span class="hw done">Assignment 3</span>
       </li>
       <li>
-        <img src="/theme/smiley/confused.gif" alt=":-)">
+        <img src="../../img/smiley/confused.gif" alt=":-)">
         <span class="lv" title="Datenbanken 1">DB1:</span>
 
         <span class="hw done">Abgabe</span>
       </li>
       <li>
-        <img src="/theme/smiley/confused.gif" alt=":-/">
+        <img src="../../img/smiley/confused.gif" alt=":-/">
         <span class="lv" title="Einführung in das Wissensmangement">EiWM:</span>
 
         <span class="hw done">Exercise 1</span>
@@ -177,7 +178,7 @@
         <span class="hw done">Exercise 8</span>
       </li>
       <li>
-        <img src="/theme/smiley/happy.gif" alt=":-)">
+        <img src="../../img/smiley/happy.gif" alt=":-)">
         <span class="lv" title="Mensch-Maschine-Kommunikation">HCI:</span>
 
 
@@ -187,7 +188,7 @@
         <span class="hw done">TA</span>
       </li>
       <li>
-        <img src="/theme/smiley/happy.gif" alt=":-/">
+        <img src="../../img/smiley/happy.gif" alt=":-/">
         <span class="lv" title="Anwendung von Betriebs- und Informationssystemen">ABIS</span>
 
         <span class="hw done">Blogbeitrag</span>

@@ -20,6 +20,9 @@
 % value. So you are describing the program in a way that only the correct
 % result evaluates to true. prolog is kind of strange as far as it will
 % tell you only true or false for a lot of error classes.
+% The interpreter mechanism behind prolog is proof by contradiction. Each
+% statement can be transformed in a logical clause and satisfying the overall
+% logical clause results in all possible results.
 
 istrue. % fact
 share_property(A, B). % fact with arguments (variable, variable)

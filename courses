@@ -29,7 +29,7 @@ Clawback: 4 ECTS, 3 SSt
 
 Software-Maintenance (SM, VU)
 Id: 716.064
-Topics: Program Analysis, Maintenance of software, Legacy software, Debugging
+Topics: Program Analysis, Sustainability and maintainability of software, Legacy software, Debugging, reverse debugging
 Group: ?
 Newsgroups: tu-graz.lv.soma
 Website: http://www.ist.tugraz.at/teaching/bin/view/Main/SoftwareMaintenance
@@ -39,7 +39,7 @@ Clawback: 4.5 ECTS; 3 SSt
 Entwurf und Analyse von Algorithmen (EAA, VO)
 Design and Analysis of Algorithms (DAA, VO)
 Id: 716.033
-Topics: Divide & Conquer, randomization, graphs, dynamic programming
+Topics: Divide & Conquer, randomization, graphs, trees, data structures, dynamic programming
 Newsgroups: tu-graz.algorithmen
 Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?716033
 Evaluation: 1 exam
@@ -48,7 +48,7 @@ Clawback: 3 ECTS, 2 SSt
 Entwurf von Echtzeitsystemen (EES, VO)
 Design of Real-Time Systems (DRTS, VO)
 Id: 448.023
-Topics: reliability, real-time, hardware support
+Topics: reliability, real-time, operating systems, programming languages, hardware support, scheduling
 Website: https://www.iti.tugraz.at/cms/index.php?option=com_content&view=article&id=30:entwurf-von-echtzeitsystemen&catid=34:entwurf-von-echtzeitsystemen-vouelabor&Itemid=64
 Evaluation: 1 exam
 Clawback: 3 ECTS, 2 SSt
@@ -65,7 +65,7 @@ Clawback: 3 ECTS, 2 SSt
 Betriebsysteme (BS, UE)
 Operating Systems (OS, UE)
 Id: 705.047
-Topics: exercise corresponding to the lecture content
+Topics: exercise corresponding to the lecture content, SWEB
 Group: Sev, Thom, Flix, Lukas
 Newsgroups: tu-graz.lv.bs.sweb
 Evaluation: 2? major assignments
@@ -74,9 +74,9 @@ Clawback: 3 ECTS, 2 SSt
 Klassische Themen der Computerwissenschaft (KTCW, VO)
 Classical Themes of Computer Science (CTCS, VO)
 Id: 716.113
-Topics: robotics, AI, game theory, constraint programming
+Topics: robotics, AI, game theory, constraint programming, complexity theory, automaton theory
 Newsgroups: tu-graz.lv.ktdcw
-Website: http://www.ist.tugraz.at/ktdcw12.html
+Website: http://www.ist.tugraz.at/ktdcw12.html, http://www.ist.tugraz.at/teaching/bin/view/Klassischethemen
 Evaluation: 1 exam
 Clawback: 4 ECTS, 3 SSt
 
@@ -176,6 +176,14 @@ winter semester
 
 [also watch out for any "Interne Weiterbildung" courses]
 
+* (master!) 501.660 Mathematical foundations of cryptography (P)
+  URL: http://www.math.tugraz.at/~ziegler/Krypto/krypto.html
+  TUGraz, 1 SSt
+
+* (master!) 501.661 Mathematical foundations of cryptography (L)
+  URL: http://www.math.tugraz.at/~ziegler/Krypto/krypto.html
+  TUGraz, 2 SSt
+
 * 646.003 Chemical Informatics (P)
   KF, 1.5 SSt
 
@@ -209,8 +217,68 @@ winter semester
 * 716.111 Choice and Decision Making for Health and Well-Being Researchers (L)
   TUGraz, 1 SSt
 
+* 373.347 Patent law (L)
+  TUGraz, 2 SSt
+
+* 501.504 Analysis 1 (L)
+  TUGraz, 4 SSt
+
+* 502.500 Basic Mathematical Concepts (L)
+  TUGraz, 1.5 SSt
+
+* 716.118 Constraint Programming
+  TUGraz, 2 SSt
+
 summer semester
 ---------------
 
 * 448.004 Technical Informatics 1 (L)
+  TUGraz, 2 SSt
+
+* (master!) 305.090 Mobile Robots (L)
+  TUGraz, 2 SSt
+
+* (master!) 305.091 Mobile Robots (P)
+  TUGraz, 1 SSt
+
+* 710.112 Selected Topics Public Law, Informatics and Data Security
+  TUGraz, 2 SSt
+
+* 448.004 Technical Informatics 1 (L)
+  TUGraz, 2 SSt
+
+* 448.006 Technical Informatics 1 (P)
+  TUGraz, 1 SSt
+
+* 710.112 AK Informatikrecht und Datenschutz (L)
+  TUGraz, 2 SSt
+
+* (master?) 442.070 Computational Intelligence (L)
+  TUGraz, 2 SSt
+
+* (master?) 708.070 Computational Intelligence (P)
+  TUGraz, 1 SSt
+
+* 447.003 Bioethics (L)
+  TUGraz, 1 SSt
+
+* 439.026 Programming of Microprocessors (L)
+  TUGraz, 2 SSt
+
+* 706.201 Selected Topics Business Economics (L)
+  TUGraz, 3 SSt
+
+* 716.055 Modelling Technical Systems (L)
+  TUGraz, 2 SSt
+
+* 716.090 Didactics in Computer Science (LP)
+  TUGraz, 2 SSt
+
+* 716.092 Software Engeneering for mobile autonomous robots (P)
+  TUGraz, 2 SSt
+
+* 716.099 Industrial Software Development Process (LP)
+  TUGraz, 2 SSt
+
+* 710.112 Selected Topics Public Law, Informatics and Data Security (L)
   TUGraz, 2 SSt

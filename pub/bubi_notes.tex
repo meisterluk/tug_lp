@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{eulervm}
+\usepackage{xltxtra}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage[pdftex,pdfborder={0 0 0}]{hyperref}
+%\setmainfont[Mapping=tex-text]{Ubuntu}
+\setmainfont[Mapping=tex-text]{DejaVu Sans}
+
+\makeatletter
+\hypersetup{
+  pdftitle = {Buchhaltung und Bilanzierung Notizen},
+  pdfauthor = {Lukas Prokop},
+  pdfkeywords = {BuBi, TUGraz, Buchhaltung und Bilanzierung, Cheatsheet}
+}
+\makeatother
+
+\date{\today}
+\author{Lukas Prokop}
+\title{Buchhaltung und Bilanzierung Notizen}
+
+\begin{document}
+\maketitle
+
+\section{Umsatzsteuer}
+%
+,,X exkl. Y\% USt``, ,,X + Y\% USt``, \dots{} exklusive (X enthält keine USt). \\
+Nur wenn explizit \emph{inklusive} genannt wird (,,X inkl. Y\% USt``), ist der Wert enthalten.
+
+\begin{table}[h]
+  \begin{tabular}{rcl}
+    Kauf & → & Vorsteuer \\
+    Verkauf & → & Umsatzsteuer
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \begin{tabular}{rcl}
+    Rückstellungen & → & exklusive USt \\
+    Abschreibungen & → & exklusive USt
+  \end{tabular}
+\end{table}
+%
+\section{Rechnungen nach UStG (UStG~§~11)}
+
+Unternehmer, die Umsätze nach §~1~Abs.~1~Z~1 ausführen, sind berechtigt, Rechnungen auszustellen. Der Unternehmer ist verpflichtet eine Rechnung auszustellen, wenn die Rechnung an ein anderes Unternehmen gestellt ist oder es sich um eine steuerpflichtige Werklieferung oder Werkleistung in Zusammenhang mit einem Grundstück an einem Nichtunternehmer handelt. Weiters hat er dann für seine Buchhaltung einen Durchdruck oder eine Abschrift anzufertig (,,Ohne Beleg keine Buchung``). Der Unternehmer hat der Rechnungsausstellung innerhalb von sechs Monaten nach Ausführung nachzukommen. Rechnungen müssen die folgenden Daten enthalten:
+%
+\begin{enumerate}
+  \item Name und Anschrift des liefernden oder leistenden Unternehmen
+  \item Name und Anschrift des Abnehmers der Lieferung oder des Empfängers der sonstigen Leistung.
+  \item (Wenn Betrag $> 100000$ EUR, Aussteller inländischer Unternehmer, Empfänger ist Unternehmer) UID-Nummer
+  \item Menge und handelsübliche Bezeichnung der gelieferten Gegenstände oder Art und Umfang der sonstigen Leistung
+  \item Tag der Lieferung oder Zeitraum der sonstigen Leistung. Wenn aufgeteilt und innerhalb des selben Monats, dann Abrechnungszeitraum.
+  \item Entgelt für die Lieferung oder sonstigen Leistung und der anzuwendende Steuersatz (oder Hinweis auf Steuerbefreiung)
+  \item Den auf das Entgelt entfallende Steuerbetrag.
+  \item Ausstellungsdatum
+  \item Fortlaufende Nummer zur Identifierzierung
+  \item Wenn Vorsteuerabzug möglich, UID-Nummer
+\end{enumerate}
+%
+Ausnahmen bilden Rechnungen mit einem Bruttoentgelt (Gesamtbetrag der Rechnung) kleiner gleich 150~EUR:
+%
+\begin{enumerate}
+  \item Name und Anschrift des liefernden oder leistenden Unternehmen
+  \item Menge und handelsübliche Bezeichnung der gelieferten Gegenstände oder Art und Umfang der sonstigen Leistung
+  \item Tag der Lieferung oder Zeitraum der sonstigen Leistung.
+  \item Entgelt für die Lieferung oder sonstigen Leistung und der Steuerbetrag in einer Summe
+  \item Der Steuersatz
+\end{enumerate}
+%
+\section{Konten}
+%
+\begin{table}[th]
+  \begin{tabular}{rcl}
+    Lieferantenkonto & → & 3300 \\
+    Kundenkonto & → & 2000
+  \end{tabular}
+\end{table}
+
+,,auf Ziel`` = gegen spätere Bezahlung
+
+% TODO: Schema der doppelten Buchhaltung
+% TODO: Schema der Bilanz
+% TODO: Aufbau einer GuV
+
+\end{document}

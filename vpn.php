@@ -16,8 +16,8 @@
  <body>
     <h1>VPN Configuration</h1>
     <p style="text-align:center">
-        <img src="img/vpn_configuration_fedora_builtin_vpn_client_4.6.2.png"
-            alt="VPN Client Configuration TU Graz Linux Fedora">
+        <img src="img/vpn_config_xubuntu_gnome_network_manager_0.9.4.1.png"
+            alt="VPN Client Configuration TU Graz Linux xubuntu Network Manager 0.9.4.1">
     <p>
 
     <p>Do you own a TUG IP address?</p>
@@ -36,11 +36,10 @@
         <strong>Note:</strong>
         <ul>
             <li>IPv4 Settings are set to "Automatic(VPN)"</li>
-            <li>Group password is always set to "default"</li>
             <li>User password is your TUG online user password</li>
             <li>This works from extern to use a TUG IP address to access paper repositories
                 and works inside the WLAN at TUG campuses. (But I never get a connection
-                to tug access points in Kopernikusgasse)
+                up and running to tug access points in Kopernikusgasse)
         </ul>
     </p>
 

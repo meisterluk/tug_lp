@@ -21,7 +21,6 @@ Softwareentwicklung in verteilten Umgebungen (SVU, VU)
 Software Development in Distributed Environments (SDDE, VU)
 Id: 710.020
 Topics: Threading, Multiprocessing, Timing, Operating systems, networking
-Group: ?
 Newsgroups: tu-graz.lv.svu.vo, tu-graz.lv.svu.ue
 Website: http://www.icg.tugraz.at/courses/lv710.020/svu
 Evaluation: 2 partial exams, 2 exercise assignments
@@ -30,7 +29,7 @@ Clawback: 4 ECTS, 3 SSt
 Software-Maintenance (SM, VU)
 Id: 716.064
 Topics: Program Analysis, Sustainability and maintainability of software, Legacy software, Debugging, reverse debugging
-Group: ?
+Group: Lukas, Flix, Pete, Hedi
 Newsgroups: tu-graz.lv.soma
 Website: http://www.ist.tugraz.at/teaching/bin/view/Main/SoftwareMaintenance
 Evaluation: ?
@@ -84,7 +83,7 @@ Klassische Themen der Computerwissenschaft (KTCW, UE)
 Classical Themes of Computer Science (CTCS, UE)
 Id: 716.114
 Topics: exercises corresponding to lecture
-Group: ?
+Group: Christopher, Flix, Lukas
 Newsgroups: tu-graz.lv.ktdcw
 Website: http://www.ist.tugraz.at/ktdcw12.html
 Evaluation: ?

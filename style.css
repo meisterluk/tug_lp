@@ -15,10 +15,11 @@
         text-align: center;
     }
     thead {
-		font-weight: bold;
+        font-weight: bold;
     }
 
     .id:link, .id:visited { text-decoration: none; color: #999; }
+    .inactive { display: none; }
 
     /* todo states */
     .exercises .notyet { opacity: 0.2; }

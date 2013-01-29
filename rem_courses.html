@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Remaining courses →  Bachelor studies</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+      <!--
+      function trim(word)
+      {
+        return word.replace(/^0+/, "");
+      }
+
+      function cmp_dates(a, b)
+      {
+        var index;
+        for (index = 2; index >= 0; index--)
+        {
+          if (a[index] < b[index])
+            return -1;
+          else if (a[index] > b[index])
+            return 1;
+        }
+        return 0;
+      }
+
+      function get_sum()
+      {
+        var i, j, value;
+        var indizes = new Array();
+        var sums = new Array();
+        var base = "#analyse tfoot td";
+        for (i = 0; i < $(base).length; i++)
+        {
+          if ($(base + ":nth(" + i + ")").hasClass("sum"))
+          {
+            indizes.push(i);
+            sums.push(0);
+          }
+        }
+
+        base = "#analyse tbody tr:visible";
+        for (i = 0; i < $(base).length; i++)
+        {
+          for (j = 0; j < indizes.length; j++)
+          {
+            value = parseFloat($(base + ":nth(" + i + ") td:nth(" + indizes[j] + ")").text());
+            if (value != NaN)
+              sums[j] += value;
+          }
+        }
+
+        for (i = 0; i < sums.length; i++)
+        {
+          $("#analyse tfoot .sum:nth(" + i + ")").text(sums[i]);
+        }
+      }
+
+      function get_date()
+      {
+        var i, j, base, data;
+        var dates = new Array();
+        var index = $("#analyse tfoot td").index($("#analyse tfoot .date"));
+
+        base = "#analyse tbody tr";
+        loop:
+        for (i = 0; i < $(base).length; i++)
+        {
+          data = $(base + ":nth(" + i + ") td:nth(" + index + ")").text().split(".");
+          for (j = 0; j < data.length; j++)
+          {
+            data[j] = parseInt(trim(data[j]));
+            if (isNaN(data[j]))
+              break loop;
+          }
+          dates.push(data);
+        }
+
+        dates.sort(cmp_dates);
+
+        $("#analyse tfoot .date").text(dates[0].join("."));
+      }
+
+      $(document).ready(function () {
+          $("tr").click(function () { $(this).hide(); });
+          setInterval("get_sum()", 2000);
+          setInterval("get_date()", 2000);
+      });
+      -->
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Bachelor studies prokls</h1>
+      <h2>lukas.prokop [@] student.tugraz<!-- -->.at</h2>
+    </header>
+    <article>
+      <dl>
+        <dt>Last update</dt>
+        <dd><time datetime="2013-01-28 23:50:00+02:00">28th of Jan 2013</time></dd>
+      </dl>
+
+      <h3 id="courses">Courses <a class="id" href="#courses">#</a></h3>
+      
+      <table style="width:100%; text-align:center" id="analyse">
+        <thead>
+          <tr>
+            <td>Course</td>
+            <td>ECTS (min)</td>
+            <td>SSt (min)</td>
+            <td>Next date</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>  <td>BuBi UE</td> <td>2</td> <td>1</td> <td>29.04.2013</td>  </tr>
+          <tr>  <td>SFI</td> <td>1.5</td> <td>1</td> <td>04.02<!--01.03-->.2013</td>  </tr>
+          <tr>  <td>KoRe VO</td> <td>2.5</td> <td>1</td> <td>29.04.2013</td>  </tr>
+          <tr>  <td>KoRe UE</td> <td>2</td> <td>2</td> <td>29.04.2013</td>  </tr>
+          <tr>  <td>CV2</td> <td>2.5</td> <td>1.5</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>BWL VO</td> <td>4.5</td> <td>3</td> <td>01.07.2013</td>  </tr>
+          <tr>  <td>BWL UE</td> <td>2</td> <td>2</td> <td>01.07.2013</td>  </tr>
+          <tr>  <td>SVU</td> <td>4</td> <td>3</td> <td>01.10.2013</td>  </tr>
+          <tr>  <td>EAA VO</td> <td>3</td> <td>2</td> <td>06.03.2013</td>  </tr>
+          <tr>  <td>OS VO</td> <td>3</td> <td>2</td> <td>04.02.2013</td>  </tr>
+          <tr>  <td>KTdCW VO</td> <td>4</td> <td>3</td> <td>30.01.2013</td>  </tr>
+          <tr>  <td>LAC VO</td> <td>3</td> <td>2</td> <td>29.01.2013</td>  </tr>
+          <tr>  <td>BS</td> <td>3</td> <td>2</td> <td>04.03.2013</td>  </tr>
+          <tr>  <td>CLLBE</td> <td>4</td> <td>3</td> <td>02.02.2013</td>  </tr>
+          <tr>  <td>IKP VO</td> <td>3</td> <td>2</td> <td>22.03.2013</td>  </tr>
+          <tr>  <td>IKP UE</td> <td>1.5</td> <td>1</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>CCN VO</td> <td>3</td> <td>2</td> <td>??.??.2013</td>  </tr>
+          <tr>  <td>CCN UE</td> <td>1.5</td> <td>1</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>SAIT</td> <td>2.5</td> <td>3</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>QASD</td> <td>2.5</td> <td>2</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>WSWT</td> <td>3</td> <td>2</td> <td>01.03.2013</td>  </tr>
+          <tr>  <td>Bakk@IAIK</td> <td>15</td> <td>15</td> <td>27.02.2013</td>  </tr>
+          <tr>  <td>Bakk@IST</td> <td>15</td> <td>15</td> <td>??.02.2013</td>  </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td style="padding-left:30px">total</td>
+            <td class="sum"></td>
+            <td class="sum"></td>
+            <td class="date"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+  </body>
+</html>

@@ -17,6 +17,9 @@
     thead {
         font-weight: bold;
     }
+    tfoot {
+        font-style: italic;
+    }
 
     .id:link, .id:visited { text-decoration: none; color: #999; }
     .inactive { display: none; }

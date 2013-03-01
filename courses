@@ -17,137 +17,99 @@ Clawback: _ects ECTS, _sst SSt
 Attending courses
 -----------------
 
-Softwareentwicklung in verteilten Umgebungen (SVU, VU)
-Software Development in Distributed Environments (SDDE, VU)
-Id: 710.020
-Topics: Threading, Multiprocessing, Timing, Operating systems, networking
-Newsgroups: tu-graz.lv.svu.vo, tu-graz.lv.svu.ue
-Website: http://www.icg.tugraz.at/courses/lv710.020/svu
-Evaluation: 2 partial exams, 2 exercise assignments
-Clawback: 4 ECTS, 3 SSt
+Einführung in die Wissensverarbeitung (IKP, VO)
+Introduction to Knowledge Processing (IKP, VO)
+Id: 708.560
+Topics: Machine Learning, Adaptive Filters, Neural networks
+Newsgroups: tu-graz.lv.ew
+Website: https://www.spsc.tugraz.at/courses/EW
+Evaluation: 1 exam with 2 parts where each of them has to be positive
+Clawback: 3 ECTS, 2 SSt
 
-Software-Maintenance (SM, VU)
-Id: 716.064
-Topics: Program Analysis, Sustainability and maintainability of software, Legacy software, Debugging, reverse debugging
-Group: Lukas, Flix, Pete, Hedi
-Newsgroups: tu-graz.lv.soma
-Website: http://www.ist.tugraz.at/teaching/bin/view/Main/SoftwareMaintenance
+Einführung in die Wissensverarbeitung (IKP, UE)
+Introduction to Knowledge Processing (IKP, UE)
+Id: 442.072
+Topics: Machine Learning, Adaptive Filters, Neural networks
+Group: (<=3 people)
+Newsgroups: tu-graz.lv.ew
+Website: https://www.spsc.tugraz.at/courses/einfuehrung-die-wissensverarbeitung/ewhomework
+Evaluation: ~6 assignments
+Clawback: 1.5 ECTS, 1 SSt
+
+Rechner- und Kommunikationsnetze (RNK, VO)
+Computer- and Communication Networks (CCN, VO)
+Id: 705.088
+Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
+Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und_kommunikationsnetze/
+Evaluation: 1 exam
+Clawback: 3 ECTS, 2 SSt
+
+Rechner- und Kommunikationsnetze (RNK, KU)
+Computer- and Communication Networks (CCN, KU)
+Id: 705.089
+Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
+Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und_kommunikationsnetze/practicals/
+Evaluation: 2 assignments
+Clawback: 1.5 ECTS, 1 SSt
+
+Gesellschaftliche Aspekte der Informationstechnologie (GADI, VU)
+Societal Aspects of Information Technology (SAIT, VU)
+Id: 706.009
+Topics: Various
+Group: ?
+Newsgroups: tu-graz.lv.gadi
+Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?707000
 Evaluation: ?
-Clawback: 4.5 ECTS; 3 SSt
+Clawback: 2.5 ECTS, 3 SSt
 
-Entwurf und Analyse von Algorithmen (EAA, VO)
-Design and Analysis of Algorithms (DAA, VO)
-Id: 716.033
-Topics: Divide & Conquer, randomization, graphs, trees, data structures, dynamic programming
-Newsgroups: tu-graz.algorithmen
-Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?716033
-Evaluation: 1 exam
+Web Science and Web Technology (WSWT, VU)
+Id: 707.000
+Topics: Web technology, networks graphs, ontologies
+Newsgroups: tu-graz.lv.web-science
+Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?707000
+Evaluation: 1 assignment, 1 exam
 Clawback: 3 ECTS, 2 SSt
 
-Entwurf von Echtzeitsystemen (EES, VO)
-Design of Real-Time Systems (DRTS, VO)
-Id: 448.023
-Topics: reliability, real-time, operating systems, programming languages, hardware support, scheduling
-Website: https://www.iti.tugraz.at/cms/index.php?option=com_content&view=article&id=30:entwurf-von-echtzeitsystemen&catid=34:entwurf-von-echtzeitsystemen-vouelabor&Itemid=64
-Evaluation: 1 exam
-Clawback: 3 ECTS, 2 SSt
-
-Betriebsysteme (BS, VO)
-Operating Systems (OS, VO)
-Id: 705.056
-Topics: Operating systems, Threading & Process scheduling, shell, UNIX/POSIX
-Newsgroups: tu-graz.lv.bs
-Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/betriebssysteme/
-Evaluation: 1 exam
-Clawback: 3 ECTS, 2 SSt
-
-Betriebsysteme (BS, UE)
-Operating Systems (OS, UE)
-Id: 705.047
-Topics: exercise corresponding to the lecture content, SWEB
-Group: Sev, Thom, Flix, Lukas
-Newsgroups: tu-graz.lv.bs.sweb
-Evaluation: 2? major assignments
-Clawback: 3 ECTS, 2 SSt
-
-Klassische Themen der Computerwissenschaft (KTCW, VO)
-Classical Themes of Computer Science (CTCS, VO)
-Id: 716.113
-Topics: robotics, AI, game theory, constraint programming, complexity theory, automaton theory
-Newsgroups: tu-graz.lv.ktdcw
-Website: http://www.ist.tugraz.at/ktdcw12.html, http://www.ist.tugraz.at/teaching/bin/view/Klassischethemen
-Evaluation: 1 exam
-Clawback: 4 ECTS, 3 SSt
-
-Klassische Themen der Computerwissenschaft (KTCW, UE)
-Classical Themes of Computer Science (CTCS, UE)
-Id: 716.114
-Topics: exercises corresponding to lecture
-Group: {Christopher, Flix, Lukas, Markus}, {Flix, Karin, Christian, Ritchie, Thomas, Lukas}, {}, {Lukas, Pete, Flix, Jo, Manuel}
-Newsgroups: tu-graz.lv.ktdcw
-Website: http://www.ist.tugraz.at/ktdcw12.html
-Evaluation: ?
-Clawback: 2 ECTS, 1 SSt
-
-Logik und Berechenbarkeit (LUB, VO)
-Logic and Computability (LAC, VO)
-Id: 705.033
-Topics: First-order logic, deduction, satisfiability, decision problems
-Newsgroups: tu-graz.lv.logik
-Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/logik_und_berechenbarkeit/
-Evaluation: 1 exam
-Clawback: 3 ECTS, 2 SSt
-
-Logik und Berechenbarkeit (LUB, KU)
-Logic and Computability (LAC, KU)
-Id: 705.034
-Topics: exercises corresponding to lecture
-Newsgroups: tu-graz.lv.logik
-Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/logik_und_berechenbarkeit/practicals/
-Evaluation: 1 exam
-Clawback: 1 ECTS, 1 SSt
-
-Betriebssoziologie (BS, VO)
-Business sociology (BS, VO)
-Id: 373.314
-Topics: social aspects in company structures, conflicts, working atmosphere
-Newsgroups: tu-graz.bwl
-Evaluation: 3 lectures and 1 exam following
-Clawback: 3 ECTS, 2 SSt
-
-Bürgerliches Recht und Unternehmensrecht (BRU, VO)
-Civil Law and Law of Business Enterprises (CLLBE, VO)
-Id: 373.336
-Topics: basic introduction to civil law
-Evaluation: 1 exam
-Clawback: 4 ECTS, 3 SSt
+Qualitätssicherung in der Softwareentwicklung (QS, VU)
+Quality Assurance in Software Development (QASD, VU)
+Id: 716.066
+Topics: JML, Quality of OpenSource software
+Group: ?
+Newsgroups: tu-graz.lv.qs
+Website: http://www.ist.tugraz.at/teaching/bin/view/Main/QS
+Evaluation: 3 assignments
+Clawback: 2.5 ECTS, 2 SSt
 
 Additional attending courses
 ----------------------------
 
-[not part of my curricula]
+Mathematische Optimierung (MO, VO)
+Mathematical Programming (MP, VO)
+Id: 502.552
+Topics: lineare Optimierung, Simplexverfahren, Dualität, innere Punkte Verfahren, ganzzahlige Optimierung, Kuhn-Tucker Theorie
+Website: http://www.opt.math.tu-graz.ac.at/~cela/Vorlesungen/MathOptSS12/main.htm
+Evaluation: 1 exam
+Clawback: 6 ECTS, 4 SSt
 
-Entwurf und Analyse von Algorithmen (EAA, UE)
-Design and Analysis of Algorithms (DAA, UE)
-Id: 716.032
-Topics: exercises corresponding to the lecture content
-Newsgroups: tu-graz.algorithmen
-Evaluation: weekly assignments, 1 exercise interview
-Clawback: 2 ECTS, 1 SSt
+Mathematische Optimierung (MO, UE)
+Mathematical Programming (MP, UE)
+Id: 502.553
+Topics: lineare Optimierung, Simplexverfahren, Dualität, innere Punkte Verfahren, ganzzahlige Optimierung, Kuhn-Tucker Theorie
+Website: http://www.opt.math.tu-graz.ac.at/~cela/Vorlesungen/MathOptSS12/main.htm
+Evaluation: weekly assignments presented at the board
+Clawback: 3 ECTS, 2 SSt
 
 Old courses
 -----------
 
-[Planning to attend in 5th semester]
+Computer Vision 2 (CV2, VU)
+Computer Vision 2 (CV2, VU)
+Id: 710.006
+Topics: motion tracking compression
+Website: http://www.icg.tu-graz.ac.at/courses/cgcv
+Evaluation: 1 assignment, 1 exam
+Clawback: 2.5 ECTS, 1.5 SSt
 
-Statistik für Informatikstudien (SFI, VU)
-Statistics for Computer Science (SCS, VU)
-Id: 506.004
-Topics: Stichprobenvariablen, Hypothesentests, Konfidenzintervalle
-Newsgroups: tu-graz.lv.wthstochp
-Website: http://portal.tugraz.at/portal/page/portal/TU_Graz/Einrichtungen/Institute/Homepages/i5060/courses/Practical%20Statistik/allgemeines
-Evaluation: 2 exams
-Clawback: 1.5 ECTS, 1 SSt
 
 Buchhaltung und Bilanzierung (BuBi, UE)
 Accounting and Balancing (BuBi, UE)
@@ -157,127 +119,17 @@ Newsgroups: tu-graz.bwl
 Evaluation: 1 exam
 Clawback: 2 ECTS, 1 SSt
 
-[Optional old courses I attend possibly]
+MOOCs
+-----
 
-* Kosten- und Erfolgsrechnung (VO)
-* Kosten- und Erfolgsrechnung (UE)
-* Betriebswirtschaftslehre (VO)
-* Betriebswirtschaftslehre (UE)
-
-Courses Nive-To-Have
-====================
-
-guidelines: no master courses
-TODO: look at websites of institutes
-
-winter semester
----------------
-
-[also watch out for any "Interne Weiterbildung" courses]
-
-* (master!) 501.660 Mathematical foundations of cryptography (P)
-  URL: http://www.math.tugraz.at/~ziegler/Krypto/krypto.html
-  TUGraz, 1 SSt
-
-* (master!) 501.661 Mathematical foundations of cryptography (L)
-  URL: http://www.math.tugraz.at/~ziegler/Krypto/krypto.html
-  TUGraz, 2 SSt
-
-* 646.003 Chemical Informatics (P)
-  KF, 1.5 SSt
-
-* 218.485 Introduction to the Austrian Constitution (L)
-  TUGraz, 2 SSt
-
-* 433.104 Technology and Ethics (L)
-  TUGraz, 1 SSt
-
-* 448.008 Technical Informatics 2 (L)
-  TUGraz, 2 SSt
-
-* 448.009 Technical Informatics 2 (P)
-  TUGraz, 1 SSt
-
-* 373.386 Industrial Law (Labour Law) (L)
-  TUGraz, 2 SSt
-
-* 502.636 Combinatorial Optimization 1 (L)
-  TUGraz, 3 SSt
-
-* 502.636 Combinatorial Optimization 1 (P)
-  TUGraz, 1 SSt
-
-* MAT.105_1 Computer Mathematics 1 (LP)
-  TUGraz, 3 SSt
-
-* 716.110 Crunch points of modern industrial software development and IT project management (LP)
-  TUGraz, 3 SSt
-
-* 716.111 Choice and Decision Making for Health and Well-Being Researchers (L)
-  TUGraz, 1 SSt
-
-* 373.347 Patent law (L)
-  TUGraz, 2 SSt
-
-* 501.504 Analysis 1 (L)
-  TUGraz, 4 SSt
-
-* 502.500 Basic Mathematical Concepts (L)
-  TUGraz, 1.5 SSt
-
-* 716.118 Constraint Programming
-  TUGraz, 2 SSt
-
-summer semester
----------------
-
-* 448.004 Technical Informatics 1 (L)
-  TUGraz, 2 SSt
-
-* (master!) 305.090 Mobile Robots (L)
-  TUGraz, 2 SSt
-
-* (master!) 305.091 Mobile Robots (P)
-  TUGraz, 1 SSt
-
-* 710.112 Selected Topics Public Law, Informatics and Data Security
-  TUGraz, 2 SSt
-
-* 448.004 Technical Informatics 1 (L)
-  TUGraz, 2 SSt
-
-* 448.006 Technical Informatics 1 (P)
-  TUGraz, 1 SSt
-
-* 710.112 AK Informatikrecht und Datenschutz (L)
-  TUGraz, 2 SSt
-
-* (master?) 442.070 Computational Intelligence (L)
-  TUGraz, 2 SSt
-
-* (master?) 708.070 Computational Intelligence (P)
-  TUGraz, 1 SSt
-
-* 447.003 Bioethics (L)
-  TUGraz, 1 SSt
-
-* 439.026 Programming of Microprocessors (L)
-  TUGraz, 2 SSt
-
-* 706.201 Selected Topics Business Economics (L)
-  TUGraz, 3 SSt
-
-* 716.055 Modelling Technical Systems (L)
-  TUGraz, 2 SSt
-
-* 716.090 Didactics in Computer Science (LP)
-  TUGraz, 2 SSt
-
-* 716.092 Software Engeneering for mobile autonomous robots (P)
-  TUGraz, 2 SSt
-
-* 716.099 Industrial Software Development Process (LP)
-  TUGraz, 2 SSt
-
-* 710.112 Selected Topics Public Law, Informatics and Data Security (L)
-  TUGraz, 2 SSt
+* Compilers: Stanford University (https://www.coursera.org/course/compilers)
+* Mathematical thinking: Stanford University (https://www.coursera.org/course/maththink)
+* Model thinking: University of Michigan (https://www.coursera.org/course/modelthinking)
+* Foundations of Business Strategy: University of Virginia (https://www.coursera.org/course/strategy101)
+* Pattern-Oriented Software Architectures for Concurrent and Networked Software: Vanderbilt University (https://www.coursera.org/course/posa)
+* Women and the Civil Rights Movement: University of Maryland (https://www.coursera.org/course/womencivilrights)
+* Games without Chance: Combinatorial Game Theory: Georgia Tech (https://www.coursera.org/course/cgt)
+* AIDS: Emory University (https://www.coursera.org/course/aids)
+* Artificial intelligence: UC Berkeley (https://www.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/about)
+* Natural Language Processing: Columbia University (https://www.coursera.org/course/nlangp)
+* Introduction to Computer Science: Udacity (https://www.udacity.com/course/cs101)

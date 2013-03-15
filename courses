@@ -30,13 +30,13 @@ Einführung in die Wissensverarbeitung (IKP, UE)
 Introduction to Knowledge Processing (IKP, UE)
 Id: 442.072
 Topics: Machine Learning, Adaptive Filters, Neural networks
-Group: (<=3 people)
+Group: Schumi, X, Lukas
 Newsgroups: tu-graz.lv.ew
 Website: https://www.spsc.tugraz.at/courses/einfuehrung-die-wissensverarbeitung/ewhomework
 Evaluation: ~6 assignments
 Clawback: 1.5 ECTS, 1 SSt
 
-Rechner- und Kommunikationsnetze (RNK, VO)
+Rechner- und Kommunikationsnetze (RKN, VO)
 Computer- and Communication Networks (CCN, VO)
 Id: 705.088
 Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
@@ -44,9 +44,10 @@ Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und
 Evaluation: 1 exam
 Clawback: 3 ECTS, 2 SSt
 
-Rechner- und Kommunikationsnetze (RNK, KU)
+Rechner- und Kommunikationsnetze (RKN, KU)
 Computer- and Communication Networks (CCN, KU)
 Id: 705.089
+Group: Chris
 Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
 Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und_kommunikationsnetze/practicals/
 Evaluation: 2 assignments
@@ -56,7 +57,6 @@ Gesellschaftliche Aspekte der Informationstechnologie (GADI, VU)
 Societal Aspects of Information Technology (SAIT, VU)
 Id: 706.009
 Topics: Various
-Group: ?
 Newsgroups: tu-graz.lv.gadi
 Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?707000
 Evaluation: ?
@@ -74,7 +74,7 @@ Qualitätssicherung in der Softwareentwicklung (QS, VU)
 Quality Assurance in Software Development (QASD, VU)
 Id: 716.066
 Topics: JML, Quality of OpenSource software
-Group: ?
+Group: Luke, Lukas, Christian
 Newsgroups: tu-graz.lv.qs
 Website: http://www.ist.tugraz.at/teaching/bin/view/Main/QS
 Evaluation: 3 assignments

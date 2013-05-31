@@ -84,7 +84,7 @@
       }
 
       $(document).ready(function () {
-          $("tr").click(function () { $(this).hide(); });
+          $("tr").click(function () { $(this).remove(); });
           setInterval("get_sum()", 2000);
           setInterval("get_date()", 2000);
       });
@@ -116,26 +116,24 @@
         </thead>
         <tbody>
           <!-- earlier than current semester -->
-          <tr>  <td>BuBi UE</td> <td>2</td> <td>1</td> <td>29.04.2013</td>  </tr>
-          <tr>  <td>KoRe VO</td> <td>2.5</td> <td>1</td> <td>29.04.2013</td>  </tr>
-          <tr>  <td>KoRe UE</td> <td>2</td> <td>2</td> <td>29.04.2013</td>  </tr>
-          <tr>  <td>CV2</td> <td>2.5</td> <td>1.5</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
+          <tr>  <td>KoRe VO</td> <td>2.5</td> <td>1</td> <td>01.07.2013</td>  </tr>
+          <tr>  <td>KoRe UE</td> <td>2</td> <td>2</td> <td>01.07.2013</td>  </tr>
+          <tr>  <td>CV2</td> <td>2.5</td> <td>1.5</td> <td>05.07.2013</td>  </tr> <!-- since 1st of March -->
           <tr>  <td>BWL VO</td> <td>4.5</td> <td>3</td> <td>01.07.2013</td>  </tr>
           <tr>  <td>BWL UE</td> <td>2</td> <td>2</td> <td>01.07.2013</td>  </tr>
           <tr>  <td>SVU</td> <td>4</td> <td>3</td> <td>01.10.2013</td>  </tr>
           <!-- to be done in current semester -->
-          <tr>  <td>OS VO</td> <td>3</td> <td>2</td> <td>13.05.2013</td>  </tr>
-          <tr>  <td>KTdCW VO</td> <td>4</td> <td>3</td> <td>22.03.2013</td>  </tr>
-          <tr>  <td>IKP VO</td> <td>3</td> <td>2</td> <td>22.03.2013</td>  </tr>
+          <tr>  <td>OS VO</td> <td>3</td> <td>2</td> <td>10.06.2013</td>  </tr>
+          <tr>  <td>KTdCW VO</td> <td>4</td> <td>3</td> <td>21.06.2013</td>  </tr>
+          <tr>  <td>IKP VO</td> <td>3</td> <td>2</td> <td>02.07.2013</td>  </tr>
           <tr>  <td>IKP UE</td> <td>1.5</td> <td>1</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
-          <tr>  <td>CCN VO</td> <td>3</td> <td>2</td> <td>??.??.2013</td>  </tr>
+          <tr>  <td>CCN VO</td> <td>3</td> <td>2</td> <td>01.07.2013</td>  </tr>
           <tr>  <td>CCN UE</td> <td>1.5</td> <td>1</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
           <tr>  <td>SAIT</td> <td>2.5</td> <td>3</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
-          <tr>  <td>BS</td> <td>3</td> <td>2</td> <td>29.04.2013</td>  </tr>
-          <tr>  <td>QASD</td> <td>2.5</td> <td>2</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
-          <tr>  <td>WSWT</td> <td>3</td> <td>2</td> <td>!!.!!.2013</td>  </tr> <!-- since 1st of March -->
-          <tr>  <td>Bakk@IAIK</td> <td>15</td> <td>15</td> <td>!!.02.2013</td>  </tr> <!-- since 27th of Feb -->
-          <tr>  <td>Bakk@IST</td> <td>15</td> <td>15</td> <td>!!.02.2013</td>  </tr> <!-- since 4th of Feb -->
+          <tr>  <td>QASD</td> <td>2.5</td> <td>2</td> <td>25.06.2013</td>  </tr> <!-- since 1st of March -->
+          <tr>  <td>WSWT</td> <td>3</td> <td>2</td> <td>17.06.2013</td>  </tr> <!-- since 1st of March -->
+          <tr>  <td>Bakk@IAIK</td> <td>15</td> <td>15</td> <td>!!.!!.2013</td>  </tr> <!-- since 27th of Feb -->
+          <tr>  <td>Bakk@IST</td> <td>15</td> <td>15</td> <td>!!.!!.2013</td>  </tr> <!-- since 4th of Feb -->
         </tbody>
         <tfoot>
           <tr>

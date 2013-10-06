@@ -1,0 +1,103 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Solution to the Monty Hall Problem with the Bayesian Theorem}
+\date{\today}
+\author{Lukas Prokop}
+
+\newcommand{\Pc}[2]{P(#1\,|\,#2)}
+
+\begin{document}
+\maketitle
+
+\section{The problem}
+%
+In a quizshow, the candidate has to select one of three doors.
+Behind two doors there is a goat (an undesirable prize).
+Behind the one door there is a car.
+At the beginning the candidate tries to guess the door with the car.
+Afterwards the moderator Monty Hall opens one of the doors with a goat which is not the candidate's door.
+So two doors are left where one of them is the one, the candidate has chosen.
+Monty asks the candidate whether he would like to change his mind; he is
+free to select the other door.
+
+In general, is it better to change the mind, stick to the first selection
+or doesn't it matter?
+
+\section{Bayesian approach}
+%
+Assumption (one of three cases): The candidate selects door \#1.
+\begin{center}
+  \begin{tabular}{cc}
+    $D_1$ & Car behind door \#1 \\
+    $D_2$ & Car behind door \#2 \\
+    $D_3$ & Car behind door \#3
+  \end{tabular}
+\end{center}
+
+\noindent
+We define the corresponding probabilities:
+\[
+    P(D_1) = \frac13  \qquad
+    P(D_2) = \frac13  \qquad
+    P(D_3) = \frac13
+\]
+
+We somehow have to model the behavior of the moderator.
+Therefore we introduce a hypothesis $H$ that he opens door \#3.
+The probability that he selects door \#3 in favor of door \#2
+is $\frac12$, because \#1 is already taken by the candidate:
+\[
+    P(H) = \frac12
+\]
+
+\noindent
+Furthermore,
+\[
+    \Pc{H}{D_1} = \frac12  \qquad
+    \Pc{H}{D_2} = 1        \qquad
+    \Pc{H}{D_3} = 0
+\]
+
+So the probability that he opens door \#3 under the condition that door \#1
+contains the car is $\frac12$ (moderator will select door \#2 or door \#1
+because \#1 is candidate's door). The probability is $1$ if the car is in
+door \#2 (door \#1 is candidate's door and \#2 contains the car).
+And if the car is in door \#3, the moderator will never show door \#3.
+
+We can spot some asymmetry here. This point is evidently responsible why
+an intuition like ``it does not matter'' might be wrong.
+
+So we will use the Bayes' Theorem:
+\[
+    \underbrace{\Pc{A}{B}}_{\text{posterior probability}} =
+      \frac{\overbrace{\Pc{B}{A}}^{\text{Likelihood}} \cdot
+        \overbrace{P(A)}^{\text{priori probability}}
+      }{
+        \underbrace{P(B)}_{\text{expectedness}}
+      }
+\]
+
+The important question is: Under the assumption that we have selected door \#1
+(our first assumption) and Monty opens door \#3 (our hypothesis or
+``expectedness''), what is the probability that the car is behind door \#1
+compared to door \#2?
+\[
+    \Pc{D_1}{H} = \frac{\Pc{H}{D_1} \cdot P(D_1)}{P(H)}
+        = \frac{\frac12 \cdot \frac13}{\frac12} = \frac13
+\] \[
+    \Pc{D_2}{H} = \frac{1 \cdot \frac13}{\frac12} = \frac23
+\]
+
+So apparently, the probability that door \#2 contains the car is higher than
+for door \#1. Or in other words: in this case the candidate should prefer
+to change his mind.
+
+Now we have to evaluate this for other hypotheses (moderator opens door \#2)
+and other candidate selections (door \#2 and door \#3). The approach is the
+same and not carried out here. But the conclusion keeps the same in all cases:
+Being open to change your mind will make you probabilistically win the car.
+
+\end{document}

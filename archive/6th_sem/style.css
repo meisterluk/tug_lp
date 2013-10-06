@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+@media all {
+    article {
+        text-align: left;
+        background-color: #EEE;
+        width: 70%;
+        margin: auto;
+        padding: 10px;
+    }
+    dt {
+        font-variant: small-caps;
+    }
+    header {
+        text-align: center;
+    }
+    thead {
+        font-weight: bold;
+    }
+    tfoot {
+        font-style: italic;
+    }
+
+    .id:link, .id:visited { text-decoration: none; color: #999; }
+    .inactive { display: none; }
+
+    /* todo states */
+    .exercises .notyet { opacity: 0.2; }
+    .exercises li {} /* active */
+    .exercises .urgent { color: #600; }
+    .exercises .review { color: #555; }
+    .exercises .done { text-decoration: line-through; }
+}

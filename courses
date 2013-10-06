@@ -4,7 +4,6 @@ Courses planned
 Format
 ------
 
-_germantitle (_shortcut, _type)
 _englishtitle (_shortcut, _type)
 Id: _id
 Topics: _list(keyword_+)
@@ -14,11 +13,95 @@ Topics: _list(keyword_+)
 Evaluation: _description
 Clawback: _ects ECTS, _sst SSt
 
-Attending courses
------------------
+Attending courses, high priority
+--------------------------------
 
-Einführung in die Wissensverarbeitung (IKP, VO)
-Introduction to Knowledge Processing (IKP, VO)
+Algorithm Design Seminar 1 (ADS, S)
+Id: 708.131
+Topics: anything about Algorithms
+Evaluation: 1 exam
+Clawback: 3.5 ECTS, 2 SSt
+
+Geometry for Computer Scientists (GCS, LP)
+Id: 507.100
+Topics: analytic, projective, and differential geometry in 2 and 3 dimensions
+Evaluation: ?
+Clawback: 3 ECTS, 2 SSt
+
+Numerical Optimization (NO, L)
+Id: 437.133
+Topics: deterministic and stochastic optimization methods
+Evaluation: exam
+Clawback: 3 ECTS, 2 SSt
+
+Numerical Optimization (NO, P)
+Id: 437.134
+Topics: deterministics and stochastic optimization methods
+Evaluation: ? assignments
+Clawback: 2 ECTS, 1 SSt
+
+Security Aspects of Software Development (SASD, L)
+Id: 705.024
+Topics: Web security, Java PKIs, Operating system security
+Evaluation: 1 exam
+Clawback: 3 ECTS, 2 SSt
+
+Security Aspects of Software Development (SASD, P)
+Id: 705.025
+Topics: Web security, Java PKIs, Operating system security
+Evaluation: 4 assignments
+Clawback: 3 ECTS, 2 SSt
+
+Attending courses, low priority
+-------------------------------
+
+Advanced Computer Networks (ACN, L)
+Id: 705.010
+Topics: Hierarchical network models, internetworking, SONET/SDH, Frame Relay, DQDB, ATM, Firewalls
+Evaluation: 1 exam
+Clawback: 3 ECTS, 2 SSt
+
+Advanced Computer Networks (ACN, P)
+Id: 705.011
+Topics: Hierarchical network models, internetworking, SONET/SDH, Frame Relay, DQDB, ATM, Firewalls
+Evaluation: ? assignments
+Clawback: 2 ECTS, 1 SSt
+
+Combinatorics (C, L)
+Id: MAT.905
+Topics: Algebraic and enumerative combinatorics
+Evaluation: exam
+Clawback: 5 ECTS, 3 SSt
+
+Combinatorics (C, P)
+Id: MAT.906
+Topics: Algebraic and enumerative combinatorics
+Evaluation: ? assignments
+Clawback: 2 ECTS, 1 SSt
+
+Digital Libraries (DL, LP)
+Id: 711.010
+Topics: XML, publishing standards, metadata standards
+Evaluation: ?
+Clawback: 3.5 ECTS, 2 SSt
+
+Theoretical Computer Science II (TCS2, L)
+Id: MAT.903
+Topics: Extensional topics of TCS1, complexity theory
+Evaluation: oral exam
+Clawback: 4 ECTS, 3 SSt
+
+Theoretical Computer Science II (TCS2, P)
+Id: MAT.904
+Topics: Extensional topics of TCS1, complexity theory
+Group: ?
+Evaluation: informal, random assignments with 2-3 presentations at board
+Clawback: 1 ECTS, 1 SSt
+
+Old courses
+-----------
+
+Introduction to Knowledge Processing (IKP, L)
 Id: 708.560
 Topics: Machine Learning, Adaptive Filters, Neural networks
 Newsgroups: tu-graz.lv.ew
@@ -26,138 +109,37 @@ Website: https://www.spsc.tugraz.at/courses/EW
 Evaluation: 1 exam with 2 parts where each of them has to be positive
 Clawback: 3 ECTS, 2 SSt
 
-Einführung in die Wissensverarbeitung (IKP, UE)
-Introduction to Knowledge Processing (IKP, UE)
-Id: 442.072
-Topics: Machine Learning, Adaptive Filters, Neural networks
-Group: Schumi, X, Lukas
-Newsgroups: tu-graz.lv.ew
-Website: https://www.spsc.tugraz.at/courses/einfuehrung-die-wissensverarbeitung/ewhomework
-Evaluation: ~6 assignments
-Clawback: 1.5 ECTS, 1 SSt
-
-Rechner- und Kommunikationsnetze (RKN, VO)
-Computer- and Communication Networks (CCN, VO)
-Id: 705.088
-Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
-Newsgroups: tu-graz.lv.rechnernetze
-Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und_kommunikationsnetze/
+Classical Themes of Computer Science (CTCS, L)
+Id: 716.113
+Topics: robotics, AI, game theory, constraint programming, complexity theory, automaton theory
+Newsgroups: tu-graz.lv.ktdcw
+Website: http://www.ist.tugraz.at/ktdcw12.html, http://www.ist.tugraz.at/teaching/bin/view/Klassischethemen
 Evaluation: 1 exam
-Clawback: 3 ECTS, 2 SSt
+Clawback: 4 ECTS, 3 SSt
 
-Rechner- und Kommunikationsnetze (RKN, KU)
-Computer- and Communication Networks (CCN, KU)
-Id: 705.089
-Group: Chris
-Topics: Low-level technology of networks, Packet switching, Internetworking, End-to-end protocols, Network security
-Website: http://www.iaik.tugraz.at/content/teaching/bachelor_courses/rechner_und_kommunikationsnetze/practicals/
-Evaluation: 2 assignments
-Clawback: 1.5 ECTS, 1 SSt
+Cost Accounting (KoRe, P)
+Topics: Rechnungswesen, Kostenerstellung, Rechnungen
+Evaluation: "schriftlich und mündlich"
+Clawback: 2 ECTS, 2 SSt
 
-Gesellschaftliche Aspekte der Informationstechnologie (GADI, VU)
-Societal Aspects of Information Technology (SAIT, VU)
-Id: 706.009
-Topics: Various
-Newsgroups: tu-graz.lv.gadi
-Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?707000
-Evaluation: ?
-Clawback: 2.5 ECTS, 3 SSt
-
-Web Science and Web Technology (WSWT, VU)
-Id: 707.000
-Topics: Web technology, networks graphs, ontologies
-Newsgroups: tu-graz.lv.web-science
-Website: http://tugtc.tugraz.at/wbtmaster/courseMain.htm?707000
-Evaluation: 1 assignment, 1 exam
-Clawback: 3 ECTS, 2 SSt
-
-Qualitätssicherung in der Softwareentwicklung (QS, VU)
-Quality Assurance in Software Development (QASD, VU)
-Id: 716.066
-Topics: JML, Quality of OpenSource software
-Group: Luke, Lukas, Christian
-Newsgroups: tu-graz.lv.qs
-Website: http://www.ist.tugraz.at/teaching/bin/view/Main/QS
-Evaluation: 3 assignments
-Clawback: 2.5 ECTS, 2 SSt
+Software Development in Distributed Environments (SDDE, LP)
+Id: 710.020
+Topics: Java, distributed computing, interprocess communication
+Evaluation: 2 assignments, 2 partial exams
+Clawback: 4 ECTS, 3 SSt
 
 Optional courses
 ----------------
 
-(Visiting the lecture but don't take the exams)
+(I am not sure I have time for those courses)
 
-Mathematische Optimierung (MO, VO)
-Mathematical Programming (MP, VO)
-Id: 502.552
-Topics: lineare Optimierung, Simplexverfahren, Dualität, innere Punkte Verfahren, ganzzahlige Optimierung, Kuhn-Tucker Theorie
-Website: http://www.opt.math.tu-graz.ac.at/~cela/Vorlesungen/MathOptSS12/main.htm
-Evaluation: 1 exam
-Clawback: 6 ECTS, 4 SSt
-
-Mathematische Optimierung (MO, UE)
-Mathematical Programming (MP, UE)
-Id: 502.553
-Topics: lineare Optimierung, Simplexverfahren, Dualität, innere Punkte Verfahren, ganzzahlige Optimierung, Kuhn-Tucker Theorie
-Website: http://www.opt.math.tu-graz.ac.at/~cela/Vorlesungen/MathOptSS12/main.htm
-Evaluation: weekly assignments presented at the board
+Mathematical Foundation of Cryptography (MFOC)
+Id: 501.660
+Topics: public-key-cryptography, RSA, primality tests, factoring methods
+Website: http://www.math.tugraz.at/~cheub/lv/Krypto/
 Clawback: 3 ECTS, 2 SSt
 
-Old courses
------------
-
-Computer Vision 2 (CV2, VU)
-Computer Vision 2 (CV2, VU)
-Id: 710.006
-Topics: motion tracking compression
-Website: http://www.icg.tu-graz.ac.at/courses/cgcv
-Evaluation: 1 assignment, 1 exam
-Clawback: 2.5 ECTS, 1.5 SSt
 
 
-Buchhaltung und Bilanzierung (BuBi, UE)
-Accounting and Balancing (BuBi, UE)
-Id: 373.323
-Topics: double-entry bookkeeping system
-Newsgroups: tu-graz.bwl
-Evaluation: 1 exam
-Clawback: 2 ECTS, 1 SSt
-
-MOOCs
------
-
-http://www.class-central.com/
-Coursera, Udacity, edX, Canvas Network
-
-* Compilers: Stanford University (https://www.coursera.org/course/compilers)
-* Mathematical thinking: Stanford University (https://www.coursera.org/course/maththink)
-* Model thinking: University of Michigan (https://www.coursera.org/course/modelthinking)
-* Foundations of Business Strategy: University of Virginia (https://www.coursera.org/course/strategy101)
-* Pattern-Oriented Software Architectures for Concurrent and Networked Software: Vanderbilt University (https://www.coursera.org/course/posa)
-* Women and the Civil Rights Movement: University of Maryland (https://www.coursera.org/course/womencivilrights)
-* Games without Chance: Combinatorial Game Theory: Georgia Tech (https://www.coursera.org/course/cgt)
-* AIDS: Emory University (https://www.coursera.org/course/aids)
-* Artificial intelligence: UC Berkeley (https://www.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/about)
-* Natural Language Processing: Columbia University (https://www.coursera.org/course/nlangp)
-* Introduction to Computer Science: Udacity (https://www.udacity.com/course/cs101)
-
-Interesting courses
--------------------
-
-* "Einführung in die Semantik (I)" (2 ECTS, 2 SSt)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=307996
-* "Einführung in die Allgemeine Sprachwissenschaft" (3 ECTS, 2 SSt)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=305003
-* "Globalisierung, sozialer Wandel und Zivilisationen" (3 ECTS, 2 SSt)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=306330
-* "Bibliotheken und ihre Benützung - ein historischer Überblick" (4 ECTS, 2 SSt, 505.093)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=334198
-* "Digitale Kartographie" (3 ECTS, 2 SSt, GST.160)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=312357
-* "Zivilrechtliche Fragen des Internet- und Medienrechts" (5 ECTS, 2 SSt, 207.906)
-  https://online.uni-graz.at/kfu_online/lv.detail?clvnr=304436
-* "Network Science" (3 ECTS, 2 SSt, 707.028)
-  https://online.tugraz.at/tug_online/lv.detail?clvnr=166703&sprache=1
-* "Sprache und Gesellschaft in Österreich III - Diskurs und Pragmatik des Österreichischen Deutsch" (4 ECTS, 2 SSt, 935.165)
-  https://online.uni-graz.at/kfu_online/lv.detail?cperson_nr=53870&clvnr=333635
-* "Linguistic Foundations of Speech and Language Technology" (3 ECTS, 2 SSt, 442.034)
-  https://online.tugraz.at/tug_online/lv.detail?clvnr=162278
+Also interesting:
+* 710.035, Convex Optimization

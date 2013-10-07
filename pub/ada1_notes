@@ -1,0 +1,870 @@
+Design and Analysis of Algorithms 1
+===================================
+
+"Perhaps the most important principle for the good algorithm designer is to refuse to be content." (Aho Hopcroft and Ullman)
+
+Karatsuba Multiplication
+------------------------
+
+Improved multiplication method.
+
+1. Split number 1 into "a" and "b"
+2. Split number 2 into "c" and "d"
+3. Compute x = a·c
+4. Compute y = b·d
+6. Compute z = (a+b)·(c+d)   (equates to ac + ad + bc + bd)
+7. Compute z - y - x
+8. Pad x with as many zeros as number 1 digits has
+9. Add y to this number.
+10. Add z to it; padded with as many zeros as half the number of digits of x
+
+Underlying math law: x·y = 10ⁿ·ac + 10^{n/2}·(ad + bc) + bd
+
+Algorithm: Recursive Karatsuba Multiplication
+---------------------------------------------
+
+1. recursively compute x = a·c
+2. recursively compute y = b·d
+3. recursively compute z = (a+b)·(c+d)
+4. return z - y - x
+
+Algorithm: Merge Sort
+---------------------
+
+Problem: Sorting a sequence of [distinct] numbers.
+
+6n * log_2(n) + 6n
+Ο(n log n)
+
+Guiding design principles and reasoning
+---------------------------------------
+
+Biases:
+1. Worst-case analysis: Because we are interested in how the algorithm holds for **every** input of length n.
+2. We won't pay attention to constants and lower-order terms (see rationale below).
+3. Asymptotic analysis: focus on running time for *large* input sizes.
+
+Why do we omit constant factors?
+* easier to work with
+* often depends on architecture and compiler-language toolchain
+* lose of very predictive power
+
+Big Ο-Notation
+--------------
+
+Ο(1)
+  one operation independent of the input
+Ο(n)
+  iteration over the input list
+Ο(n)
+  2 iterations over the input list
+Ο(n²)
+  nested iterations over the input list
+
+Formally:
+    T(n) = Ο(f(n)) if and only if there exist constants c, n₀ > 0 such that
+        T(n) ≤ c · f(n)
+    for all n ≥ n₀
+
+True statements:
+  if T(n) = aₖ nᵏ + … + a₁ n + a₀ then T(n) = Ο(nᵏ)
+  for every k ≥ 1, nᵏ is not Ο(nᵏ⁻¹)
+
+Topic. Also Θ and Ω-Notation.
+
+Little O-Notation
+-----------------
+
+Formally:
+    T(n) = ο(f(n)) if and only if for *all* constants c > 0, ∃ a constant n₀ such that
+    T(n) ≤ c · f(n)  ∀ n ≥ n₀
+
+"On the basis of the issues discussed here, I propose that members of SIGACT, and editors of computer science and mathematics journals, adopt the Ο, Ω and Θ notations as defined above, unless a better alternative can be found reasonably soon." (D. E. Knuth, "Big Omicons and Big Omega and Big Theta", SIGACT News, 1976. Reprinted in "Selected Papers on Analysis of Algorithms")
+
+Script reference. "3 - 1 - O(n log n) Algorithm for Counting Inversions I (13 min).mp4"
+
+Divide and Conquer Paradigm
+---------------------------
+
+1. Divide into smaller subproblems.
+2. Conquer subproblems recursively.
+3. Combine solutions of subproblems into one for the original problem.
+
+Algorithm: Inversion counting
+-----------------------------
+
+Inversion: Given an array A, an inversion is the relation between two entries
+(i, j) where i < j and A[i] > A[j]
+
+Problem: Count the number of inversions in a given sequence of numbers.
+
+Interesting representation:
+Create two lines with the ordered values of A and sorted indices.
+Create a line between any value and index, if this particular value is at this index.
+The number of intersections of the lines corresponds to the number of inversions in an array.
+
+⇒ We can modify Mergesort to reduce the intuitive Ο(n²) algorithm to Ο(n log n).
+
+Algorithm: Strassen's matrix multiplication
+-------------------------------------------
+
+Problem:
+  Multiply two n×n matrices X and Y.
+  z_{i,j} = sum_k=1^n (x_ik · y_kj)
+
+
+        ( A  |  B )         ( E  |  F )
+    X = ( ------- )     Y = ( ------- )
+        ( C  |  D )         ( G  |  H )
+
+Note. Each {A,…,H} has size n/2 × n/2.
+
+Idea:
+             ( AE + BG | AF + BH )   ( P₅+P₄-P₂+P₆ |    P₁+P₂    )
+     X × Y = ( ----------------- ) = ( ------------------------- )
+             ( CE + DG | CF + DH )   (     P₃+P₄   | P₁+P₅-P₃-P₇ )
+
+1. Recursively compute the 7 products.
+2. Addition and Subtraction (Ο(n²))
+
+7 products?
+
+    P₁ = A(F-H)
+    P₂ = (A+B)H
+    P₃ = (C+D)E
+    P₄ = D(G-E)
+    P₅ = (A+D)(E+H)
+    P₆ = (B-D)(G+H)
+    P₇ = (A-C)(E+F)
+
+We get Ο(n³).
+
+Algorithm: Closest Pair Problem
+-------------------------------
+
+Given is a set P = {p₁,…,pₙ} of n points in the plane.
+Let d(pᵢ, pⱼ) be the euclidean distance. So, with pᵢ = (xᵢ, yᵢ) and pⱼ = (xⱼ, yⱼ)
+  d(pᵢ, pⱼ) = √(xᵢ - xⱼ)² + (yᵢ - yⱼ)²
+
+Assumption. All points are colinear.
+
+In 1D we could use Mergesort to sort the points on a line and
+return the pair with the smallest euclidean distance.
+
+Make copies of points sorted by x-coordinate Px and y-coordinate Py (Ο(n log n) each).
+
+ClosestPair(Px, Py) algorithm:
+
+    1. Let Q = left half and R = right half. So create Qx, Qy, Rx and Ry (takes Ο(n) time).
+    2. (p, q) = ClosestPair(Qx, Qy)
+    3. (p₂, q₂) = ClosestPair(Rx, Ry)
+    4. Let S = min{d(p,q), d(p₂, q₂)}
+    5. (p₃, q₃) = ClosestSplitPair(Px, Py, S)
+    6. return best of (p, q), (p₂, q₂) and (p₃, q₃)
+
+ClosestSplitPair(Px, Py, δ)
+
+    Let ₓ be the biggest x-coordinate in left of p (Ο(1))
+    Let Sy be points of P with x-coordinate in [ₓ-δ, ₓ+δ] sorted by y-coordinate (Ο(n))
+    Initialize best = δ, bestpair = NULL
+    for i = 1 to |Sy|-1
+        for j = 1 to min{7, |Sy|-i}
+            let P_ij = i'th, (i+j)'th points of Sy
+            if d(p, q) < best
+                bestpair = (p, q)
+                best = d(p, q)
+
+ClosestPair runs in Ο(n log n).
+
+Script reference. "4 - 1 - Motivation (8 min).mp4".
+
+Master method
+-------------
+
+A simple method to solve recurrences.
+Assumption: All sub problems have equal size.
+
+Given a divide-and-conquer algorithm with the following recurrence format:
+
+    Base case:
+      T(n) ≤ c   ∀ n < n₀  … c constant
+    In every other case:
+      T(n) ≤ a · T(n/b) + Ο(nᵈ)   ∀ n > n₀
+    
+    a … number of recursive calls (≥1)
+    b … input size shrinkage factor (>1)
+    d … exponent in running time of "combine step" (≥0)
+    a, b, d must be independent of n
+
+then the running time is given by
+
+    Ο(nᵈ log n),     if a = bᵈ
+    Ο(nᵈ),           if a < bᵈ
+    Ο(n^{log_b a}),  if a > bᵈ
+
+For the recurrence format "T(n) = a · T(n/b) + Θ(nᵈ)", we get the same
+running times with Θ.
+
+Ο(nᵈ log n) … logarithm base does *not* matter
+Ο(n^{log_b a}) … logarithm base *does* matter
+
+Interpretation:
+  a … rate of subproblem proliferation
+  bᵈ … rate of work shrinkage
+
+Algorithm: QuickSort
+--------------------
+
+1961, Tony Hoare
+
+Problem: Sorting a sequence of [distinct] numbers.
+
+Average case: Ο(n log n)
+
+Pivot element splits a subsequence into two halfs. All elements on
+the left are smaller than the pivot, all elements on the right are
+greater than the pivot. Recursively partition the subsequence.
+Finally you will end up with a sorted sequence.
+
+* Partitioning takes only linear time. No extra memory space required.
+* Problem size reduction (divide-and-conquer approach).
+
+    Quicksort(A)
+        if A.length == 1
+            return A
+        p = selectPivotElement(A)
+        Partition(A, p)  // partition left and right
+        QuickSort(A[0:p])
+        QuickSort(A[p + 1:])
+
+    Partition(A, p)
+        Swap(A[0], A[p])
+        i = 1  // splits indices <j into "left" and "right"
+        for j = 1 to A.length
+            if A[j] < p
+                Swap(A[j], A[i])
+                i += 1
+        Swap(A[i], A[0])
+
+Pivot selection
+---------------
+
+First/Last element
+  Worst case, recursion depth linear and linear time per level: Ο(n²)
+Median element of subsequence
+  Perfect, recursion depth log₂ and linear time per level: Ο(n log n)
+Random pivot element
+  If we get at least a 25:75 split, we get Ο(n log n).
+  Half of elements get a 25:75 split or better.
+
+.. note::
+    Linearity of expectation:
+    E[Y] + E[X] = E[X·Y]
+
+Decomposition Principle applied to QuickSort
+--------------------------------------------
+
+.. assumption:: the running time of quicksort is dominated by comparisons.
+
+σ is element of sample space Ω, which is all possible outcomes for selection of pivot element.
+
+C(σ) = # of comparisons between input elements
+Xᵢj(σ) = # of comparisons between z_i and z_j where z_{i,j} is the i-th smallest element in the sequence
+
+We have to show: E[C] = Ο(n log n)
+
+Thus: ∀σ, C(σ) = Σ_i=1^n-1 Σ_j=i+1^n  X_ij(σ)
+
+2 elements of the array will be compared by Quicksort 0 or 1 times.
+0 if both elements are on other sides of the pivot element,
+1 if one of the elements is the pivot and we are in the partition subroutine.
+
+By linearity of expectation: E[C] = Σ_i=1^n-1 Σ_j=i+1^n  E[Xᵢⱼ(σ)]
+
+E[Xᵢⱼ] = 0 · Pr[Xᵢⱼ = 0] + 1 · Pr[Xᵢⱼ = 1] = Pr[Xᵢⱼ = 1]
+
+Thus: E[C] = Σ_i=1^n-1 Σ_j=i+1ⁿ  Pr[zᵢ and zⱼ get compared]
+
+
+Claim:
+  ∀ i < j, Pr[zᵢ and zⱼ get compared] = 2 / (j - i + 1)
+
+Fix zᵢ and zⱼ and consider the set zᵢ, z_i+1, z_i+2, …, z_j-1, zⱼ.
+
+1. Case 1: If zᵢ or zⱼ gets chosen as pivot, then zᵢ and zⱼ get compared (= 1).
+2. Case 2: If any of z_i+1 to z_j-1 gets chosen as pivot, then zᵢ and zⱼ will never get compared (= 0),
+   because they will be passed to different recursive calls.
+
+The sequence has the size n = (j - i + 1) and the (uniform) probability that one of the two is chosen, is 2 / n which is 2 / (j - i + 1).
+
+Thus, E[C] = Σ_i=1^n-1 Σ_j=i+1ⁿ  2 / (j - i + 1)
+E[C] <= 2 · n · Σ_k=2^n 1/k
+
+Claim:
+  Σₖ₌₂ ⁿ (1/k)   is linear
+
+Decomposition Principle
+-----------------------
+
+1. Identify random variable Y that you really care about (eg. # of comparisons).
+2. Express Y as sum of indicator random variables: Y = Σₗ₌₁ ᵐ Xₗ
+3. Apply linearity of expectation: E[Y] = Σₗ₌₁ ᵐ Pr(Xₗ = 1)
+
+Reduces the problem to evaluation of Pr(Xₗ = 1).
+
+Probability theory review
+-------------------------
+
+Sample space σ (all possible outcomes).
+An event is a subset of σ.
+
+The probability of an event S is: ∑ᵢ element of S  p(i)
+
+Conditional probability: Pr[X|Y] = Pr[X intersected with Y] / Pr[Y]
+Statistical independence: Pr[X intersected with Y] = Pr[X] · Pr[Y] ⇒ Pr[X|Y] = Pr[X]
+
+If A and B are independent, then E[A·B] = E[A]·E[B]
+
+Algorithm: Selection
+--------------------
+
+Input: Array of distinct numbers
+Output: i-th order statistic
+
+    RSelect(A, length n, order statistic i)
+        if n = 1, return A[1]
+        choose pivot p from A (uniformly at random)
+        partition A around p
+        j = new index of p
+        if j = i, return p
+        if j > i, return RSelect(1st part of A, j-1, i)
+        else return RSelect(2nd part of A, n-j, i-j)
+
+Best pivot: the i-th order statistic itself
+Worst pivot: the minimum in each recursive call
+
+Best case: Ο(n)
+Average case: Ο(n)
+Worst case: Ο(n²)
+
+Deterministic RSelect
+---------------------
+
+    ChoosePivot(A, n)
+        1. logically break A into n/5 groups each (ie. each has size 5)
+        2. sort each group (eg. using MergeSort)
+        3. copy n/5 medians (ie. middle element of each sorted group) into new array C
+        4. recursively compute median of C
+        5. return this median as pivot
+
+"Median of medians" results in 70:30-split.
+
+Comparison-based sorting algorithms take at least Ο(n log n).
+
+Script reference. "8 - 6 - Omega(n log n) Lower Bound for Comparison-Based Sorting [Advanced - Optional] (13 min).mp4"
+
+Graph algorithms
+----------------
+
+G = (V, E)
+Directed or undirected.
+
+n = #(vertices), m = #(edges)
+
+A cut of a graph is a partition of V into two non-empty sets A and B.
+The crossing edges of a cut (A, B) are those with:
+* [undirected] one endpoint in each of (A, B)
+* [directed] tail in A, head in B
+
+Storing graphs as adjacency matrix: Θ(n²).
+Storing graphs in adjacency lists: Θ(m·n).
+
+Algorithm: Minimum Cut
+----------------------
+
+Given an undirected graph. Which cut has the fewest number of crossing edges?
+Karger, 1990.
+
+    While there are more than 2 vertices:
+        pick one remaining edge (u, v) uniformly at random
+        merge/contract u and v into one single vertex
+        remove self-loops
+    return cut represented by final 2 vertices
+
+Pr[output is (A, B)] = Pr[contracting does not occur for an crossing edge between (A, B)]
+
+Sᵢ = event that an crossing edge is contracted in iteration i.
+
+So what is Pr[not Sᵢ and not S_2 and not S_3 and … not S_(n-2)]?
+
+The probability that an edge crossing the minimum cut (A, B) is chosen in the first iteration is k/m [k = # of crossing edges, m = # of edges]:
+  Pr[Sᵢ] = #(crossing edges) / #(edges)
+
+Degree of each vertex is at least k.
+The sum of all degrees is 2m.
+
+Thus, m ≥ kn/2
+
+Contraction Algorithm Analysis
+------------------------------
+
+Probability of success: 2 / (n·(n-1)) ≥ 1/n²
+
+This low probability of success justifies using the algorithm multiple times (multiple trials).
+If number of trials == n², Pr[all trials fail] = 1/e.
+If number of trials == n² ln n, Pr[all trials fail] = 1/n.
+
+Script reference. "9 - 4 - Analysis of Contraction Algorithm (30 min).mp4"
+
+Number of Minimum Cuts
+----------------------
+
+t = number of minimum cuts
+
+A tree with n vertices has exactly n-1 minimum cuts.
+A graph with n vertices can have up to "(n \over 2) = n(n-1) / 2" minimum cuts.
+
+Upper bound:
+    Pr[output = (Aᵢ, Bᵢ)] ≥ 2 / n(n-1) = 1/(n \over 2)   ∀ i=1,…,t
+    t ≤ (n \over 2)
+
+Graph search
+------------
+
+Motivation:
+* Connection test
+* Direction search
+* Decision paths
+
+Find every part of the graph in Ο(m+n)
+
+Breadth-First Search (BFS)
+--------------------------
+
+* explore nodes in layers
+* can compute shortest paths
+* can compute connected components of an undirected graphs
+
+    BFS(G, src)
+        mark src as explored
+        Q = FIFO queue
+        Q.push src
+        while Q is not empty:
+            u = pop first node from Q
+            for each edge (u, v)
+                if v unexplored
+                    mark v as explored
+                    push v to Q
+
+Runtime:
+  Ο(nₛ + mₛ)
+    where nₛ is #(nodes reachable from s)
+    and mₛ is #(edges reachable from s)
+
+Depth-First Search (DFS)
+------------------------
+
+* explore agressively like a maze, backtrack when necessary
+* compute topological ordering of directed acyclic graph
+* compute connected components in directed graphs
+* computes topological ordering of an directed acyclic graph implicitly
+
+    DFS(G, src)
+        mark src as explored
+        for every edge(src, v):
+            if v is unexplored
+                DFS(G, v)
+
+Runtime:
+  Ο(nₛ + mₛ)
+    where nₛ is #(nodes reachable from s)
+    and mₛ is #(edges reachable from s)
+
+Algorithm: Shortest path problem
+--------------------------------
+
+Given is a node s. Compute dist(t): The fewest number of edges from s to t.
+
+Algorithm:
+    dist(v) = { 0  if v == s, +infinity  if v ≠ s }
+    Basic BFS algorithm, but when considering edge (v, w)
+        if w is unexplored, set dist(w) = dist(v) + 1
+
+Algorithm: Connected components (undirected graphs)
+---------------------------------------------------
+
+Algorithm:
+    all nodes unexplored
+    for i = 1 to n
+        if i not yet explored
+            BFS(G, i)
+
+Runtime: Ο(n + m)
+
+Topological sort
+----------------
+
+Definition. A topological ordering of a directed graph G is a labelling f of G's nodes such that
+  1) the f(v)'s are the set {1, 2, …, n}
+  2) (u, v) ∈ G ⇒ f(u) < f(v)
+
+Find algorithm for evaluating the topological ordering of a DAG.
+
+Algorithm: Straightforward approach to topological sort
+-------------------------------------------------------
+
+Every DAG has a sink vertex (at least one)!
+
+Algorithm:
+    Topological-Sort(G)
+        Let v be the sink vertex of the DAG
+        label(v) = n
+        recurse on G \ {v}
+
+Runtime: Ο(n + m)
+
+Algorithm: Topological sort algorithm
+-------------------------------------
+
+    DFS(G, src)
+        mark src explored
+        for every edge (src, v)
+            if v not yet explored
+                DFS(G, v)
+        set f(s) = current_label
+        current_label = current_label - 1
+
+    Topological-Sort(G)
+        mark all nodes as unexplored
+        current_label = n
+        for every vertex v:
+            if v unexplored:
+                DFS(G, v)
+
+Runtime: Ο(n + m)
+Correctness shown by edge (u, v) ⇒ f(u) < f(v)
+
+Strongly connected components
+-----------------------------
+
+Specific for directed graphs.
+Two nodes are part of a strongly connected component, iff there is an edge from s to t and from t to s.
+
+Algorithm: Kosaraju's two-pass algorithm
+----------------------------------------
+
+Discovers strongly connected components.
+
+    1. G^rev = G with all arcs reversed
+    2. Run DFS on G^rev
+    3. Run DFS on G
+
+More precisely:
+
+    t = 0
+    s = NULL
+
+    DFS-loop(G)
+        for i = n downto 1
+            if i unexplored
+                s = i
+                DFS(G, i)
+
+    DFS(G, i)
+        mark i as explored
+        set leader[i] = s
+        for each arc (i, j) \in G
+            if j unexplored
+                DFS(G, j)
+        t = t + 1
+        finishtime(i) = t
+
+Runtime: Ο(n + m)  [2 times DFS]
+Proof by showing that finishtimes are the greatest within a SCC.
+
+Script reference. "10 - 8 - Computing Strong Components The Analysis (26 min).mp4"
+
+The World Wide Web
+------------------
+
+* Input nodes
+* Output nodes
+* Tubes (direct connection between input and output nodes without touching the core)
+* The core (small-world phenomenon)
+
+1. Evolution of the Web over time
+2. How does new information propagate through the web?
+3. Identify finer-grained structures: How to define and compute communities in information and social networks?
+
+Dijkstra's algorithm
+--------------------
+
+Problem: Single source, multiple destination shortest path.
+Uses edge relaxation.
+Works only for non-negative edges.
+
+Runtime: Ο(nm) for a naive implementation.
+
+Heap data structure
+-------------------
+
+* Insert [Ο(log n)]
+* Extract-Min [Ο(log n)]
+* Heapify
+* Delete
+
+Heaps reduce Dijkstra's algorithm to Ο(m log n).
+
+Can be stored in an array.
+
+Rooted, binary, as complete as possible trees. All nodes satisfy Heap property:
+    node <= all children of node
+
+Algorithm: Median Maintenance
+-----------------------------
+
+Input: A sequence of numbers x₁, x₂, …, xₙ of numbers one by one.
+Output: For each added number report the median of all numbers x. Use Ο(log n) at maximum.
+
+Use two heaps. One for the greater half of the numbers. One for the smaller half of the numbers.
+
+
+Hash tables: Supported operations
+---------------------------------
+
+Mapping of unique keys to values. "Dictionary". Does NOT (necessarily) maintain ordering.
+
+* Insertion
+* Lookup
+* Deletion
+
+Guarantee: All those operations in Ο(1) [if correctly implemented and non-pathological data].
+In general used to avoid exploring any configuration more than once.
+
+Originally developed for symbol table lookups in compilers.
+
+Algorithm: De-Duplication
+-------------------------
+
+    Deduplication(stream)
+        Hashtable H
+        while get object from stream:
+            if object not in H
+                add object to H
+
+2-Sum problem
+-------------
+
+Input: Unsorted array (A) of (n) integers. Target sum (T).
+Output: two elements of A or false.
+
+Determine whether or not there are 2 numbers x, y in A with x + y = T.
+
+Algorithm: 2-Sum Problem
+------------------------
+
+Approach 1: Exhaustive search (Ο(n²))
+Approach 2: Pre-sorting and binary search (Ο(n log n))
+
+1. Sort array A.
+2. For each x in A, lookup T-x in A with binary search.
+
+Approach 3: Hash tables Ο(n)
+
+1. Insert elements of A into hash table H.
+2. For each x in A, lookup T-x in H.
+
+Hash table collisions
+---------------------
+
+1. Chaining (linked lists in buckets, add element to linked list for Insertion)
+2. open addressing (find next empty bucket) (linear probing or double hashing)
+
+Hash function selection
+-----------------------
+
+Performance depends on the choice of hash function.
+
+Hash functions
+--------------
+
+objects  integers  buckets
+
+hash code - subroutine to convert strings to integers
+compression function - subroutine to convert integer to bucket number
+
+Script reference 13-3
+
+Choosing number of buckets for hashing
+--------------------------------------
+
+1. Use a prime number.
+2. Not too close to a power of 2.
+3. Not too close to a power of 10.
+
+load factor alpha = #(objects in hash table) / #(buckets)
+
+Open addressing: alpha << 1
+
+Pathological data sets
+----------------------
+
+Every hash function has a pathological data sets by the Pidgeonhole Principle.
+The pathological data set is the one which only uses data which lead to collisions.
+
+Solutions:
+1. Use cryptographic functions (infeasible to reverse engineer pathological data set)
+2. Use randomization to select one hash function
+
+Universal hashing
+-----------------
+
+Let H be a set of hash functions from U to {0,1,2, … , n-1}. H is universal iff, for all x, y \in U (with x != y) the probability that x and y collide is smaller equal to 1/n (n as the number of buckets) when hash function h is chosen uniformly at random from H.
+
+Bloom filters
+-------------
+
+More space efficiency than hash tables. No deletions. Small false positive probability.
+
+Under the heuristic assumption, given that the element has not been inserted, the false positive probability is <= (1 - e^{-k/b})^k where b is the number of bits per object. The number of hash functions should scale linearly with the number of bits per object.
+
+Sorted Array
+------------
+
+* Search                                              Ο(log n)
+* Select (given order statistic i)                    Ο(1)
+* Min / Max                                           Ο(1)
+* Pred / successor (given pointer to a key)           Ο(1)
+* Rank (get number of keys less than given element)   Ο(log n)
+* Output in sorted order                              Ο(n)
+
+Balanced Search Tree
+--------------------
+
+Same like Sorted Array, but runtime is always Ο(log n) expect output which stays Ο(n). Also:
+
+* Insertion                                           Ο(log n)
+* Deletion                                            Ο(log n)
+
+Searching and Inserting
+-----------------------
+
+Script reference. "16 - 3 - Binary Search Tree Basics Part II (30 min).mp4".
+
+Binary Search algorithm:
+
+    BinarySearch(tree, root, search_element)
+        node = root(tree)
+        if node == NIL
+            return NOT_FOUND
+        if node > search_element
+            node = leftchild(tree, node)
+        else if node == search_element
+            return FOUND
+        else
+            node = rightchild(tree, node)
+
+Deletion of nodes:
+
+    Deletion(tree, element)
+        if children(tree, element) == 0
+            remove_node(tree, element)
+        else if children(tree, element) == 1
+            swap(tree, element, child(tree, element))
+            remove_node(tree, element)
+        else
+            pred = predecessor(tree, element)
+            swap(tree, pred, element)
+            remove_node(tree, element)
+
+Tree augmentation
+-----------------
+
+Nodes store extra information about the tree (not the data!).
+Only leaves contain data.
+
+i-th order statistic from augmented search trees
+------------------------------------------------
+
+Store number of children in every node. Store ordered values in leaves.
+
+1. Start at root x with children y and z
+2. Let a be the number of children of x.
+3. If a = i -1, return x's values
+4. If a ≥ i, recursively compute i-th order statistic of search tree rooted at y
+5. If a < i-1 recursively compute (i-a-1)-th order statistic of search tree rooted at z
+
+Running time: Ο(height)
+
+Red-Black-Trees
+---------------
+
+Tries to keep height of tree at log n.
+
+See also: AVL trees, splay trees, B-Trees
+
+Invariants:
+1. Each node is either red or black.
+2. The root node is black.
+3. No 2 red nodes in a row (red node has only black children)
+4. Every path from root to NIL has the same number of black nodes.
+
+Every RB-Tree with n nodes has height ≤ 2·log₂(n+1).
+
+Rotations
+---------
+
+Left rotation:
+    Given x with left subtree A and right subtree y with left subtree B and right subtree C,
+    y becomes the root with left subtree x with A and B and right subtree C.
+
+    (x A (y B C)) ⇒ (y (x A B) C)
+
+Right rotation correspondingly.
+
+Applications
+------------
+
+* Internet routing: Bellman-Ford instead of Dijkstra's algorithm
+* Sequence alignment in computational genomics: Similarity of genom sequences (Needleman-Wunsch score)
+
+Algorithm Designer's Paradigms
+------------------------------
+
+* Divide and Conquer
+* Dynamic programming
+* Greedy algorithms
+* Randomized algorithms
+
+Proofs of correctness toolbox
+-----------------------------
+
+* induction (eg. Dijkstra's algorithm)
+* exchange argument
+* (whatever works ;) )
+
+Dynamic programming
+-------------------
+
+1. Identify a small number of subproblems
+2. Solve small subproblems at one level
+3. Solve subproblem at next level by using the results of previous level; iterate between (2) and (3)
+4. Compute the final overall solution
+
+P vs NP
+-------
+
+Reasons to believe P != NP:
+psychological
+  if P = NP, someone would have proved it after so much time of research
+philosophical
+  finding a proof is not as easy as verifying it
+
+Handling NP-complete problems in projects
+-----------------------------------------
+
+* Focus on computationally tractable special case in your usecase
+* Assure problem size stays small
+* Rethink your data model and its implications on the complexity
+* Resort to heuristics
+* Solve in exponential time, but faster than brute-force

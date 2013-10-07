@@ -1,0 +1,611 @@
+SaaS lecture notes
+==================
+
+:course:    "Software As A Service" by Armando Fox and David Patterson
+:date:      July and August 2013
+:author:    Lukas Prokop
+
+Armando and David are the authors of the book "Engineering Software as a Service".
+The videos of the course are publicly unofficially available at http://benkyoplayer.com/courses/berkeleyx-cs-169-1x-software-as-a-service.
+
+Software engineering
+--------------------
+
+Software engineering is different than hardware engineering!
+(Hardware decays, software is long-lasting)
+
+* Waterfall development
+* Spiral development
+* Agile development
+
+Change as a problem.
+
+Book. "The Mythical Man-Month" by Fred Brooks.
+
+Hardware focuses on verification. Software focuses on validation.
+
+Productivity
+------------
+
+* Clarity via conciseness.
+* Synthesis.
+* Reuse - Don't Repeat Yourself (DRY).
+* Automation and Tools.
+
+Software as a Service (SaaS)
+----------------------------
+
+Software is provided as a service. Software deployment into the cloud.
+
+6 reasons for SaaS:
+1. No installation worries about hardware capabilities / operating system
+2. No worries about data loss (at remote site)
+3. Easy for groups to interact with same data
+4. If data is large or changes frequently, simpler to keep 1 copy at a place
+5. 1 copy of software and controlled hardware environment is given (no compatibilities issues)
+6. 1 copy of software; simplified software upgrades for developers (no user upgrade requests)
+
+SaaS's 3 demands on infrastructure:
+Communication
+  allow customers to interact with service
+Scalability
+  fluctuations in demand during + new services to add users rapidly
+Dependability
+  service and communication continuously available 24x7
+
+Service oriented architecture
+-----------------------------
+
+All components are build as services (opposite of monolithic design). All developers will expose their data and functionality
+through service interfaces. Components must communicate with each other through interfaces. There will be no other form of interprocess communication allowed: no direct linking, no direct reads of another components' data store, no shared-memory model, no back-doors, etc. The only communication allowed is via service interface calls over the network. It doesn't matter what [API protocol] technology is used. Service interfaces, without exception, must be designed from the ground up to be externalizable.
+
+Clusters
+  Commodity computers connected together by commodity Ethernet switches
+Utility computing / Public Cloud Computing
+  Computing, storage and/or communication at money per hour
+
+Interface languages are almost always JSON and XML.
+
+Fallacies and Pitfalls
+----------------------
+
+* If a software project is falling behind schedule, DO NOT catch up by adding people.
+* The Agile lifecycle is NOT ALWAYS best for software development.
+* DO NOT ignore the cost of software design.
+
+Ruby
+----
+
+* String representation by "to_s" method
+* 10.times do … end
+* Call "respond_to?" method to test whether object responds to a method name
+* poetry mode: Sometimes you can leave out the braces (especially if hashes are last argument)
+* "list << value" appends value to list
+* Instance variables (@variable) vs class variable (variable)
+* Supply variable names as symbols to "attr_accessor" to dynamically create getters and setters
+* Destructive methods have a leading bang (eg. "save!")
+* If you make two "class {$CLASS}" definitions, you add additional methods and members and overwrite them with the second definitions.
+* A method can run the provided block with the yield statement
+
+Web architecture
+----------------
+
+… is a 3-tier architecture:
+* presentation tier
+* logic tier
+* persistence tier
+
+"HTML is just the formatting mechanism" … ^^
+
+Tasks of a framework:
+* map URI to program/function
+* pass arguments
+* invoke program on server
+* handle persistent storage
+* handle cookies
+* handle errors
+* package output back to user
+
+Model View Controller
+---------------------
+
+Controller paradigms:
+* Controller per entity
+* Controller per page
+* Front Controller
+
+Object operations: CRUD (Create, Read, Update, Delete)
+Route = HTTP method + URI
+
+Smart & small controllers. No fat controllers!
+
+Debugging with RASP
+-------------------
+
+* Read. Really read the error messages.
+* Ask a colleague an informed question.
+* Search using StackOverflow, a search engine, …
+* Post on StackOverflow and web forums
+
+Ruby on Rails technologies
+--------------------------
+
+* Ruby on Rails (api.rubyonrails.org, ruby-doc.org)
+* HAML
+* RSpec
+* Cucumber
+* Capybara
+
+Major problems with software
+----------------------------
+
+* Software does not what they customer is looking for
+* Projects are late
+* Over budget
+* Hard to maintain and evolve
+* All of the above
+* Inspired Agile Lifecycle
+
+Behavior-driven design
+----------------------
+
+BDD asks questions about behavior of app before and during development to reduce miscommunication.
+Requirements get written down as user-stories.
+For each feature there is one user-story (so there are hundreds of them in a bigger projects).
+Backlog contains user stories not yet completed (for the next releases).
+Store user stories in the steps directory in Ruby on Rails.
+
+Just like test-driven development writes tests first, in BDD we discuss the behavior of the application first.
+
+Advantages / Pros:
+* Common language for all stakeholders
+* Write tests before coding
+
+Downsides / Cons:
+* May lead to poor software architecture because of its focus on behavior.
+* It requires continuous contact with the customer, which may not be possible.
+
+BDD vs TDD
+----------
+
+BDD
+* develop user stories to describe features
+* via Cucumber, user stories become acceptance tests and integration tests
+
+Software tool: Cucumber
+
+TDD
+* step definitions for new story, may require new code to be written
+* write unit & functional tests for the code *first*, *before* the code itself
+* So: write tests for the code you wish you had
+
+Software tool: RSpec
+
+User stories
+------------
+
+Specific enough to make them testable.
+Given (precondition) + When (what do I do) + Then (what happens) + Ands/Buts.
+Assign difficulty (points) to each user stories and keep track of how many points per iteration you can resolve.
+Identify a reason *why* to implement this feature. Use "why" questions all the time to derive the real value of the feature.
+
+As a … So that … I want to …
+
+* Specific
+* Measurable
+* Achievable
+* Relevant
+* Timeboxed
+
+Topic. Cucumber: 1 Feature contains several scenarios which contain several steps.
+
+Lo-Fi sketches to fix HCI problems and sketch the UI.
+
+Imperative vs declarative scenarios
+-----------------------------------
+
+Background
+  Steps to perform before a scenario can take place.
+Imperative scenario
+  Specify a logical sequence to get the desired result (Given, When, Then, And, When, Then)
+Declarative scenario
+  Only specify what you expect (use a DSL for writing it)
+
+Testing tools for Ruby on Rails
+-------------------------------
+
+* Autotest
+* Cucumber
+* RSpec
+    * flog/fray
+    * reek
+    * SimpleCov
+* Capybara
+* Rack::Test
+* Webdriver
+* SauceLabs
+
+How testing changed over the years
+----------------------------------
+
+Fully automated testing environments are important!
+
+Old days:
+* developers finish code, some ad-hoc testing
+* "toss over the wall to QA"
+* QA people manually poke at software
+
+Modern times:
+* testing is part of every agile iteration
+* developers are responsible for testing their own code
+* testing tools & processes highly automated
+* QA/testing group improves testability & tools
+
+Unit tests
+----------
+
+Should be
+* Fast
+* Independent
+* Repeatable
+* Self-checking (fully automated)
+* Timely (before the code or very close to it)
+
+Seam
+----
+
+A seam is a place where you can change your app's behavior without modifying the code.
+
+RSpec
+-----
+
+* it
+* should
+* be
+* assigns
+* stub
+
+should_receive combines a seam and an expectation, whereas stub is only seam.
+
+Fixture and Factories
+---------------------
+
+Fixture
+  Statical preload of some data into database.
+  So a set of data used only in the context of the tests.
+Factory
+  Store some test data beforehand for a unittest and remove them afterwards.
+
+Problem of fixtures: Dependency of multiple tests on data (tests are not independent).
+Solution: Use factories for dynamic data. Use fixtures for settings.
+
+Test Coverage
+-------------
+
+S1 and C0 coverage are common.
+
+S0
+  All methods get called
+S1
+  Every method from every call site gets called
+C0
+  Every statement gets called.
+  Used by Ruby SimpleCov.
+C1
+  Every branch is executed in both directions
+C1+
+  Every subexpression in conditionals is executed
+C2
+  Every path is executed
+
+Testing approaches
+------------------
+
+* Mutation testing
+* Fuzz testing / Monkey testing
+* DU-coverage: is every Defined unit also Used?
+* Black box, white box, glass box testing
+
+Use all of them:
+* unit tests: test small units with FIRST approach
+* integration tests: interfaces between units have consistent assumptions, communicate correctly
+* system / acceptance tests: integrated program meets its specifications
+* module / functional tests: tests across different modules
+* Regression Testing: automatically rerun old tests so changes don’t break what used to work
+
+http://stackoverflow.com/a/4904533/1624929
+
+
+Questions
+---------
+
+Which type of SW is considered an epic failure?
+[ ] Beautiful code
+[ ] Legacy code
+[X] Unexpectedly short-lived code
+[ ] Both legacy code and unexpectedly short lived code 
+
+What is NOT a key difference between Waterfall, Spiral and Agile lifecycles?
+[ ] Waterfall uses long phases, Agile uses quick iterations, Spiral long iterations
+[ ] Waterfall has no working code until the end; Spiral and Agile produce working code each iteration
+[X] Waterfall and Spiral use written requirements; Agile does not use anything written
+[ ] Waterfall and Spiral have architectural design phases, but you cannot incorporate SW architecture into the Agile life-cycle 
+
+Which statement is NOT true about testing?
+[ ] With better test coverage, you are more likely to catch faults
+[X] While difficult to achieve, 100% test coverage insures design reliability
+[ ] Each higher level test delegates more detailed testing to lower levels
+[ ] Unit testing works within a single class and module testing works across classes
+
+Which statement is TRUE about productivity?
+[ ] Copy and pasting code is another good way to get reuse
+[ ] Metaprogramming helps productivity via program synthesis
+[ ] Of the four productivity reasons, the primary one for HLL is reuse
+[X] A concise syntax is more likely to have fewer bugs and be easier to maintain
+
+Which is the WEAKEST argument for a Google app's popularity as SaaS?
+[ ] Don't lose data: Gmail
+[ ] Cooperating group: Documents
+[ ] Large/Changing Dataset: YouTube
+[X] No field upgrade when improve app: Search
+
+Which statement is NOT true about SOA?
+[X] SOA does not affect performance
+[ ] Silo'd systems likely completely down on a failure, SOA must deal with partial failures
+[ ] SOA improves developer productivity primarily through reuse
+[ ] No service can name or access another service's data; it can only make requests for data through an external API 
+
+Which statement is NOT true about Saas, SOA and Cloud Computing?
+[ ] Clusters are collections of commodity servers connected by LAN switches
+[ ] The Internet supplies the communication for SaaS
+[ ] Cloud computing uses HW clusters + SW layer using redundancy for dependability
+[X] Private datacenters could match cost of Warehouse Scale Computers if they just purchased the same type of hardware
+
+rx = {:fox=>/^arm/, 'fox'=>[%r{AN(DO)$}, /an(dO)/i]}
+Which expression will evaluate to non-nil?
+[ ] "armando" =~ rx{:fox}
+[ ] rx[:fox][1] =~ "ARMANDO"
+[X] rx['fox'][1] =~ "ARMANDO"
+[ ] "armando" =~ rx['fox', 1] 
+
+def foo(arg, hash1, hash2) ... end
+Which is not a legal call to foo():
+[ ] foo a, {:x=>1,:y=>2}, :z=>3
+[X] foo(a, :x=>1, :y=>2, :z=>3)
+[ ] foo(a, {:x=>1,:y=>2},{:z=>3})
+[ ] foo(a, {:x=>1}, {:y=>2,:z=>3}) 
+
+Which ones are correct:
+(a) my_account.@balance
+(b) my_account.balance
+(c) my_account.balance()
+[ ] All Three
+[ ] Only (b)
+[ ] (a) and (b)
+[X] (b) and (c)
+
+Suppose we define:
+    class String
+        def curvy?
+            !("AEFHIKLMNTVWXYZ".include?(self.upcase))
+        end
+    end
+Which way should we call 'curvy?'?
+[ ] String.curvy?("foo")
+[X] "foo".curvy?
+[ ] self.curvy?("foo")
+[ ] curvy?("foo") 
+
+Suppose we want to handle 5.euros.in(:rupees)
+What change to Numeric would be most appropriate?
+[ ] Change Numeric.method_missing to detect calls to 'in' with appropriate args
+[ ] Change Numeric#method_missing to detect calls to 'in' with appropriate args
+[X] Define the method Numeric#in
+[ ] Define the method Numeric.in 
+
+Which string will not appear in the result of
+    ['banana', 'anana', 'naan'].map do |food|
+      food.reverse
+    end.select {|f| f.match /^a/}
+[X] naan
+[ ] ananab
+[ ] anana
+[ ] The above code won't run due to syntax error(s) 
+
+Which of the following represents a full Presentation / Logic / Persistence stack?
+[X] Apache web server / Rack+Rails / Relational database
+[ ] Firefox / Apache web server / PostgreSQL
+[ ] Microsoft Internet Information Server / Rack+Rails / Apache web server
+[ ] Firefox / Microsoft Internet Information Server / MySQL 
+
+Which statement is not true about the Model-View-Controller (MVC) architectural pattern?
+[ ] In SaaS apps on the Web, controller actions and view contents are transmitted using HTTP.
+[X] All MVC apps have both a “client” part (e.g. Web browser) and a “cloud” part (e.g. Rails app on cloud).
+[ ] Model-View-Controller is just one of several possible ways to structure a SaaS app.
+[ ] Peer-to-peer apps can be structured as Model-View-Controller.
+
+Which statement is not true about the Model in Model-View-Controller?
+[X] The CRUD actions only apply to models backed by a database that supports ActiveRecord.
+[ ] Part of the Model’s job is to convert between in-memory and stored representations of objects.
+[ ] Although Model data is displayed by the View, a Model's direct interaction is with Controllers.
+[ ] Although DataMapper doesn’t use relational databases, it’s a valid way to implement a Model. 
+
+Which statement is not true regarding Rails RESTful routes and the resources to which they refer?
+[ ] A resource may be existing content or a request to modify something.
+[ ] Every route must eventually trigger a controller action.
+[ ] One common set of RESTful actions is the CRUD actions on models.
+[X] The route always contains one or more parameters, such as :id, to identify the resource.
+
+Why must every interaction with a SaaS app eventually cause something to be rendered?
+[ ] Because of convention over configuration.
+[X] Because HTTP is a request-reply protocol.
+[ ] Because Model-View-Controller implies that every action renders its own View.
+[ ] All of the above.
+
+Based on what you've seen on Rails, what kind of object is likely being yielded in the migration code?
+    def up
+        create_table 'movies' do |t|
+            t.datetime 'release_date' ...
+        end
+    end
+[ ] An object representing a database.
+[ ] An object representing an instance of a model.
+[X] An object representing a table.
+[ ] Come on, it could be anything.
+
+Assume table fortune_cookies has column fortune_text.
+Which of these instance methods of FortuneCookie < ActiveRecord::Base will not return a silly fortune (if any)?
+[X] def silly_fortune_1
+      @fortune_text + 'in bed'
+    end
+[ ] def silly_fortune_2
+      self.fortune_text + 'in bed'
+    end
+[ ] def silly_fortune_3
+      fortune_text + 'in bed'
+    end
+[ ] They will all return a silly fortune.
+
+Which of the following statements are true?
+    1. A route consists of both a URI and an HTTP method.
+    2. A route URI must be generated by Rails URI helpers.
+    3. A route URI may be generated by Rails URI helpers.
+[ ] Only (1) is true.
+[ ] Only (3) is true.
+[ ] Both (1) and (2) are true.
+[X] Both (1) and (3) are true. 
+
+Ben Bitdiddle claims:
+  'You can put arbitrary objects (not just "simple" ones like ints and strings) into the session[].'
+What do you think?
+[ ] True, knock yourself out!
+[X] True, but a bad idea!
+[ ] False, because you can't put arbitrary objects into a hash.
+[ ] False, because session[] isn't really a hash, it just quacks like one.
+
+If you use puts or printf to print debugging messages in a production app,
+[ ] Your app will raise an exception and grind to a halt.
+[X] Your app will continue, but the messages will be lost forever.
+[ ] Your app will continue, and the messages will go into the log file.
+[ ] The SaaS gods will strike you down in a fit of rage.
+
+If you set an instance variable in a controller method, how long will its value be retained?
+[ ] This request and all subsequent requests.
+[ ] Only this request and the next request.
+[X] Only this request. Once the view is rendered, the variable is reset to nil.
+[ ] All of the above will work. 
+
+Which expression statement regarding BDD and user stories is false?
+[ ] BDD is designed to help with validation (build the right thing) in addition to verification
+[X] BDD should test app implementation
+[ ] User stories in BDD play same role as design requirements in Big Design Up Front
+[ ] This is a valid user story: "Search TMDb / I want to search TMDb / As a movie fan / So that I can more easily find info"
+
+Which feature below is least SMART?
+[ ] User can search for a movie by title
+[X] Rotten Potatoes should have good response time
+[ ] When adding a movie, 99% of Add Movie pages should appear within 3 seconds
+[ ] As a customer, I want to see the top 10 movies sold, listed by price, so that I can buy the cheapest ones first
+
+Which is false about Cucumber and Capybara?
+[ ] Cucumber and Capybara can perform acceptance and integration tests
+[X] A Feature has ≥1 User Stories, which are composed typically of 3 to 8 Steps
+[ ] Steps use Given for current state, When for action, and Then for consequences of action
+[ ] Cucumber matches step definitions to scenario steps using regexes, and Capybara pretends to be user that interacts with SaaS app accordingly 
+
+Which is false about Lo-Fi UI?
+[ ] Like 3x5 cards, sketches and storyboards are more likely to involve all stakeholders vs. code
+[ ] The purpose of the Lo-Fi UI approach is to debug the UI before you program it
+[ ] SaaS apps usually have a user interfaces associated with the user stories
+[X] While it takes more time than building a prototype UI in CSS and Haml, the Lo-Fi approach is more likely to lead to a UI that customers like
+
+Which statements are true?
+  1. Implement all code being tested before Cucumber will say that the test passes
+  2. A sad path can pass without having code written that enables a happy path to pass
+[ ] (1) only
+[ ] (2) only
+[X] Both (1) and (2)
+[ ] None of the above 
+
+Which is true about implicit vs. explicit and declarative vs. imperative scenarios?
+[X] As you get more experience with user stories, you will write many more declarative scenarios
+[ ] Explicit scenarios usually capture integration tests
+[ ] Declarative scenarios usually capture implementation as well as behavior
+[ ] Explicit requirements are usually defined with imperative scenarios and implicit requirements are usually defined with declarative scenarios
+
+Which statement is false about Lo-FI UI and BDD?
+[ ] The purpose of the Lo-Fi UI approach is to debug the UI before you program it
+[ ] A BDD downside is requiring continuous contact with customers, which may not be possible
+[ ] A BDD downside is that it may lead to a poor software architecture, since focus is on behavior
+[X] None are false; all three above are true
+
+Which CSS selector will select only the word 'bar' for styling:
+  <p class="a">foo,
+  <span class="a">bar<span> </p>
+[ ] span.a
+[ ] p .a
+[ ] .a span
+[X] All of these
+
+What happens if you embed code in your Rails views that directly accesses the model?
+[X] It will work, but it’s bad form and violates the MVC guidelines
+[ ] It will work when developing against a "toy" database, but not in production
+[ ] It won’t work, because Views can’t communicate directly with Models
+[ ] Behavior varies depending on the app 
+
+Other factors being equal, which statement is not true regarding SaaS scalability?
+[ ] Shared-nothing clusters scale better than systems built from mainframes
+[X] Relational databases scale better than 'NoSQL' databases
+[ ] The programming language used (Ruby, Java, etc.) isn't a main factor in scalability
+[ ] Scalability can be impeded by any part of the app that becomes a bottleneck 
+
+Which are true about BDD and TDD?
+    1. Requirements drive implementation
+    2. They’re used only within Agile development
+    3. They embrace and deal with change 
+[ ] Only (1)
+[ ] Only (1) and (2)
+[X] Only (1) and (3)
+[ ] (1), (2) and (3) 
+
+The method that contacts TMDb to search for a movie should be
+[X] a class method of the Movie model
+[ ] an instance method of the Movie model
+[ ] a controller method
+[ ] a helper method 
+
+Which is false about should_receive?
+[ ] It provides a stand-in for a real method that doesn’t exist yet
+[ ] It would override the real method, even if it did exist
+[X] It can be issued either before or after the code that should make the call
+[ ] It exploits Ruby’s open classes and metaprogramming to create a seam
+
+Which of these, if any, is not a valid use of should or should_not?
+[ ] result.should_not be_empty
+[X] 5.should be <=> result
+[ ] result.should_not match /^D'oh!$/
+[ ] All of the above are valid uses 
+
+should_receive combines _____ and _____, whereas stub is only _____.
+[ ] a mock and an expectation; a mock
+[ ] a mock and an expectation; an expectation
+[ ] a seam and an expectation; an expectation
+[X] a seam and an expectation; a seam
+
+Which of the following kinds of data, if any, should not be set up as fixtures?
+[X] Movies and their ratings
+[ ] The TMDb API key
+[ ] The application's time zone settings
+[ ] Fixtures would be fine for all of these
+
+Which statement(s) are true about implicit requirements?
+[X] The are often, but not always, derived from explicit requirements
+[ ] They apply only to unit and functional tests, not integration tests
+[ ] Testing them is lower priority than testing explicit requirements, since they don't come from the customer
+[ ] All of the above are true 
+
+Which of these is *poor* advice for TDD?
+[ ] Mock and stub early and often in unit tests
+[ ] Aim for high unit test coverage
+[ ] Sometimes it's OK to use stubs and mocks in integration tests
+[X] Unit tests give you higher confidence of system correctness than integration tests

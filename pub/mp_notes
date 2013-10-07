@@ -1,0 +1,480 @@
+Introduction to Mathematical Philosophy
+=======================================
+
+Topic 1: Infinity
+-----------------
+
+Premises used to derive a conclusion.
+Paradoxon: Premises used to derive an invalid/confusing conclusion.
+
+Zeno's paradoxon
+~~~~~~~~~~~~~~~~
+
+Achilles and the tortoise: Achilles will not overtake the tortoise.
+
+Sets
+~~~~
+
+* Sequence of elements.
+* elements are distinct.
+* order of elements is irrelevant.
+
+Principle of Extensionality:
+  Two sets are identical iff they have the same members.
+
+Topic. Subset and proper subset relations.
+
+* If X is a proper subset of Y, X has less members than Y.
+* If there is a pairing off between the members X and Y, X and Y have the same number of members.
+
+Topic. Ambiguity.
+Topic. Cantor's theorem.
+
+Those definitions contradict if applied to infinite sets.
+We need differentitation.
+
+Equal Size (Equinumerosity, Equipollence):
+  For all sets X and Y: X has equally₂ many members as Y iff there is a pairing off between the members of X and those of Y.
+Smaller Size:
+  For all sets X and Y: X has less₂ members than Y iff X has equally₂ many members as a proper subset of Y, but X does not have equally₂ many members as Y.
+Infinity and Finiteness:
+  For all sets X: X is infinite₂ iff X has equally₂ many members as a proper subset of X.
+  X is finite₂ if and only if X is not infinite₂.
+
+The set of natural numbers has less members than the set of real numbers.
+
+We have definitions at several levels for infinity.
+
+Topic. Absolute infinity.
+
+Topic 2: Truth
+--------------
+
+"A descriptive sentence or a proposition is true if and only if it corresponds to reality."
+Is this a valid statement?
+
+    "In order be satisfactory, a definition of truth has to be formally correct and materially adequate."
+    "What is truth?"
+    -- Alfred Tarski
+
+	"To say of what is that it is, or of what is not it is not, is true"
+	-- Aristoteles in Metaphysics
+	corresponds to truth scheme: (A and 'A' is true) or (not A and 'A' is not true).
+
+The Truth scheme does not tell us how to create sentences that do not involve the truth predicate.
+
+Material adequacy:
+
+	A definition of truth for the descriptive sentences of a language L is materially adequate if and only if the definition implies all truth equivalences, that is, all instances of the truth scheme.
+	  (T) 'A' is true if and only if A
+	in which the placeholder 'A' is replaced by an arbitrary descriptive sentence in the lanugage L.
+
+Topic. L_simple language. L_simple has a names, has predicates, has logical symbols and is defined recursively.
+
+Topic. Recursive definitions. Consistency is ensured if all statements are derived from valid axioms.
+
+Complete induction over natural numbers:
+	0 has the property P.
+	for all natural numbers n: if n has property P, than n+1 has property P.
+	
+	Therefore all natural numbers have property P.
+
+Topic. Liar paradoxon. We can derive a sentence which is an instance of the truth scheme and a sentence equates to the negation of this sentence.
+
+Distinction between to 2 languages at different levels:
+
+Object language
+  the language for which truth is defined.
+Meta language
+  the language in which one defines truth for the object language.
+
+We can use the truth predicate ("A is true") only in the meta language. So no sentence containing the truth predicate is part of the object language L_simple.
+Object language and meta language is a hierarchy of two levels, but we can derive a meta-meta language as well and as such infinitely many.
+
+Topic 3: Propositions
+---------------------
+
+1. Fear, hope, desire, … are all instances of different attitudes, but they direct towards propositions as their content.
+   Several descriptive sentences can express the same proposition (meaning of the sentence).
+2. Propositions are bearers of truth values.
+3. They are the contents of belief.
+
+Truth value depends on the world we are looking at.
+
+ID of worlds
+  For all possible worlds w, for all possible worlds w': w = w' if and only if for all propositions X: X is true at w if and only if X is true at w'
+ID of propositions
+  For all possible propositions X, for all possible propositions Y: X = Y if and only if for all possible worlds w: X is true at w if and only if Y is true at w.
+
+Let W be a given non-empty set of possible worlds:
+1. X is a proposition (over W) iff X is a subset of W.
+2. If X is a proposition (over W) and w is a world in W, then X is true at w iff w is a member of X.
+
+So we get:
+
+ID of worlds
+  For all possible worlds w, for all possible worlds w': w = w' if and only if for all subsets X of W: w is a member of X if and only if w' is a member of X.
+ID of propositions
+  For all possible propositions X, for all possible propositions Y: X = Y if and only if for all members w of W: w is a member of X if and only if w is a member of Y.
+
+Topic. Negation, Conjunction, Disjunction.
+
+:Negation:		Complement
+:Conjunction:   Intersection
+:Disjunction:   Union
+
+Prop(not A) = not Prop(A) = W \ Prop(A)
+
+Topic 4: Rational Belief
+------------------------
+
+1. If a person is inferentially perfectly rational (with W as her set of entertainable possible worlds), then she believes W.
+2. If a person is inferentially perfectly rational, then she does not believe {}.
+3. If a person if inferentially perfectly rational, if she believes X and if X is a subset of Y, then she also believes Y.
+4. If a person if inferentially perfectly rational, if she believes X and if she believes Y, then she also believes X ∩ Y.
+
+Belief B_W. If X is a proposition (a subset of W), then there are three possible cases:
+* B_W is a subset of X - X is believed.
+* B_W ∩ X = {} - ¬X is believed.
+* B_W is not a subset of X, so B_W ∩ X ≠ {} - Neither X nor ¬X is believed.
+
+Rational Degree of Belief #1
+  If a person is inferentially perfectly rational (with W as her set of entertainable possible worlds), then her degree of belief function P is such that: P(W) = 1.
+Rational Degree of Belief #2
+  If a person is inferentially perfectly rational (with W as her set of entertainable possible worlds), then her degree of belief function P is such that: for all propositions X (for all subsets X of W): P(X) is a real number such that 0 ≤ P(X) ≤ 1.
+Rational Degree of Belief #3
+  If a person is inferentially perfectly rational (with W as her set of entertainable possible worlds), then her degree of belief function P is such that: for all propositions X (for all subsets X of W), for all propositions Y (for all subsets Y of W): if X ∩ Y = {}, then P(X ∪ Y) = P(X) + P(Y)
+
+Topic. Subjective probability.
+
+P(¬X) = 1 - P(X).
+P({}) = 0.
+P(Y) = P(X ∩ Y) + P(¬X ∩ Y).
+If X is a subset of Y, then P(X) ≤ P(Y).
+
+Assumptions about a lottery:
+	P1. P(not(ticket #1 wins) ∧ not(ticket #2 wins) ∧ not(ticket #3 wins) ∧ …) = 0
+	P2. P(ticket #1 wins) = 1/N, P(ticket #2 wins) = 1/N, …
+	P3. For every proposition X: I believe X if and only if P(X) ≥ 0.9
+	P4. For every proposition X, for every proposition Y: if I believe X and I believe Y, then (if I am perfectly rational) I also believe X ∧ Y.
+    P5. For every proposition X, P(¬X) = 1 - P(X).
+This is a contradiction.
+
+Conclusion:
+1. We represented propositions in set theory.
+2. We analyzed rationality of belief with basic principles of rational belief.
+3. We postulated: Rational degrees of belief corresponds to probabilities.
+
+It is open in our discussion, what the set of possible worlds actually is → Metaphysics.
+
+Topic 5: Conditionals
+---------------------
+
+Distinction between subjunctive ("If Oswald had not killed Kennedy, someone else would have") and indicative ("If Oswald did not kill Kennedy, someone else did").
+
+Topic. Relation to set theory.
+
+	For all sentences y of L, for all sentences z of L, if x is the result of putting together 'if', with y, with 'then', and with z, then x is true if and only if y is not true or z is true.
+
+For a conditional proposition:
+	1. Take the individual probabilities in probability space.
+	2. Given a condition X, set all probabilites in (not X) 0.
+	3. Scale all remaining probabilites up to 1 to gain a valid probability space.
+
+Formally,
+	Let W be a non-empty, finite set of possible worlds.
+	Let P be a probability measure (over W) and assume P to be determined uniquely by B as explained in the previous lecture.
+	Then we can define: for all propositions X with P(X) > 0, for all worlds w in W,
+	* B_X(w) = 0, iff w is not a member of X
+	* B_X(w) = B(w)/P(X), iff w is a member of X
+
+We define a new probability measure:
+	P_X(Y) = ∑_(w in Y) B_X(w)
+	P_X(Y) = ∑_(w ∈ X ∩ Y) B(W)/P(X) + ∑_(w ∉ X) 0
+	
+	Thus, for all probability measures P (over W) for all propositions X with P(X) > 0, for all propositions Y:
+	P_X(Y) = P(X ∩ Y) / P(X)
+
+Degree of acceptability?
+	Given, there is a conditional operation → that can take any two propositions as input which maps them to a proposition as output, and which has the following property:
+		For every indicative conditional A → B, where A expresses the proposition X, and B expresses the proposition Y, it holds that:
+			A → B expresses the proposition X → Y
+
+	Thesis #1:
+	For every indicative conditional A → B where A expresses the proposition X, and B expresses the proposition Y and for every probability measure P on propositions, it holds that:
+		The degree of acceptability for the indicative condition A → B (rel. to P) is identical to P(X → Y)
+	where X → Y is the proposition expressed by A → B.
+
+	Thesis #2:
+	Thus, for every indicative conditional A → B where A expresses the proposition X, and B expresses the proposition Y and for every probability measure P on propositions, it holds that:
+		The degree of acceptability for the indicative conditional A → B (rel. to P) is identical to P(Y|X) (or P_X(Y)).
+
+Frank Ramsey
+	If two people are arguing "If p will q?" and are both in doubt as to p, they are adding p hypothetically to their stock of knowledge and arguing on that basis about q.
+
+Lewis Triviality Theorem on Conditionals:
+	Let W be a given non-empty set of possible worlds. By propositions we mean subsets of W again, as usual.
+	Assumption #1: There is a conditional operation → that can take any two propositions over W as input and which maps them to a uniquely determined proposition over W as output.
+	Assumption #2: Every rational degree of belief function P (on W) is a probability measure.
+	Assumption #3: Every rational degree of belief function P (on W) satisfies:
+		For all propositions X, Y: P(X → Y) = P(Y|X), where X → Y is as described by Assumption #1.
+	Assumption #4: The set of all rational degree of belief functions P (on W) is closed under conditionalization: that is, for every rational degree of belief function P (on W), for every proposition X for which P(X) > 0, the conditionalization P_X of P on X is a rational degree of belief function (on W) as well.
+
+	Conclusion #1: P(Y → Z|X) = P(Z|X ∩ Y)
+	Conclusion #2: P(Y → Z) = P(Z)
+
+Thesis #1 and/or Thesis #2 must be invalid.
+Are indicative conditionals actually propositions?
+We have to distinguish between conditionals in math/logic and natural languages ("a → b" is "not a or b" is fine in math; in language it's not).
+"Beliefs in conditionals" != "Conditional beliefs"
+
+Confirmation
+~~~~~~~~~~~~
+
+False positives, true negatives.
+Hypothesis might explain some behavior but we can never be sure to be right.
+Compare the hypothesis in AI learning.
+Selecting hypotheses by simplicity.
+
+Bayesian confirmation theory
+	Monty Hall Problem
+	Bayesian Rule: P(A|B) = P(B|A) * P(A) / P(B)
+	Rule of Total Probability: P(E) = P(E|H) P(H) + P(E|¬H) P(¬H)
+
+Monty Hall Problem solved with Bayesian Statistic? see separate bayes_monty_hall.pdf
+
+Topic 6: Utilities
+------------------
+
+For modelling the expected utilities:
+1. Define acts (what does the actor do to get new probabilities? eg. "switch the door" or "not switch the door" or "buy the lottery ticket").
+2. Define outcomes (eg. "get a car", "get a goat", "win the lottery", "lose the lottery")
+3. Define the probabilities for a specific act for a specific outcome.
+
+For example,
+  Buy ticket, Win: +999$, Lose: -1$
+  ie. act, outcome 1, outcome 2
+Probabilities:
+  Buy ticket, Win: 1%, Lose: 99%
+  ie. act, probability of outcome 1, probability of outcome 2
+
+Expected utility:
+  0.01 * 999$ + 0.99 * -1$ = 9$
+  ie. EU(A) = ∑_(i = 1 to m) P(O_i) * U(O_i)
+
+An act A dominates an act B if and only if the outcome of A will be as good as the outcome of B not matter which state of the world happens to be the true one, and strictly better under at least one state of the world.
+
+Preference:
+	A > B: you strictly prefer lottery A to lottery B.
+	A ≺ B: you strictly prefer lottery B to lottery A.
+	A ~ B: you are indifferent between lotteries A and B.
+
+Von Neumann Morgenstern Axioms:
+	Completeness
+		For all lotteries A, B in L, A ≻ B or A ≺ B or A ~ B.
+	Transitivity
+		For all lotteries A, B, C in L, if A ≻ B and B ≻ C, then A ≻ C.
+	Continuity
+		For all lotteries A, B, C in L, if A ≻ B ≻ C then there are probabilities p and q such that ApC ≻ B ≻ AqC.
+	Independence
+		For all lotteries A, B, C in L, A ≻ B if and only if ApC ≻ BpC.
+
+The Neumann and Morgenstern representation theorem:
+	A preference relation ≻ satisfies the axioms if and only if there exists a utility function u such that
+	1. if A ≻ B, then u(A) ≻ u(B)
+	2. u(ApB) = p * u(A) + (1 - p) u(B)
+	3. for every other function u' that satisfies (1) and (2), there are numbers a ≻ 0 and b such that u' = au + b
+
+The Allais Paradoxon
+	Choice 1:
+		A: a cheap car for sure
+		B: nothing (1%), expensive car (10%) or cheap car (89%)
+
+		Intuition: Choice A
+	Choice 2:
+		E: a cheap car (11%) or nothing (89%)
+		F: an expensive car (10%) or nothing (90%)
+
+		Intuition: Choice F
+
+The Ellsberg Paradoxon
+	An urn contains 90 balls. 30 of these balls are red. The remaining 60 balls are either blue or yellow.
+	Choice 1:
+		G: three nights in a luxury hotel in St. Petersburg if a red ball is drawn
+		H: three nights in a luxury hotel in St. Petersburg if a blue ball is drawn
+
+		General preference: G
+		Conclusion: We don't like uncertainty.
+
+Both Paradoxons invalidate the Independence axiom.
+In most cases you don't know the probabilities precisely - uncertainty.
+
+Topic 7: Voting
+---------------
+
+Given a ranking of the values {A, B, C} by different entities. Which is the most preferable overall ranking?
+
+Pairwise Comparisons / Condorcet Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Compare every two values and order the value accordingly:
+
+= = =
+1 4 2
+- - -
+A A B
+B C C
+C B A
+= = =
+
+========== =====
+comparison score
+---------- -----
+A beats B   5:2
+C beats B   4:3
+A beats C   5:2
+========== =====
+
+Therefore the ranking A (first), C, B (last) is the best.
+A ≺ C ≺ B.
+
+Borda Count
+~~~~~~~~~~~
+
+Assign 0 to the lowest ranked option. Assign 1 to the second-lowest ranked option. etc.
+Multiply the score with the number of supporters.
+
+= = =
+1 4 2
+- - -
+A A B
+B C C
+C B A
+= = =
+
+Score(A) = 2 * 1 + 2 * 4 + 0 * 2 = 10
+Score(B) = 1 * 1 + 0 * 4 + 2 * 2 = 5
+Score(C) = 0 * 1 + 1 * 4 + 1 * 2 = 6
+
+Therefore the ranking A, C, B is the best.
+A ≺ C ≺ B.
+
+Majority Voting
+~~~~~~~~~~~~~~~
+
+= = =
+1 4 2
+- - -
+A A B
+B C C
+C B A
+= = =
+
+5 people ranked A first.
+2 people ranked B first.
+No one ranked C first.
+
+A ≺ B ≺ C.
+
+2-approval voting
+~~~~~~~~~~~~~~~~~
+
+Consider only the two highest ranked votings.
+Count the supporters.
+
+= = =
+1 4 2
+- - -
+A A B
+B C C
+C B A
+= = =
+
+Score(A) = 1 + 4 = 5
+Score(B) = 1 + 2 = 3
+Score(C) = 2 + 4 = 6
+
+C ≺ A ≺ B
+
+Properties of Voting Systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Anonymity
+  Changing the preference orderings of two group members does not affect the outcome of the aggregation.
+Neutrality
+  The names of the options do not matter, that is, if two options are exchanged in every individual ordering, then the outcome of the aggregation changes accordingly.
+Positive Responsiveness
+  If option A is tied for the win and moves up in one of the individual orderings, then option A is the unique winner.
+
+Mayes' theorem (1952):
+  An aggregation method for choosing between two options satisfies
+  1. Anonymity
+  2. Neutrality
+  3. Positive Responsiveness
+  if and only if it is the majority rule.
+
+Universal Domain
+  No preference ordering over the options can be ignored by an aggregation method.
+Pareto
+  If all group members prefer option A to option B, then the group prefers option A to option B.
+Independence of Irrelevant Alternatives
+  The social ordering of two options A and B depends only on the relative orderings of A and B for each group member.
+Non-Dictatorship
+  The group ordering cannot simply mimic the preferences of a single group member.
+
+For a finite set of group members and at least three distinct options, there is no method to satisfy all last four properties.
+
+Optimal aggregation procedure: Bayesian Procedure:
+1. Start with the priors q1, …, q4.
+2. Take the judgments of the (partially reliable) council members as evidence.
+3. Update the priors using Bayes' Theorem taking the evidence into account.
+4. Select the situation with the highest posterior probability.
+
+Topic 8: Quantum Theory
+-----------------------
+
+Different theories to explain quantum behavior:
+* The Copenhagen Interpretation
+* Bohmian Mechanics
+
+For two binary random variables we get the permutations
+  P(A=1,B=1), P(A=-1,B=1), P(A=1,B=-1), P(A=-1,B=-1)
+we can define a joint probability distribution using these permutations.
+Therefore, P(1, 1) + P(1, -1) + P(-1, 1) + P(-1, -1) = 1
+
+Notation. P(a, b) = P(a ∧ b)
+
+Expectation of random variables A and B:
+	E(A) = P(1,1) + P(1,-1) - P(-1,1) - P(-1,-1)
+	E(B) = P(1,1) - P(1,-1) + P(-1,1) - P(-1,-1)
+
+Variance of a random variable A:
+    V(A) = E(A²) - (E(A))²
+
+Covariance of a random variable A and B:
+	cov(A,B) = E((A - E(A)) * (B - E(B))) = E(A,B) - E(A) * E(B)
+
+Statistical independence implies
+	P(A,B) = P(A) * P(B)
+	⇒ cov(A,B) = 0
+
+E(AB) = x implies P(1,1) - P(1,-1) - P(-1,1) + P(-1,-1) = x
+
+Let's consider 4 random variables A,B,C and D:
+	if E(A,B) = E(A,D) = E(C,B) = x; E(C,D) = x; x = 1/√2
+	There is no joint probability distribution over all four variables
+	This follows from the Clauser-Horne-Shimony-Holt Theorem
+
+Clauser-Horne-Shimony-Holt Theorem:
+	There is a joint distribution over the random variables A, B, C, D
+	with E(A) = E(B) = E(C) = E(D) = 0 if and only if
+		|E(AB) + E(AD) + E(CB) - E(CD)| ≤ 2
+
+Boolean Logic:
+	* Associativity of AND
+	* Associativity of OR
+	* Commutativity of AND
+	* Commutativity of OR
+	* Distributivity of AND over OR
+
+Measurements modify the spins of electrons.

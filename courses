@@ -25,7 +25,7 @@ Clawback: 3.5 ECTS, 2 SSt
 Geometry for Computer Scientists (GCS, LP)
 Id: 507.100
 Topics: analytic, projective, and differential geometry in 2 and 3 dimensions
-Evaluation: ?
+Evaluation: 2 partial exams
 Clawback: 3 ECTS, 2 SSt
 
 Numerical Optimization (NO, L)
@@ -37,7 +37,7 @@ Clawback: 3 ECTS, 2 SSt
 Numerical Optimization (NO, P)
 Id: 437.134
 Topics: deterministics and stochastic optimization methods
-Evaluation: ? assignments
+Evaluation: ? assignment sheets
 Clawback: 2 ECTS, 1 SSt
 
 Security Aspects of Software Development (SASD, L)
@@ -64,7 +64,7 @@ Clawback: 3 ECTS, 2 SSt
 Advanced Computer Networks (ACN, P)
 Id: 705.011
 Topics: Hierarchical network models, internetworking, SONET/SDH, Frame Relay, DQDB, ATM, Firewalls
-Evaluation: ? assignments
+Evaluation: 1 project
 Clawback: 2 ECTS, 1 SSt
 
 Combinatorics (C, L)
@@ -76,13 +76,13 @@ Clawback: 5 ECTS, 3 SSt
 Combinatorics (C, P)
 Id: MAT.906
 Topics: Algebraic and enumerative combinatorics
-Evaluation: ? assignments
+Evaluation: assignments every 2 weeks
 Clawback: 2 ECTS, 1 SSt
 
 Digital Libraries (DL, LP)
 Id: 711.010
 Topics: XML, publishing standards, metadata standards
-Evaluation: ?
+Evaluation: 3 assignments, 1 team work
 Clawback: 3.5 ECTS, 2 SSt
 
 Theoretical Computer Science II (TCS2, L)
@@ -94,7 +94,6 @@ Clawback: 4 ECTS, 3 SSt
 Theoretical Computer Science II (TCS2, P)
 Id: MAT.904
 Topics: Extensional topics of TCS1, complexity theory
-Group: ?
 Evaluation: informal, random assignments with 2-3 presentations at board
 Clawback: 1 ECTS, 1 SSt
 

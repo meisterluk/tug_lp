@@ -1,0 +1,723 @@
+Algorithms: Design and Analysis, Part 2
+=======================================
+
+:course:		Algorithms: Design and Analysis, Part 2
+:lecturer:      Tim Roughgarden
+:university:    Stanford University
+
+Greedy algorithms
+-----------------
+
+1. easy to propose multiple greedy algorithms for many problems
+2. easy running time analysis
+3. hard to establish correctness
+
+Caching Problem
+---------------
+
+Problem:
+  We have a small, fast memory.
+  We have a big, slow memory.
+  Random access at elements.
+  Elements are in slow memory for sure.
+  How can we always keep the requested elements in the fast (but smaller) memory?
+
+Theorem (Bélády, 1960):
+  Assumption. You know the future.
+  The furthest-in-future algorithm is optimal (ie. minimizes the number of cache misses).
+
+Algorithm: LRU-Cache
+--------------------
+
+We look in the past. Each item in the small memory stores a counter. On each lookup the counter of the searched element gets set to 1. All numbers are ordered incrementally from 2.
+If we need to store a new element of the slow memory, replace the item with the lowest counter with the new one.
+
+Algorithm: Scheduling
+---------------------
+
+Problem:
+  * One shared resource, many jobs to do
+  * job = (weight, length)
+  * The weight defines the priority of the job and the length defines the duration for completion
+  * The completion time cⱼ of job j is the sum of job lengths up to and including j.
+  * Objective target function (one of many possible): minimize the weighted sum of completion times: min \sum_j=i^n wⱼ * cⱼ
+    * equal lengths, which weight shall we prefer? larger ones.
+    * equal weights, which length shall we prefer? shorter ones.
+
+Approach 1: Order jobs by decreasing value of "weightⱼ - lengthⱼ"
+Approach 2: Order jobs by "weightⱼ / lengthⱼ"
+
+Proof:
+  We assume the optimal schedule is different to the ratio-based schedule.
+  We exchange two ratios to get the optimal schedule and come up with a contradiction that optimal != ratio-based schedule.
+
+Algorithm: Minimum Spanning Tree
+--------------------------------
+
+For directed graphs: 'optimal branching problem'.
+Prim's algorithm = DJP algorithm (Ο(m log n))
+
+1930
+  Jarník: DJP algorithm
+1956
+  Kruskal's algorithm
+1957
+  Prim: DJP algorithm
+1959
+  Dijkstra: DJP algorithm
+
+MST: Minimum cost tree T ⊆ E that spans all vertices.
+
+MST satisfies the following conditions:
+* T has no cycles
+* the subgraph (V, T) is connected.
+
+  prims_algorithm(G, src)
+	X = [src]
+	T = []
+	while X != V (of G):
+		let e = (u, v) be the cheapest edge of G with u ∈ X, v ∉ X
+		add e to T
+		add v to X
+
+You can improve Prim's algorithm by using a heap, but a few code changes are necessary (stored vertices in heap might change outside).
+
+Graph Facts
+-----------
+
+* A cut of a graph (V, E) is partition of V into two non-empty sets.
+* There are 2^n cuts in a graph with n vertices.
+
+Double-crossing lemma
+  Suppose the cycle C ⊆ E has an edge crossing the cut (A, B), then so does some other edge of C.
+Lonely cut corollary
+  If edge e is the only edge crossing some cut (A, B), then it is not in any cycle.
+Cut property
+  Assumption: Distinct edge costs.
+  Consider an edge e of G and a cut C (A, B) such that e is the cheapest edge of G that crosses it. Then e belongs to any MST of G.
+
+Algorithm: Kruskal's algorithm
+------------------------------
+
+	Kruskals_algorithm(G = (V, E))
+		sort edges in order of increasing cost  # rename edges. Ergo: e_1.cost < e_2.cost < … < e_n.cost
+		T = {}
+		for i = 1 to m
+			if T union {i} has no cycles
+				add i to T
+		return T
+
+Proof:
+* Use Double-crossing lemma, lonely Cut corollary, Cut property
+* Key Point: Kruskal will include cheapest edge crossing a cut (A, B)
+
+Ο(m * n)
+
+Improvements: Karger-Klein-Tarjan (randomized Ο(m) algorithm)
+Deterministic algorithm: Ο(m * α(n)) where α(n) is the inverse Ackermann function
+
+Function notes
+--------------
+
+Keyword. "Inverse Ackermann function"
+
+log*(n) = #(times you have to apply log function til result drops below 1)
+… inverse of "tower function"
+
+Algorithm: Clustering
+---------------------
+
+Problem: Given n points classify points into coherent groups.
+Input: points P, #(clusters) k
+Output: clusters [point-sets] P
+
+Somehow related to Kruskal's algorithm but stopped early.
+
+	SingleLinkClustering(points P, number of clusters k)
+		each point has its own cluster
+		while number of clusters != k:
+			let p,q = closest pair of points
+			merge the clusters containing p & q into a single cluster
+
+We can speed this algorithm up by using the union-find data structure.
+
+Union-Find and Lazy Union-Find
+------------------------------
+
+We define a set of sets. The union operation merge two sets of the sets.
+The find operation returns the representative of a set.
+
+Basic structure: We define a set of representatives. We create pointers
+from every element to its representative.
+
+Thus, we get
+Find
+  Ο(1)
+Union
+  Ο(n log n)
+
+We want to modify the data structure. For each union we only want to update
+a single pointer. In Lazy Union-Find the pointer to the representative
+might be a pointer to a representative. So you actually get a tree of
+representatives. For Find you have to follow a path until you hit the root.
+Of course the running times change:
+
+Find: Ο(n)
+Union: Ο(n)  [two calls to Find and Ο(1)]
+
+Another optimization: Union-by-Rank.
+We maintain a rank for each vertex. For all x ∈ X, rank[x] = maximum number
+of hops from some leaf to x. This rank can help us to avoid worst-case
+behavior. On union, we set the representative with the higher rank to
+be the root. Unless the ranks of the merged representatives is equal,
+you don't have to change rank in any way.
+
+Invariants:
+1. For all objects x, rank[x] is monotonically increasing
+2. Only ranks of roots can go up.
+3. Ranks for each vertex are only updated once.
+4. Ranks strictly increase along the path to root
+
+Rank Lemma:
+Consider an arbitrary sequence of union (and find) operations. For every
+r ∈ {0,1,2,…} there are at most n/2ʳ objects with rank r.
+
+Corollaries
+1. max rank always smaller equal log₂(n)
+2. worst-case running time of FIND, UNION is Ο(log n) [with UNION by Rank]
+
+Claims
+1. if x,y have the same rank r, then their subtrees are disjoint
+2. the subtree of a rank-r object has size ≥2ʳ
+
+Next optimization: Path compression.
+If find(x) returning p is invoked, we rewire x and all its parents directly to p.
+
+This way union-by-rank gets invalidated and rank[x] only tells us the
+_upper bound_ on the maximum number of hops on a path from a leaf to x.
+But Rank Lemma still holds and rank[parent(X)] > rank[x] is still true.
+
+Hopcraft-Ullman Theorem
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Hopcraft-Ullman, 1973
+With Union by Rank and Path compression, m Union & Find operations
+take Ο(m log* n).
+Recall that log* is the number of times you need to apply log to n
+before the result is ≤1.
+
+We define the progress measure (on lookup):
+  rank[parent(x)] - rank[x]   (with x as non-root object)
+as we know rank is monotonic when traversing to a leaf.
+
+A node x is good iff the node or its parent is a root or rank[parent(x)]
+is in a larger rank block than rank(x).
+
+We can show that the progress measure for good nodes is bounded by
+Ο(m log* n) and bad nodes have a smaller complexity growth.
+
+Tarjan's bound
+~~~~~~~~~~~~~~
+
+Tarjan, 1975.
+With Union by Rank and Path Compression, m Union & Find operations take
+Ο(m * α(n)) time, where alpha(n) is the inverse Ackermann function.
+
+Ackermann function
+~~~~~~~~~~~~~~~~~~
+
+	A₀(r) = r + 1
+	Aₖ(r) = Aₖ₋₁(r) ⚬  Aₖ₋₁(r) ⚬  … ⚬ Aₖ₋₁(r)
+	                        [r-fold composition]
+
+So, for example:
+    A₁(r) = A₀(A₀(A₀(…)))
+           [r applications]
+          = A₀(A₀(A₀(… r+1)))
+          = r + (r + 1)
+          = 2r + 1
+
+So A₁(r) as a function of r is about r ↦ 2r.
+A₂(r) as a function of r is about r ↦ r2ʳ.
+A₃(2) = 2048.
+A₄(2) = A₃(2048) ≥ 2^2^2^2^…2 (a tower of 2s to the height of 2048).
+
+Inverse Ackermann function
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	For every n ≥ 4,
+	α(n) = minimum value of k such that Aₖ(2) ≥ n.
+
+Algorithm: Huffman coding
+-------------------------
+
+Map each character of an alphabet Σ to a binary string.
+Goal: Overall binary string must be as small as possible.
+
+Variable length encoding can save space, but have to be designed prefix-free.
+Prefix-free:
+	For every pair {i,j} ∈ Σ, neither of the encodings f(i), f(j) is a
+	prefix of the other.
+
+We can represent the encoding as a tree (binary tree in case of binary
+encoding). Must not be balanced.
+
+Measure by probability:
+	L(T) = ∑_i∈Σ pᵢ * [depth of tree T]
+	L(T) is the average encoding length
+
+The greedy bottom-up approach is actually better than the divide&conquer
+top-down approach.
+
+Algorithm:
+	If |Σ| = 2, return tree with the 2 letters as leaves.
+	{i,j} = letters with the smallest frequency.
+	Let Σ' = Σ with i, j replaced by new symbol ij.
+	Define pᵢⱼ = pᵢ + pⱼ.
+	Recursively compute T' (for alphabet Σ').
+	Extend T' to a tree T with leaves corresponding to Σ by splitting leaf ij into two leaves i and j.
+	Return T.
+
+Or in other words:
+	INPUT: alphabet Σ and probabilities for each letter pᵢ.
+	OUTPUT: A tree where a path to a leaf describes the encoding for a letter (left=0, right=1).
+
+	T = empty tree
+	while |Σ| > 1:
+		i, j = letters with lowest probabilites.
+		Remove {i,j} from Σ.
+		Introduce {i,j}.each as leaf if they are not contained in T yet.
+		Merge i and j to a new node "ij".
+		Add "ij" to Σ with probability pᵢ + pⱼ.
+	return T
+
+Running time: Ο(n²) with n = |Σ|.
+Improvements through heaps [Ο(n log n)] or even sorting + Ο(n) additional work.
+
+Weighted Independent Set
+------------------------
+
+Given: A graph G = (V, E) with non-negative weights on vertices.
+Problem: Return a subset of vertices of maximum weight such that no pair of vertices is adjacent.
+
+MWIS
+  Maximum weighted independent set
+
+Intuitive greedy algorithm is wrong. Divide and Conquer algorithm is difficult to get right.
+
+We break the algorithm down to optimal substructures. Let v be a vertex of G. There are two possibilities: whether v is in the optimal solution or not:
+* if v is not part of the optimal solution, a graph with v excluded (:= G') is an MWIS.
+* if v is part of the optimal solution, the optimal solution excluding v is a MWIS of G with excluded v and the predecessors of v (:= G'').
+
+Approach algorithm #1 (correct, but exponential time):
+1. recursively compute S₁ = MWIS of G'
+2. recursively compute S₂ = MWIS of G''
+3. return S₁ or (S₂ ∪ {vₙ}) whichever is better.
+
+Algorithm
+~~~~~~~~~
+
+Bottom-up iterative dynamic programming algorithm with memoization.
+It populates array A left to right with A[i] = value of MWIS of Gᵢ.
+
+	A[0] = 0, A[1] = w
+	for i = 2,3,4,…,n:
+		A[i] = max{A[i-1], A[i-2] + wᵢ}
+
+A reconstruction algorithm can be defined which determinies *which vertices*
+were used to create the value:
+
+	let A = filled-in array A
+	let S = {}
+	while i >= l
+		if A[i] >= A[i-2] + wᵢ
+			decrease i by 1
+		else
+			add vᵢ to S, decrease i by 2
+	return S
+
+Both algorithms: Ο(n)
+
+Video reference. "10 - 5 - Principles of Dynamic Programming (8 min).mp4".
+
+Dynamic programming algorithms
+------------------------------
+
+* a _small_ number of subproblems
+* can quickly and correctly solve larger subproblems given the solutions of smaller subproblems (via a recurrence)
+* fast computation of the final solution after solving subproblems.
+
+The Knapsack Problem
+--------------------
+
+n items. Each item i has:
+* non-negative value vᵢ
+* non-negative integral size wᵢ
+* non-negative integer capacity W
+
+Identify a subset S of all items that maximizes
+  ∑_i∈S vᵢ
+but maintaining
+  ∑_i∈S wᵢ ≤ W
+
+Algorithm: Knapsack Problem
+---------------------------
+
+Let S = max-value solution to an instance of Knapsack.
+
+Notation. V_i,x = value of the best solution on S that
+  1. uses only the first i items
+  2. has total size ≤ x
+
+Recurrence: V_{i,x} = max{V_{i-1,x}, V_i + V_{i-1,x-wᵢ}}
+
+	A = 2d array
+	for x = 0,1,2,…,W
+		A[0,x] = 0 
+	for i = 1,2,3,…,n
+		for x = 0,1,2,3,…,W:
+			A[i,x] = max{A[i-1,x],A[i-1,x-wᵢ]+vᵢ}
+	return A[n,W]
+
+Running time: Θ(nW)
+
+Algorithm: Sequence alignment problem
+-------------------------------------
+
+Needleman-Wunsch score evaluation (describing the similarity between strings).
+
+Input: 2 strings (X=x₁,x₂,…; Y=y₁,y₂,…) over the some alphabet Σ (typically {A,G,C,T}).
+Output: score for the similarity of both strings
+
+We also define a gap penality αₚ if a string introduces a gap between
+two letters to achieve better matching with the other string.
+Furthermore penalty αᵢⱼ penalitizes the difference between two characters
+i and j (as elements of Σ).
+
+Optimal solution: both strings have the same length.
+For the last string character, there are 3 possibilities: The character
+matches in both strings, the character matches with a gap in the first
+string or the character matches with a gap in the second string.
+
+Pᵢⱼ … penalty of optimal alignment for two strings Xᵢ and Yⱼ.
+
+	A[i,0] = A[0,i] = i * αₚ   ∀ i ≥ 0
+
+	for all i = 1,2,3,…,m:
+		for all j = 1,2,3,…,n:
+			Pᵢⱼ = min{
+				case strings are equal,            A[i-1,j-1] + α_xᵢyⱼ
+				case introducing gap to string 1,  A[i-1,j] + Pₚ
+				case introducing gap to string 2,  A[i,j-1] + Pₚ
+			}
+
+Reconstruction algorithm:
+
+	Start with A[m,n]
+	Go back until you reach A[m,0] or A[0,n]:
+		If you reach subproblem A[i,j] and A[i,j] was filled using
+		case 1, match xᵢ and yⱼ, goto A[i-1][j-1]
+		case 2, match xᵢ with a gap, goto A[i-1][j]
+		case 3, match yⱼ with a gap, goto A[i][j-1]
+	Fill remaining i, j with gaps in the corresponding string
+	return strings
+
+Search trees
+------------
+
+Search tree criterion: left subtree contains elements smaller than key.
+right subtree contains elements greater than key.
+Provides a performance improvement only if tree keeps balanced.
+
+Problem: Given n items in sorted order with their respective access frequencies,
+what's the fastest lookup tree? I.e. which search tree minimizes the weighted
+(average) search time?
+
+	C(T) = ∑_{items i} pᵢ * {search time of i in T}
+
+Uniform case: Red-black trees are optimal with Ο(height). In difference to
+Huffman Coding we don't have constraints regarding prefix-freedom and we
+must not have any ordering of the alphabet.
+
+Greedy top-down or bottom-Up approaches do not work.
+
+If a tree BST is an optimal binary search tree, the left tree of the root
+element has to be optimal for the left subtree and the right tree is
+optimal for the right subtree.
+
+Cᵢⱼ = weighted search cost of an optimal BST for the items {i, i+1, …, j-1, j}
+      with 1 ≤ i ≤ j ≤ n
+
+Recurrence:
+	for every 1 ≤ i ≤ j ≤ n:
+		Cᵢⱼ = min_ᵣ₌ᵢ^ʲ { ∑ₖ₌ᵢ^ʲ pₖ + Cᵢᵣ₋₁ + Cᵢ₊₁ᵣ }
+
+Algorithm:
+	solve smallest subproblems (with fewest number (j-i+1) of items) first.
+	
+	Let A = 2D-array.
+	For s = 0 to (n-1)
+		For i = 1 to n
+			A[i,i+s] = min_ᵣ₌ᵢ^ⁱ⁺ˢ { ∑ₖ₌ᵢ^ⁱ⁺ˢ pₖ + A[i,j-1] + A[r+1,i+s] }
+	Return A[1,n]
+
+Runtime:
+  Ο(n²) subproblems
+  Ο(j-i) runtime to compute A[i,j]
+  Ο(n³) overall runtime
+
+Knuth, Yao: optimized version Ο(n²)  [constant time in average case per subproblem]
+
+Video reference. "14 - 1 - Single-Source Shortest Paths, Revisted (11 min).mp4"
+
+Single-Source shortest path problem
+===================================
+
+Input: Directed graph G =(V,E) edge lengths cₑ for each e ∈ E, source vertex s ∈ V.
+Output: for every destination v ∈ V compute the length of a shortest s-v-path.
+Optimize: sum of edge costs
+
+On Dijkstra's algorithm
+-----------------------
+
+Ο(m log n) running time using heaps.
+
+Not always correct for negative edge lengths.
+Not very distributed.
+
+Computing shortest cycle-free s-v-paths is a NP-hard problem.
+
+Algorithm: Bellman-Ford algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Substructure: Restrict number of edges you can use for your path.
+
+If the shortest s-v path P with at most i edges has (w, v) as last edge,
+then P' (= P \ {v}) is a shortest s-w path with ≤(i-1) edges.
+
+Lᵢ,ᵥ = minimum length shortest-path with ≤ i edges.
+
+Recurrence:
+  Lᵢ,ᵥ = min{L_{i-1,v}, min_{(w,v) ∈ E} {L_{i-1,w} + c_{w,v}}}
+
+Algorithm:
+    A[s,0] = 0
+    A[0,v] = +inf  for all v ≠ s
+
+    for i = 1,2,3,…,n-1:
+		for each v ∈ E:
+			A[i,v] = min{A[i-1,v],  min_{(w,v) ∈ E} {L_{i-1,w} + c_{w,v}}}
+
+Ο(m * n)
+or more precisely Ο(n * ∑_{v ∈ E} in-degree(v))
+
+Optimization: Do not evaluate non-changing parts of the graph.
+
+Detect negative cycles (Ο(n)):
+  For v ∈ V:
+    If A[n-i,v] = A[n,v]
+	  then negative cycle detected.
+
+Compute predecessor pointers in a separate table B.
+
+Application in Internet Routing:
+- Destination-oriented rather than source-oriented.
+- Algorithm can be partially parallelized.
+- Convergence only in static networks.
+- Counting to infinity.
+- Improve robustness by maintaining an individual list of edges for each path.
+
+All-Pairs Shortest Path Problem (APSP)
+======================================
+
+Probably cubic time is a lower bound for algorithms.
+
+Algorithm: Floyd-Warshall algorithm
+-----------------------------------
+
+Ο(n³)
+
+Works with graphs with negative edge weights.
+1. At least as good as Bellman-Ford applied multiple times; better in dense graphs.
+2. In graphs with nonnegative edge costs, competitive with n Dijkstra's algorithm applications.
+
+Used to compute the transitive closure of a binary relation (= all-pairs reachability).
+Unknown: Better algorithms than cubic for dense graphs?
+
+A[i,j,k] = length of a shortest i-j path with all internal nodes in {1,2,…,k}
+           or inf if not such path.
+
+Algorithm:
+    Let A = 3D-array
+    for all i, j ∈ V:
+		A[i,j,0] = 0,   if i = j
+		A[i,j,0] = cᵢⱼ, if (i,j) ∈ E
+		A[i,j,0] = ∞,   if i ≠ j and (i,j) ∉ E
+
+	for k = 1 to n
+		for i = 1 to n
+			for j = 1 to n
+				A[i,j,k] = min{A[i,j,k-1],
+				               A[i,k,k-1] + A[k,j,k-1]}
+
+If there is a negative cycle, will have A[i,i,n] < 0 for at least one
+i ∈ V at the end of the algorithm.
+
+APSP reduces to n invocations of SSSP.
+* non-negative edge lengths: Ο(mn log n) via Dijkstra
+* general edge lengths: Ο(mn²) via Bellman-Ford
+
+Johnson's algorithm
+-------------------
+
+1. 1 invocation of Bellman-Ford
+2. n invocations of Dijkstra
+
+Reweighting technique
+~~~~~~~~~~~~~~~~~~~~~
+
+Directed graph G = (V,E) with edge lengths cₑ (possibly negative).
+Reweighting means computing cₑ' = cₑ + pₛ - pₜ for every edge (s, t).
+For a given path s-t with length L, the new path has length "L + pₛ - pₜ".
+
+Reweighting preserves shortest paths.
+
+Algorithm: Johnson's algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Input. Edge-weighted directed graph.
+
+1. G' = G with an additional vertex s connected to all other vertices.
+   All edges from s to other vertices have weight 0.
+2. Run Bellman-Ford on G' with source vertex s.
+   If graph contains negative cycle, report it and return.
+3. For each vertex v in G, define pᵥ = length of shortest s-v path in G'.
+   For each edge e = (u, v) ∈ G, define weight cₑ' = cₑ + pₛ - pₜ.
+4. For each vertex u of G:
+     Run Dijkstra's algorithm in G with edge weights cₑ' and destination v ∈ V
+     Gain all shortest paths d(u,v) this way
+5. For each pair (u, v) ∈ G, return the shortest path distance
+     d(u,v) := d'(u,v) - pᵤ + pᵥ
+
+Runtime:
+1. Ο(n)
+2. Ο(mn)
+3. Ο(m)
+4. Ο(mn log n)
+5. Ο(n²)
+
+= Ο(mn log n)
+Much better performance than Floyd-Warshall in sparse graphs!
+
+Video reference. "16 - 1 - Polynomial-Time Solvable Problems (14 min).mp4"
+
+Computational intractability
+============================
+
+Many important problems seem impossible to solve efficiently.
+Computation intractability is defined by NP-completeness.
+
+A problem is polynomial-time solvable if there is an algorithm that correctly
+solves it in Ο(nᵏ) for some constant k and n as the number of keystrokes
+required to describe the input.
+
+Class P
+-------
+
+P = set of polynomial-time solvable problems
+
+Not part of P, but part of the course [so far]:
+- cycle-free shortest graph path with negative edge weights
+- Knapsack problem
+
+Traveling Salesman Problem
+--------------------------
+
+Input: complete undirected graph with non-negative edge costs.
+Output: a min-cost tour [i.e. a cycle that visits every vertex exactly once]
+
+Edmonds (1965): there is no polynomial-time algorithm for TSP.
+
+A problem A reduces to a problem B if, given a polynomial-time subroutine
+to solve B, we can use it to solve A in polynomial time.
+
+If A reduces to B and A cannot be solved efficiently, then B cannot be either.
+
+The problem A is C-complete if A is element of C and everything in C reduces to A.
+
+Turing (1936): There is no algorithm to solve the halting problem.
+
+TSP is solvable in finite time. Halting problem not.
+
+Class NP
+--------
+
+NP = Call of polynomial-time verifiable certificates
+
+A problem is in NP if:
+Definition #1) solutions always have length polynomial in the input size
+Definition #2) purported solutions can be verified in polynomial time
+
+Every problem in NP can be solved by brute-force search in exponential time.
+
+Cook (1971), Levin (1973): NP-complete problems exist.
+Karp (1972): Many many natural and important problems are NP-complete.
+
+Book. "Computers and Intractability", Garey + Johnson
+
+Knuth (1974) "A Terminological proposal".
+
+Other proposal to "NP-completeness": PET
+- possibly exponential time (unknown)
+- provably exponential time (N != NP)
+- previously exponential time (N = NP)
+
+Coping with NP-complete problems
+--------------------------------
+
+1. Focus on computationally tractable special cases
+2. Resort to heuristics
+3. Solve in exponential time, but faster than brute-force search
+
+The Vertex Cover problem
+------------------------
+
+Input: An undirected graph G = (V, E).
+Output: Minimum-cardinality of vertex cover (a subset S ⊆ V) that contains
+at least one endpoint at each edge of G.
+
+In the general case Vertex Cover is a NP-complete problem.
+Efficient dynamic-programming algorithm for trees.
+For bipartite graphs the problem reduces to the Max-Flow problem.
+
+Compute a minimum-cardinality vertex cover (a set S ⊆ E that includes
+at least one endpoint of each edge of E).
+
+Suppose: Given a positive integer k as input, we want to test whether
+there is a vertex cover with size k.
+
+Gₙ … graph G with vertex n; its incident edges deleted.
+
+A search algorithm:
+	Pick an arbitrary edge (u,v) ∈ E.
+	Recursively search for a vertex cover of size k-1 in Gᵤ.
+		If found, return S ∪ {u}
+	Recursively search for a vertex cover of size k-1 in Gᵥ.
+		If found, return S ∪ {v}
+
+Running time: Ο(2ᵏm)
+
+Traveling Salesman Problem (TSP)
+--------------------------------
+
+Input: a complete, undirected graph with nonnegative edge costs.
+Output: a minimum-cost tour (i.e. a cycle that visits every vertex exactly once)
+
+Brute force search would take n! time.
+Dynamic programming can provide us an Ο(n² 2ⁿ) algorithm.
+
+Lᵢⱼ = length of a shortest path from i to j that uses at most i edges.
+
+
+
+"17 - 4"

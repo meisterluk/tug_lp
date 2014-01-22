@@ -1,0 +1,270 @@
+SVU Notizen
+===========
+
+Anforderungen an ein verteiltes System:
+
+• Heterogenität
+• Offenheit
+• Sicherheit
+• Skalierbarkeit
+• Fehlertoleranz
+• Nebenläufigkeit
+• Transparenz
+
+Reliability:
+• Validity
+• Integrity
+
+Netzwerk-Topologien:
+• Ring
+• Mesh
+• Star
+• Fully connected
+• Line
+• Tree
+• Bus
+
+Switching Schemes:
+• Circuit Switching
+• Packet Switching
+• Frame Relay
+• Broadcasting
+
+Messages and Encapsulation
+• Message = [header] + [payload] + [trailer]
+• Header = Nr+Länge+Priority+Checksum +Quelle+Ziel
+• Encapsulation verpackt Message pro Schicht
+
+NAT
+• Subnetz wird hinter einer einzigen IP-Adresse versteckt
+• Router assoziiert IP-Adresse zu Mac-Adresse
+
+Ports
+• Unterscheidung von mehreren Verbindungen zweier Rechner
+• Jeder Port hat eindeutige Integer-Nummer
+• Anwendungen können Ports dynamisch vom OS erhalten
+• Well-Known Ports (0-1023) für bekannte Services
+• Contact Ports: nur Initialisierung, Daten über anderen Port
+• Socket zum Zugriff auf die Verbindung
+
+Persistente IPC: Nachricht wird (falls notwendig) zwischengespeichert
+Transiente IPC
+• Speicherung nur während der Ausführung von sendender/empfangender Applikation
+• Keine Übergabe möglich = Nachricht verwerfen!
+
+Asynchrone IPC: Sender setzt Arbeit unmittelbar fort, kein Zwischenspeichern
+Synchrone IPC: Sender blockiert bis Nachricht empfangenden Puffer des Empfängers erreicht
+
+• Persistent asynchron
+• Persistent synchron
+• Transient asynchron
+• Empfangsbasiert transient synchron
+• Zustellungsbasiert transient synchron
+• Antwortbasiert transient synchron
+
+Socket API
+  socket   bind    listen   accept   receive    send   close
+  socket                    connect   write     read   close
+
+// Client
+
+var ws;
+function connect() {
+  try {
+    ws = new WebSocket("ws://host:port");
+    ws.onopen = function(e) { ... };
+    ws.onclose = function(e) { ... };
+    ws.onmessage = function(e) { var mes = e.data; };
+  } catch (exception){...}
+}
+function send(message) {
+  if (ws) { ws.send(message); }
+}
+
+// Server
+
+var WebSocketServer = require('ws').Server;
+wss = new WebSocketServer({port: 8080});
+wss.on('connection', function(ws) {
+  ws.on('message', function(message) {
+    console.log('received: %s', message);
+  });
+  ws.send('something');
+});
+
+Marshalling
+• Konvertierung Datenstruktur → Nachricht
+• Übermittlung an andere Prozesse, Problem bei Pointern
+• vs Serialisierung
+
+Casting
+• Broadcasting: An alle
+• Unicasting: An einen
+• Multicasting: An eine ausgewählte Gruppe von Subscribern (zB Discovery-Services)
+
+Dienste einer Middleware
+• Kommunikation mit Access Transparency
+• Directory Service – Ortstransparenz
+• Transaktionsunterstützung (UDP ist ungeeignet)
+• Komponentenmanagement, Instantiierung
+• Persistenz
+• Installation (Deployment)
+• Fehlertoleranz
+• Sicherheit, Authentifizierung
+
+RPC
+• Keine Kommunikations-Transparenz
+• Explizites Marshalling und Unmarshalling durch Programmierer
+• Explizites send / receive von Nachrichten
+
+Stubs
+• Zugriffsschnittstelle entkoppelt Client & Server
+• Code aus Schnittstellenspezifikation generiert
+• Verantwortlich für Marshalling/Unmarshalling
+• Ermöglichen Zugriffs- und Ortstransparenz
+
+RMI
+• Objektorientiertes, modernes RPC
+• Keine Verteilung des internen Object State
+• Remote Object sieht für Programmierer gleich aus wie ein local objects
+
+Servants (Remote objects) werden durch eine Factory Method erzeugt.
+
+Distributed Garbage Collection - Lösungsansätze:
+• Aufwendige Konsistenzprotokolle
+• Leases (begrenzte Gültigkeitsdauer)
+• Idempotente Nachrichten
+
+Prinzipien von SOAP
+• Arten von Nachrichten
+• Kein spezielles Programmiermodell
+• XML-Darstellung
+• Einbettung in viele Programmiersprachen
+
+WSDL = IDL für Web Services
+
+Contracts
+• Acceptable input values/types + meaning
+• Return values/types + meaning
+• Error + exception values/types + meaning
+• Side effects
+• Preconditions, postconditions, invariants
+• (More rarely) Performance guarantees, e.g., for time or space used
+
+Service-Oriented Architecture
+• Alle Komponenten müssen Services sein
+• Grobgranular, eigenständig nutzbar
+• Im Netz plattformunabhängig nutzbar
+• Hat wohldefinierte Schnittstelle (Kontrakt)
+• Im Verzeichnis registriert
+• Dynamisch gebunden
+
+Naming Services
+• Identifizierung von Ressourcen
+• Auffinden von Resourcen
+• Gemeinsames Nutzen von Ressourcen
+• Orts-Transparenz
+
+Beschleunigung der Namensauflösung
+• Caching
+• Replication
+
+Discovery Services
+• Association = logische Geräte-Beziehung (keine aktive Netz-Verbindung)
+• Kriterien für Association
+– Skalierbarkeit
+– Scope
+– Authorisierung
+• Discovery
+– Erster Schritt der Association
+– Auffinden von Adresse oder Name
+• Zweck: Einstiegspunkt in Ad-hoc-Netzwerken, 
+• Prinzipien
+– Knoten kann Existenz und Dienste ankündigen
+– Anderer Knoten kann Existenz/Dienste auffinden
+– Meist mit Lease (Time-out) Mechanismus
+– Problem beim Auffinden unbekannter Dienste
+• Arten: Device-Discovery, Service-Discovery
+• Implementierungen: Server-based, server-less push, server-less pull
+
+Indirect communication
+• Temporal or spatial uncoupling
+• Useful for change in terms of communication members and anonymity
+– Publish-Subscribe: Publisher publishes events to broker, subscriber gets notification
+– Observer Pattern
+– Subscription: channel-based, topic-based, content-based, type-based
+– Message Queues: Reliable p2p connection (spatial and temporal separation)
+  – producer sends message to queue (assigned to one user)
+– Distributed Shared Memory
+  – goal: spatial transparency of shared memory
+  – challenges: structure, synchronization/consistency, granularity, trashing
+– tuplespace: temporary database of tuples (content-addressable memory)
+  – subscriber read (destroying) or take (non-destroying). Probably pattern matching
+
+Peer-to-Peer
+– as communication model: asynchronous request-reply
+– as roles model: symmetrical, all peers have the same capabilities
+– as organization model: unstructured, no knowledge about context
+– ARPANET, Usenet, napster, Gnutella, KaZaa, Skype
+– BitTorrent
+  – Files are distributed as small chunks
+  – .torrent files for metadata, trackers stores active clients
+  – seed = client providing complete copy, leecher = client when downloading
+– Requirements:
+  – Each peer must have access to every ressource
+  – Adding and removing ressources and clients
+  – simple, ressource-independent API
+  – global scaling, reliability, load balancing
+  – optimization of local interaction between peers
+  – security for heterogeneous data, anonymity and repudiability
+– improvement of fast searching with distributed hash tables
+– prefix routing
+
+WebRTC
+– {PeerConnection, DataChannel, GetUserMedia}
+
+Time
+– defined by International Atomic Time (TAI)
+– UTC = Coordinated Universal Time
+– physical vs logical time, happened-before, potential causal ordering
+– Lamport-Clock: L := max(local_L, received_L) + 1
+
+Networked Games
+– Realtime requirements, large dataset, must be locally available
+– {pure p2p, p2p with central coordination, client-server, multicast} architecture
+– Multicast: Small latency, direct delivery, only LAN, routing and tunneling
+  difficult in WAN, inflexible user management
+– Client-server: slower, server does not scale, server provides all data,
+  server can share data via unicast or multicast
+– P2P works best for small groups, server for larger architectures
+– MMOG use server {anti-cheating, user access, fee control, persistency}
+– Synchronization of data set: {device I/O sharing, data model sharing,
+  command/event streaming}
+– Consistent simulation: {pessimistic, optimistic, decoupled} simulation
+– Null messages, Lookahead Null Messages
+– Rollback: {Periodic checkpoints, logging, trailing state synchronization}
+– Dead Reckoning (extrapolation of position)
+– Massively multiplayer online roleplaying game (MMORG):
+  splitting world into several regions
+
+Mobile/Ubiquitous computing
+– {Smart Devices, Smart Spaces, Ad-hoc nets, context & location, security & privacy}
+– Smart Spaces
+  – Physical environment with embedded services
+  – Connection with mobile devices
+  – Physical mobility
+  – Logical mobility
+  – Software must withstand frequent changes
+– Bluetooth
+  – automatic connection when in close distance
+  – technical data: ~1MBit/s, 10-100m size of radio cell, 2.4 GHz frequency
+  – piconets (1 master, 6 slaves), frequency hopping, paging vs inquiring
+– Directed Diffusion
+– Interoperability
+  – How can heterogeneous nodes interact?
+  – approach 1: interface adaption
+  – approach 2: interface conventions
+– data-oriented programming
+– Context awareness: {location, time, temperature, position, orientation, acceleration}
+– Location sensing: {quantitative globally, quantitative locally, qualitative},
+  number of dimensions, {indoor, outdoor} location tracking

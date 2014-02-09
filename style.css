@@ -26,6 +26,7 @@
 
     /* todo states */
     .exercises .notyet { opacity: 0.2; }
+    .exercises .cancelled { text-decoration: line-through; }
     .exercises li {} /* active */
     .exercises .urgent { color: #600; }
     .exercises .review { color: #555; }

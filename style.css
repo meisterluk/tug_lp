@@ -1,0 +1,81 @@
+body {
+    background-color: #FEFDEA;
+}
+
+article {
+    background-color: white;
+    opacity: 0.9;
+    margin: 40px;
+    padding: 30px;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #000;
+    background-color: #EEE;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: white;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Averia, sans-serif;
+    font-weight: bold;
+    font-style: normal; 
+
+    margin: 0px -40px;
+    padding: 10px;
+    line-height: 170%;
+    outline: #AA9 solid 1px;
+    background-color: #CECDBA;
+}
+
+dt {
+    font-weight: bold;
+}
+
+h1 + p:hover {
+    background-color: #CECDBA;
+}
+
+.style-bar {
+    background-color: #9F9079;
+    width: 96%;
+    height: 80px;
+    position: fixed;
+    top: 20px;
+    left: 2%;
+    z-index: -1000;
+}
+
+.progress {
+    background-color: #222;
+    color: white;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 0;
+}
+
+.progress-bar {
+    background-color: #666;
+    box-shadow: 5px 3px 3px black;
+    position: absolute;
+    z-index: 1;
+}
+
+.progress-text {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 30;
+}
+
+* {
+    font-family: "Bellota";
+    opacity: 1;
+    line-height: 1.8em;
+}

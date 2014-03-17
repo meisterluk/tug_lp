@@ -1,0 +1,106 @@
+Courses planned
+===============
+
+Format
+------
+
+_englishtitle (_shortcut, _type)
+Id: _id
+Topics: _list(keyword_+)
+(Group: _list(_member+))?
+(Newsgroups: _list(_newgroup+))?
+(Website: _list(_url+))?
+Evaluation: _description
+Clawback: _ects ECTS, _sst SSt
+
+Attending courses
+-----------------
+
+Compiler construction (CC, L)
+Id: 716.077
+Topics: Compiler construction, tokenization, bytecode optimization, stack evaluation, software paradigms
+Newsgroups: tu-graz.lv.cb
+Website: http://www.ist.tugraz.at/cb14.html
+Evaluation: 1 lecture exam
+Clawback: 3 ECTS, 2 SSt
+
+Compiler construction (CC, P)
+Id: 716.076
+Topics: Compiler construction, tokenization, bytecode optimization, stack evaluation, software paradigms
+Group: Thomas, Felix, ?
+Newsgroups: tu-graz.lv.cb
+Website: http://www.ist.tugraz.at/cb14.html
+Evaluation: 3 theoretical assignment, 1 programming exercise
+Clawback: 2 ECTS, 1 SSt
+
+Discrete Stochastics and Information Theory (DSIT, L)
+Id: 503.737
+Topics: Stochastics, probability theory, coding theory, information theory
+Evaluation: 1 lecture exam
+Clawback: 4.5 ECTS, 3 SSt
+
+Discrete Stochastics and Information Theory (DSIT, P)
+Id: 503.737
+Topics: Stochastics, probability theory, coding theory, information theory
+Evaluation: Assignment sheets
+Clawback: 1 ECTS, 1 SSt
+
+Enumerative Combinatoric Algorithms (ECA, LP)
+Id: 716.035
+Topics: Combinatorial problems, Polya counting, graph theory
+Website: http://www.ist.tugraz.at/aichholzer/teaching/eca/eca.html
+Group: Richard, Simon, AndiH, Lukas
+Evaluation: Assignment sheets
+Clawback: 3.5 ECTS, 2 SSt
+
+IT Security (ITS, L)
+Id: 705.058
+Topics: Digital signatures, E-Government, active fault attacks, …
+Website: http://www.iaik.tugraz.at/content/teaching/master_courses/it_sicherheit/
+Evaluation: 1 lecture exam
+Clawback: 3 ECTS, 2 SSt
+
+IT Security (ITS, P)
+Id: 705.059
+Topics: Digital signatures, E-Government, active fault attacks, …
+Group: Felix?
+Website: http://www.iaik.tugraz.at/content/teaching/master_courses/it_sicherheit/
+Evaluation: Assignments
+Newsgroup: tu-graz.lv.it-sicherheit
+Clawback: 2 ECTS, 1 SSt
+
+Applied Cryptography (AC, L)
+Id: 705.062
+Topics: hash algorithms, mathematical background of cryptography
+Website: http://www.iaik.tugraz.at/content/teaching/master_courses/angewandte_kryptografie/
+Evaluation: 1 lecture exam
+Newsgroup: tu-graz.lv.angewandte-kryptografie
+Clawback: 3 ECTS, 2 SSt
+
+Applied Cryptography (AC, L)
+Id: 705.062
+Topics: hash algorithms, mathematical background of cryptography
+Website: http://www.iaik.tugraz.at/content/teaching/master_courses/angewandte_kryptografie/
+Evaluation: Assignments
+Newsgroup: tu-graz.lv.angewandte-kryptografie
+Clawback: 2 ECTS, 1 SSt
+
+Selected Topics Design and Verification (STDV, L)
+Id: 705.070
+Topics: model checking, decision procedures, logic synthesis, property synthesis
+Website: https://verify.iaik.tugraz.at/research/bin/view/Ausgewaehltekapitel/WebHome
+Evaluation: 1 lecture exam
+Clawback: 3 ECTS, 2 SSt
+
+Selected Topics Design and Verification (STDV, P)
+Id: 705.071
+Topics: model checking, decision procedures, logic synthesis, property synthesis
+Website: https://verify.iaik.tugraz.at/research/bin/view/Ausgewaehltekapitel/WebHome
+Evaluation: Assignments
+Clawback: 2 ECTS, 1 SSt
+
+Computer Vision 2 (CV2, LP)
+Id: 710.006
+Topics: filters, classification
+Evaluation: Programming assignment, 1 exam
+Clawback: 2.5 ECTS, 1.5 SSt

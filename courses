@@ -27,7 +27,7 @@ Clawback: 3 ECTS, 2 SSt
 Compiler construction (CC, P)
 Id: 716.076
 Topics: Compiler construction, tokenization, bytecode optimization, stack evaluation, software paradigms
-Group: Thomas, Felix, ?
+Group: Thomas, Felix, Richard
 Newsgroups: tu-graz.lv.cb
 Website: http://www.ist.tugraz.at/cb14.html
 Evaluation: 3 theoretical assignment, 1 programming exercise
@@ -42,7 +42,7 @@ Clawback: 4.5 ECTS, 3 SSt
 Discrete Stochastics and Information Theory (DSIT, P)
 Id: 503.737
 Topics: Stochastics, probability theory, coding theory, information theory
-Evaluation: Assignment sheets
+Evaluation: Weekly assignment sheets
 Clawback: 1 ECTS, 1 SSt
 
 Enumerative Combinatoric Algorithms (ECA, LP)
@@ -55,17 +55,17 @@ Clawback: 3.5 ECTS, 2 SSt
 
 IT Security (ITS, L)
 Id: 705.058
-Topics: Digital signatures, E-Government, active fault attacks, …
+Topics: Digital signatures, ECC, active fault attacks, hardware attacks, …
 Website: http://www.iaik.tugraz.at/content/teaching/master_courses/it_sicherheit/
 Evaluation: 1 lecture exam
 Clawback: 3 ECTS, 2 SSt
 
 IT Security (ITS, P)
 Id: 705.059
-Topics: Digital signatures, E-Government, active fault attacks, …
-Group: Felix?
+Topics: Digital signatures, ECC, active fault attacks, hardware attacks, …
+Group: Roland
 Website: http://www.iaik.tugraz.at/content/teaching/master_courses/it_sicherheit/
-Evaluation: Assignments
+Evaluation: 5 assignments
 Newsgroup: tu-graz.lv.it-sicherheit
 Clawback: 2 ECTS, 1 SSt
 
@@ -81,7 +81,7 @@ Applied Cryptography (AC, L)
 Id: 705.062
 Topics: hash algorithms, mathematical background of cryptography
 Website: http://www.iaik.tugraz.at/content/teaching/master_courses/angewandte_kryptografie/
-Evaluation: Assignments
+Evaluation: weekly assignments (>50% required), 2 partial exams (defines grade)
 Newsgroup: tu-graz.lv.angewandte-kryptografie
 Clawback: 2 ECTS, 1 SSt
 

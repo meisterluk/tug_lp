@@ -79,3 +79,7 @@ h1 + p:hover {
     opacity: 1;
     line-height: 1.8em;
 }
+
+.todo { font-style: italic; }
+.urgent { border: 1px solid #FB9; padding: 2px; }
+.notyet { text-decoration: line-through; }

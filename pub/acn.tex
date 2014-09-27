@@ -1,0 +1,777 @@
+\documentclass[twocolumn]{article}
+\usepackage[top=30pt,bottom=30pt,left=30pt,right=30pt,foot=20pt]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\title{ACN elaboration}
+\author{Lukas Prokop}
+\date{24th of Sept 2014}
+
+\newcommand{\question}[1]{\section{#1}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\question{At which frequency does WiFi operate on?}
+
+The established protocols 802.11b and 802.11g use a frequency of 2.4~GHz.
+They use a bandwidth of 22 and 20~MHz respectively.
+
+\question{What does the current mobile Windows OS project branch look like?}
+%
+\begin{itemize}
+  \item \emph{Windows CE} (deprecated)
+  \item succeeded by \emph{Windows Mobile} (deprecated)
+  \item succeeded by \emph{Windows Phone}
+  \begin{itemize}
+    \item Windows Phone 7
+    \item Windows Phone 8
+    \item Windows Phone 8.1\footnote{Windows 8.1 is nicknamed ``Windows Blue''.} (upcoming)
+  \end{itemize}
+\end{itemize}
+
+\question{Name smartphone applications / usecases}
+%
+\begin{itemize}
+  \item Social networking, browsing
+  \item Gaming
+  \item Navigation, maps
+  \item Business
+  \item Augmented Reality
+  \item Banking
+  \item Security
+  \item Spyware
+\end{itemize}
+
+\question{What are security threats specific for smartphones?}
+%
+\begin{itemize}
+  \item Mobility (sensors with more data available, easy theft)
+  \item Mixed private/business usecases
+  \item Limited security capabilities (short passwords / PINs)
+\end{itemize}
+
+\question{Define the structure of a risk analysis}
+%
+\begin{enumerate}
+  \item Define assets
+  \item Define threats
+  \item Prioritize threats
+  \item Identify security functions relevant for given threats
+\end{enumerate}
+
+\question{What is the historical background of TLS? What are properties of TLS?}
+%
+History:
+%
+\begin{itemize}
+  \item Initially developed by Netscape (starting with 1994)
+  \item IETF standard (1999--2008)
+  \item ``Secure Sockets Layer'' and ``Transport Layer Security''
+  \item SSL 2.0 (RFC 6176, 1994), SSL 3.0 (RFC 6101, 1996)
+  \item TLS 1.0 (RFC 2246, 1999): No major differences to SSL 3.0, downgrade option to SSL 3.0
+  \item TLS 1.1 (RFC 4346, 2006): Countermeasures to CBC attacks
+  \item TLS 1.2 (RFC 5246, 2008): old ciphersuites removed, algorithm improvements
+\end{itemize}
+
+Properties:
+%
+\begin{itemize}
+  \item X.509 certificates (symmetric and asymmetric cryptography)
+  \item Confidentiality, data and (partially) origin integrity, authentication
+  \item Provides forward secrecy
+  \item Only one communication partner is authenticated
+  \item 
+\end{itemize}
+
+\question{What is forward secrecy?}
+%
+Short-term session keys cannot be derived from long-term session keys.
+Hence assuming an attacker breaks long-term keys (server's private keys), the session keys cannot be derived and therefore past communications stay still confidential.
+
+\question{How are TLS connections established?}
+%
+client to server packet:
+%
+\begin{itemize}
+  \item Client Hello
+    \begin{itemize}
+      \item client TLS version
+      \item random number
+      \item session ID
+      \item ciper suites
+      \item compression methods
+      \item extensions
+    \end{itemize}
+\end{itemize}
+%
+server to client packet:
+%
+\begin{itemize}
+  \item Server Hello
+    \begin{enumerate}
+      \item server TLS version
+      \item random number
+      \item selected cipher suite
+      \item selected compression method
+    \end{enumerate}
+  \item Certificate
+    \begin{enumerate}
+      \item trust chain of server
+        \begin{itemize}
+          \item first certificate is server's certificate
+          \item last certificate is certificate issued by root certificate
+          \item because root certificate can be omitted (browser must have it)
+        \end{itemize}
+    \end{enumerate}
+  \item Server Key Exchange
+    \begin{itemize}
+      \item Only if key exchange protocol requires data exchange (eg. ECDH)
+      \item Mostly data is already in certificate
+    \end{itemize}
+  \item Certificate Request (skipped in most cases)
+  \item Server Hello Done
+\end{itemize}
+%
+client to server packet:
+%
+\begin{itemize}
+  \item Certificate (if requested, return certificate)
+  \item ClientKeyExchange
+    \begin{itemize}
+      \item Client generates 48 random bytes (premaster secret)
+      \item PreMasterSecret encrypted with public key of server certificate
+      \item Server decrypts PreMasterSecret with private RSA key
+      \item Master secret = PRF(PreMasterSecret, ``master secret'', ClientHello.random + ServerHello.random)[0..47]
+    \end{itemize}
+  \item CertificateVerify (verify server's certificate)
+  \item ChangeCipherSpec (``everything is encrypted now'')
+  \item Finished (sending MAC of previous handshake messages)
+\end{itemize}
+%
+server to client packet:
+%
+\begin{itemize}
+  \item ChangeCipherSpec (``everything is encrypted now'')
+  \item Finished
+\end{itemize}
+
+\question{Which ciphersuites exist (for example)?}
+%
+Structure: \texttt{[SSL | TLS]\_[key exchange]\_[authentication]\_[bulk cipher]\_[message auth]}
+%
+\begin{description}
+  \item[Key exchange / agreement]\hfill{}\\
+    RSA, DH, DHE, ECDH, ECDHE (confidentiality, integrity)
+  \item[Authentication]\hfill{}\\
+    RSA, DSS, ECDSA (authenticity)
+  \item[Bulk ciphers]\hfill{}\\
+    AES, 3DES, RC4 (confidentiality)
+  \item[Message authentication]\hfill{}\\
+    SHA256, SHA384, MD5 (integrity)
+\end{description}
+
+Examples:
+\begin{itemize}
+  \item TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA
+  \item TLS\_ECDHE\_RSA\_WITH\_RC4\_128\_SHA
+\end{itemize}
+
+\question{What is Certificate Pinning?}
+%
+The certificate trust chain is ignored and a specific set of certificates is whitelisted.
+
+\question{How does the renegotiation attack work?}
+%
+\begin{enumerate}
+  \item Attacker establishes a TLS connection to the server
+  \item Attacker and server communicate privately
+  \item Attacker renegotiates a new connection meaning that a new handshake is done via the existing encrypted channel
+  \item Attacker tricks server
+  \item Server has built up a secret connection to a different client than the attacker
+\end{enumerate}
+
+The attacker cannot read from the new secret connection\footnote{Hence, it's not a Man-In-The-Middle attack.} but can inject data which will be read and processed at the client.
+
+\question{How does the BEAST attack work?}
+%
+BEAST (Browser Exploit Against SSL/TLS) injects javascript in the same-origin using a broken Java Same Origin Policy implementation. Then the attacker sniffs the traffic between the victim and the server. He injects updated crafted data and can eventually cookies (even with httpOnly flags).
+
+\question{How does the Padding Oracle attack work?}
+%
+During decryption of symmetric ciphers in CBC mode data is leaked about whether the padding of an encrypted message is correct or not. This can allow attackers to decrypt (possibly also encrypt) messages through the server (``oracle'') using server's key, without knowing the encryption key.
+
+This attack is a predecessor of Lucky Thirteen.
+
+\question{How does the Lucky Thirteen attack work?}
+%
+The lucky thirteen attack uses a timing attack against the MAC check stage in the TLS algorithm. The attacker uses the input ciphertext and forms a message of 20 AES blocks. He copies a block (which content he wants to extract) and its predecessor as the last two encrypted blocks (which contain the MAC and padding).
+
+Then on every different user connection it XORs the last byte of the penultimate block with a byte named Delta of his choice. He tries various Delta values and awaits the server response (a TLS server notifies the client of decryption failure).
+
+Plotting the response time we observe that different Delta require different time to receive a reply.
+
+\question{How does the CRIME attack work?}
+%
+CRIME (Compression Ratio Info-leak Made Easy) has been demonstrated with the HTTPS and SPDY protocols and attacks data compression. The attacker observes the size of compressed, encrypted data sent from the browser to the server. The attacker also makes the user to send multiple carefully crafted web connections to some attack sites, which contain various strings. If the data size becomes smaller, we can assume that the website contains a string which is also part of the cookie. Apply divide and conquer to retrieve the whole content of a cookie.
+
+\question{How does the BREACH attack work?}
+%
+BREACH (Browser Reconnaissance and Exfiltration via Adaptive Compression of Hypertext) is an instance of the CRIME attack specifically for HTTP compression. Many browser and servers use gzip or DEFLATE data compression algorithms via the content-encoding option within HTTP, which is exploited by this attack.
+
+There are no mitigations implemented against this attack.
+
+\question{What is the Heartbleed bug?}
+%
+Heartbleed is an severe implementation in OpenSSL. The TLS heartbeat extension lacks proper input validation and returns as much main memory content as requested.
+
+\question{Where could passwords possibly come from?}
+%
+\begin{itemize}
+  \item User password $\rightarrow$ Key Derivation Function
+  \item Device-integrated chip
+    \begin{itemize}
+      \item Secure Element
+      \item Trust Zone
+      \item Hardened CPU
+    \end{itemize}
+  \item Chip on external token via NFC, cable, etc
+    \begin{itemize}
+      \item SIM card
+      \item Secure SD card
+      \item Smartcard
+    \end{itemize}
+  \item Operating System Store
+    \begin{itemize}
+      \item Software
+      \item Hardware
+    \end{itemize}
+  \item Cloud Computing
+    \begin{itemize}
+      \item Hardware Security Module
+      \item Mobile Phone Signature
+    \end{itemize}
+\end{itemize}
+
+\question{Give statistics about Android malware}
+%
+\begin{itemize}
+  \item Market shares: Android 84.7\%, iOS 11.7\%, Windows Phone 2.5\% (as of 2014 Q2)
+  \item 92\% of all known mobile malware is written for Android.
+  \item $\sim$70\% of all smartphones in 2012 were Android devices.
+  \item 77\% of all Android threats can be mitigated with a migration to the lastest OS.
+\end{itemize}
+
+Reasons to attack Android:
+\begin{itemize}
+  \item Market dominance
+  \item Open platform
+  \item Existence of many third-party app stores
+  \item Anonymity of developers
+\end{itemize}
+
+Kinds of malware:
+\begin{itemize}
+  \item Rootkits
+  \item Worms
+  \item Crimeware
+  \item Trojans
+  \item Viruses
+  \item Spyware
+  \item Adware
+\end{itemize}
+
+\question{How does the Eurograbber trojan work?}
+%
+\begin{enumerate}
+  \item Infect user's computer.
+  \item Intercept web communication between user and bank (offer ``new banking software'').
+  \item Attacker retrieves user's mobile number and infects the mobile device.
+  \item Next time user logs into bank, a transfer to a ``mule'' account is initiated.
+  \item A TAN is sent to the user's mobile. Attacker intercepts it and completes illicit transaction.
+\end{enumerate}
+
+\question{Which circumstances support phishing attacks on mobile devices?}
+%
+\begin{itemize}
+  \item User cannot hover over link to see true URL
+  \item Users expect mobile websites to look different than desktop versions
+\end{itemize}
+
+\question{Which problems do user passwords on mobile devices have?}
+%
+\begin{itemize}
+  \item User passwords have very low entropy [key derivation required]
+  \item Passwords stored in plaintext [hashing required]
+  \item Low-power mobile devices with little performance [little power requirements needed]
+  \item Hashes tuned for performance [security problems]
+  \item Attacker with high performance device(s) [HSM required]
+\end{itemize}
+
+\question{What are mobile Botnets?}
+%
+\begin{itemize}
+  \item Network of smartphones controlled by a botmaster
+  \item Used for spam delivery, DDos attacks, theft of personal data
+  \item Examples: Geinimi, Pjapps, DroidDream, DroidKungFu, Nickispy, SMSspacem
+\end{itemize}
+
+\question{Name applications for electronic signatures?}
+%
+\begin{description}
+  \item[E-Banking]\hfill{}\\ User authentication, transaction authorization
+  \item[E-Government]\hfill{}\\ User authentication, Sign request data, Sign official notifications
+  \item[Private affairs]\hfill{}\\ Sign contracts
+\end{description}
+
+\question{What is two-factor authentication?}
+%
+An authentication requiring presence of two independent authentication factors such as
+\begin{description}
+  \item[knowledge] something only the user \emph{knows}
+  \item[possession] something only the user \emph{has}
+  \item[inherence] something only the user \emph{is}
+\end{description}
+
+\question{Was ist eine qualifizierte Signature (Austrian national signature law)?}
+%
+Eine qualifizierte elektronische Signatur ist eine fortgeschrittene elektronische Signatur, die auf einem qualifizierten Zertifikat beruht und von einer sicheren Signaturerstellungseinheit erstellt wird. Eine fortgeschrittene Signatur ist eine elektronische Signatur, die
+
+\begin{itemize}
+  \item ausschließlich dem Signator zugeordnet ist,
+  \item die Identifizierung des Signators ermöglicht,
+  \item mit Mitteln erstellt wird, die der Signator unter seiner alleinigen Kontrolle halten kann, sowie
+  \item mit den Daten, auf die sie sich bezieht, so verknüpft ist, dass jede nachträgliche Veränderung der Daten festgestellt werden kann
+\end{itemize}
+
+Eine sichere Signaturerstellungseinheit (Secure Signature Creation Devices, SSCD) ist eine konfigurierte Software oder Hardware, die zur Verarbeitung der Signaturerstellungsdaten verwendet wird und die den Sicherheitsanforderungen dieses Bundesgesetzes sowie der auf seiner Grundlage erlassenen Verordnungen entspricht (Signaturgesetz §~2).
+
+\question{How does the Austrian Mobile Phone Signature work?}
+%
+For Mobile Phone Signatures a central HSM is assumed as SSCD. The Estonian signature system (in contrast) uses the SIM card as SSCD. It stores user's personal signature keys and creates signatures. Access to personal signature keys are protected by a two-factor authentication. A password is required for the signature process (authentication factor ``knowledge'') and a TAN is sent to the mobile phone (factor ``possession'').
+
+\begin{enumerate}
+  \item User initiates signature creation in some application.
+  \item Application sends signature request to A-Trust.
+  \item User enters telephone number and password in web form and sends it to A-Trust.
+  \item A-Trust sends TAN and hash to mobile communication provider.
+  \item Mobile communication provider sends SMS to user.
+  \item User enters TAN into web form and sends it to A-Trust.
+  \item A-Trust signs document using HSM and sends signature response to application.
+  \item Application offers user signed document.
+\end{enumerate}
+
+It is crucial that signed data (SD) is kept confidential and unmodified. Credentials (CRE) must only be kept confidential.
+
+\question{Why is encryption of the file system necessary for Remote Wiping?}
+%
+Remote Wiping deleting all files on the filesystem is not an option, because it takes too much times. Hence it is convenient to encrypt all files and delete the key if remote wipe is desired.
+
+\question{What is crypto-shredding?}
+%
+Crypto-shredding is the deliberate destruction of all encryption keys for the data; effectively destroying the data (unless the crypto scheme is broken some day).
+
+\question{In what regards do encryption systems differ?}
+%
+\begin{itemize}
+  \item Purpose (remote wipe, encryption of data)
+  \item Encryption scope (application data, system data, user data, how many keys are used)
+  \item Key properties (length, storage, derivation)
+  \item Locking (Encrypted when phone only locked?)
+  \item Implementation (hardware / software support)
+  \item Weaknesses (various attacks possible)
+\end{itemize}
+
+\question{What does Mobile Device Management mean?}
+%
+\emph{Mobile Device Management} refers to rules established in a company to keep business data secure.
+
+\question{When were the two encryption systems introduced in iOS?}
+%
+\begin{description}
+  \item[Device encryption (whole file system)]\hfill{}\\ Introduced with iOS~3 and iPhone~3GS, based on a chip
+  \item[Data protection (individual files and credentials)]\hfill{}\\ Introduced with iOS~4, improved with iOS~5 (new classes, better keychain protection)
+\end{description}
+
+\question{Where are data protection class keys derived from?}
+%
+The PIN / passcode is entered by the user. Data protection class keys use derived keys from the key derivation algorithm which in turn uses the PIN.
+
+\question{Where are filesystem keys derived from?}
+%
+The filesystem key originates from the Secure Element AES Key and is therefore independent from the PIN. If PIN would be used, a jailbreak can be used to circumvent PIN protection and the system decrypts the data for you. Hence filesystem encryption enables remote wiping, but data is accessible unless the device is shut off.
+
+\question{How does data protection in iOS work?}
+%
+Protects specific application files (emails, PDF files, \dots). The developer defines the protection class and unique file keys are generated and stored encrypted in extended file attributes. Protection classes (key derived from device's UID key and PIN/passcode):
+
+\begin{description}
+  \item[NSProtectionNone]\hfill{}\\
+    by device key, storage in EffaceableArea (small blobs of data with secure erasure)
+  \item[NSProtectionComplete]\hfill{}\\
+    by device key and passcode/PIN,
+    decryption key is only available when device is unlocked
+  \item[NSFileProtectionCompleteUnlessOpen]\hfill{}\\
+    by device key and passcode/PIN,
+    uses ECDH over D. J. Bernstein's Curve25519,
+    file readable only if device unlocked or file still in memory
+  \item[NSFileProtectionCompleteUntilFirstUserAuthentication]
+    by device key and passcode/PIN,
+    encrypted until first user auth
+    (reboot loses key)
+\end{description}
+
+It's the developer's responsibility to select the correct protection class. The user relies on appropriate security decisions.
+
+\question{How does key derivation happen on iOS?}
+%
+Screen lock passcode and hardware element are used for key derivation. Derivation takes 80~ms per derivation. The derived key finally results in the Data encryption key. Because the hardware element is involved, only on-device brute-force attacks are possible.
+
+\question{What is the iOS keychain?}
+%
+The \emph{keychain} is used to store passwords, credentials and keys (SQLite database). iOS has only one keychain. Database is stored in NSProtectionNone environment on device. \texttt{securityd} daemon handles access to database. Only apps from the same developer may access some keychain item.
+
+\question{Are iOS backups encrypted?}
+%
+There are three types of backups:
+%
+\begin{description}
+  \item[Plain iTunes Backups]\hfill{}\\ Credentials are stored encrypted with key stored on the iOS device. Hence credentials cannot be restored on other device.
+  \item[Encrypted iTunes Backups]\hfill{}\\ Files and credentials are protected via the derived key. Credentials can be restored on other iOS devices. But off-device brute-force attacks are possible for weak passwords when backup is stolen. Protection for keys is weaker than in plain iTunes Backups
+  \item[iCloud Backups]\hfill{}\\ somehow encrypted, protection via user passcode
+\end{description}
+
+The software developer has to choose whether files are in backup. For keychain entries he needs to chose the right protection class.
+
+\question{Which two keys are secured within chips of iOS devices?}
+%
+\begin{itemize}
+  \item the \emph{GDI key} is a globally shared key for decrypting Apple's firmware images
+  \item the \emph{UID key} works on a per-device basis. It is used to derive AES keys which are used to encrypt data (keychain, files, filesystem metadata)
+\end{itemize}
+
+The UID key is used to derive further keys (filesystem encryption key, keychain, etc)
+
+\question{How does the iOS Secure Boot Chain look like?}
+%
+\begin{enumerate}
+  \item ROM is signed by \emph{Apple Root CA Public Key} (verification needed)
+  \item LLB (Low Level Bootloader) is started (verification needed)
+  \item iBoot (Bootloader) is started (verification needed)
+  \item iOS kernel is running
+\end{enumerate}
+
+\question{What are tethered jailbreaks?}
+%
+Tethered jailbreaks (unlike untethered jailbreaks) need to patch the system every time it boots (using a desktop computer).
+
+\question{Name a few iOS jailbreaks}
+%
+\begin{itemize}
+  \item 0x24000 Segment Overflow
+  \item Corona (limera1n)
+  \item Pwnage
+\end{itemize}
+
+\question{How can we mitigate buffer overflows attacks?}
+%
+\begin{itemize}
+  \item Address space layout randomization
+  \item Data Execution Prevention
+  \item Compiler-based mitigation
+\end{itemize}
+
+\question{What are characteristics of the Apple App Store?}
+%
+\begin{itemize}
+  \item the \emph{only} source for apps
+  \item preinstalled on all iOS devices, not removable
+  \item only reviewed apps offered
+\end{itemize}
+
+\question{How does the Apple app publishing process look like?}
+%
+\begin{itemize}
+  \item User uploads app
+  \item Enter review queue
+  \item App gets reviewed: Reject with reason or user is allowed to release
+\end{itemize}
+
+In 2009 40 reviewers were reported to be working on app reviews. At least 2 reviewers confirm one app. 8500 iPhone apps per week released. Reasons for rejection include bugs, instabilities, privacy violations, porn, \dots
+
+\question{What are properties of the Android OS?}
+%
+\begin{itemize}
+  \item Patched Linux kernel
+  \item \texttt{libc} replaced with custom \texttt{Bionic} implementation
+  \item \texttt{X11} replaced with \texttt{SurfaceFlinger}
+  \item Until Android 4.3 single-user
+  \item Managed code for user apps, well-defined execution environment
+  \item Android Runtime (ART, Dalvik VM is deprecated since Android 4.4) to run Java software
+\end{itemize}
+
+\question{How does filesystem encryption on Android work?}
+%
+\begin{itemize}
+  \item \texttt{dm-crypt} is used as disk encryption system (since Android 3.0, Linux kernel feature)
+  \item No hardware module (not entirely true any more) used unlike iOS. Hence off-device brute force attack is possible.
+  \item After entering PIN, device is decrypted for 128~bit AES with CBC
+  \item Android shares complexity of PIN to everyone (DevicePolicyManager property)
+  \item PBKDF2 is used to derive master key from PIN. Device admin can set password complexity
+  \item Master key is encrypted with 128~bit AES using OpenSSL
+\end{itemize}
+
+\question{What is the Android KeyChain?}
+%
+\begin{itemize}
+  \item public API since Android 4.0
+  \item is a storage for credentials
+  \item backed by secure element hardware, TPM or ARM TrustZone
+  \item keys are not extractable
+\end{itemize}
+
+\question{How does Sandboxing on Android work?}
+%
+\begin{itemize}
+  \item individual user runs an app (like Linux kernel)
+  \item apps are separated (process with its own address space, user permissions)
+  \item applies to native code as well as java code on Dalvik
+  \item SELinux is used to manage permissions for individual apps (invisible to app devs)
+\end{itemize}
+
+\question{Which feature of Android can be used to mitigate buffer overflow attacks?}
+%
+\begin{itemize}
+  \item \texttt{FORTIFY\_SOURCE} is a compiler flag (can be used since Android 4.2)
+  \item compiler adds checks for buffer size (if known at compile-time)
+\end{itemize}
+
+\question{How does Secure Boot take place on Android?}
+%
+\begin{itemize}
+  \item Kernel verification (key is in hardware of manufacturer)
+  \item Used to verify first boot loader
+  \item \texttt{dm-verity} kernel module creates and signs hash tree
+  \item No protection classes - once phone is booted, everything is unencrypted
+\end{itemize}
+
+\question{How does the Android permission system work?}
+%
+\begin{itemize}
+  \item Android app requires a set of permissions to run
+  \item User has to accept before installation
+    \begin{itemize}
+      \item Cannot deselect individual permissions
+      \item Can turn off some functionality globally (GPS, WiFi, network, \dots)
+    \end{itemize}
+\end{itemize}
+
+\question{Which application sources exist for Android?}
+%
+\begin{itemize}
+  \item Google Play Store
+    \begin{itemize}
+      \item Official store with free \& commercial apps, >1 mio. apps
+      \item performs ``application security scanning''
+    \end{itemize}
+  \item Third Party Store (eg. Amazon Appstore)
+  \item File System
+    \begin{itemize}
+      \item Put \texttt{.apk} file on file system. Run it to install application.
+      \item \texttt{.apk} files can be downloaded from the web
+      \item ``Untrusted Sources'' must be allowed
+    \end{itemize}
+\end{itemize}
+
+Applications are signed with developer's key. Two apps of same dev may share resources.
+Application encryption is possible with a device-specific key. Some information keeps world-readable (permissions, etc) but the code is encrypted (since Android 4.1). Since Android 4.2 / 2.3 apps are verified before installation (data is sent to google server).
+
+\question{What changed in regards of SMS handling with Android 4.4?}
+%
+\begin{itemize}
+  \item User has to choose a ``default app'' for SMS
+  \item Only this app can receive \texttt{SMS\_DELIVER\_ACTION} broadcast
+  \item Other apps are still able to send simple SMS
+\end{itemize}
+
+\question{Which IPC mechanisms does Android offer?}
+%
+IPC mechanisms give Android applications the ability to
+\begin{itemize}
+  \item run processes in background
+  \item offer services consumed by other applications
+  \item safely share relational data
+  \item start other programs
+  \item reuse components from other applications safely
+\end{itemize}
+
+\question{Which backup system are available on Android?}
+%
+\begin{description}
+  \item[Android Backup Service]\hfill{}\\ since Android 2.2, enabled per default, access only via Google account, unknown encryption, Backup Service Key for each app, includes SMS, MMS, apps, wifi pwds, bookmarks, \dots
+  \item[Dropbox, Carbon, SkyDrive]\hfill{}\\ synchronization with cloud
+  \item[Titanium Backup, NANdroid, App Backup \& Restore]\hfill{}\\ root permissions required
+\end{description}
+
+\question{How do Windows Phone backups work?}
+%
+\begin{itemize}
+  \item Builtin
+  \item List of apps installed, setting, call history, sms, photos, etc
+\end{itemize}
+
+\question{What is Blackberry?}
+%
+\begin{itemize}
+  \item BlackBerry Limited (formerly Research In Motion) is a telecom and wireless equiment company
+  \item BlackBerry Limited develops wireless handheld devices and smartphones as ``BlackBerry deivces''
+  \item Since 1999 (email pager), 40\% smartphone market share in 2010
+  \item Today below 10\%, mostly known for still using physical keyboards on most products
+\end{itemize}
+
+\question{Which operating system is used by BlackBerry devices?}
+%
+\begin{itemize}
+  \item QNX, minimal unix-like microkernel
+  \item designed for embedded systems
+  \item kernel runs many small tasks (called ``servers'') which can simply turned off (to turn off functionality)
+  \item for mobile BlackBerry devices: strong separation between ``work'' and ``personal'' area
+  \item focus on business usecases
+\end{itemize}
+
+\question{What is BlackBerry Protect?}
+%
+\begin{itemize}
+  \item Is integrated in OS
+  \item Offers management services
+    \begin{itemize}
+      \item Lock your device (if lost)
+      \item Delete data in it (if stolen)
+      \item Find it (if misplaced)
+      \item Wireless backup
+      \item Restore settings (if switched)
+    \end{itemize}
+\end{itemize}
+
+\question{Which development platforms exist for BlackBerry?}
+%
+\begin{itemize}
+  \item Native (Cascade / Core / Gaming)
+  \item HTML 5
+  \item Adobe Air
+  \item Runtime for Android
+\end{itemize}
+
+\question{Which security features does BlackBerry offer?}
+%
+\begin{itemize}
+  \item Position Independent Code/Executable (PIC/PIE, equivalent to ASLR, compiler flag)
+  \item Password Keeper
+    \begin{itemize}
+      \item Previous versions: native app, now installation via BlackBerry World (app store)
+      \item stores all passwords
+      \item records encryption with AES~256
+      \item single password
+      \item generates very strong random passwords
+    \end{itemize}
+  \item Memory cleaning (clear temporary data in memory)
+  \item Content protection (app data protection with smartphone password, decrypted when unlocked)
+  \item RIM cryptographic API (Java) (encrypt/decrypt/sign/verify, establish secure connections, key management)
+\end{itemize}
+
+\question{Which mobile operating systems support certificate revocation?}
+%
+\begin{description}
+  \item[Android]\hfill{}\\ OCSP and CRL supported, must be explicitly enabled by developer
+  \item[iOS]\hfill{}\\ OCSP support, only enabled for Extended Validation certificates, certificate check passes if server unreachable
+\end{description}
+
+\question{How do cold boot attacks work?}
+%
+\begin{itemize}
+  \item Freeze (well, at least $-15^\circ$~C) mobile device when its running
+  \item Charged memory cells in RAM do not drain immediately
+  \item Recover data from frozen chip using a minimal OS
+\end{itemize}
+
+\question{Describe how data-flow analysis can take place.}
+%
+\begin{itemize}
+  \item Per function / method apply forward \& backward slicing
+  \item Define taints for data to analyze (taints are transitive)
+    \begin{itemize}
+      \item sources are parameters, globals, instance members
+      \item sinks are return values, by-ref arguments, globals, instance members
+    \end{itemize}
+  \item Possibly state explosion (everything is tainted)
+\end{itemize}
+
+\question{What does MDM and MAM stand for?}
+%
+Mobile Device Management and Mobile Application Management
+
+\question{What are possible deployment scenarios?}
+%
+\begin{description}
+  \item[Managed devices]\hfill{}\\ handing out dedicated devices to employees, company has control over hard-/software, enforce password rules / remote wiping / forbid installation sources / tracking
+  \item[COPE] Corporately-Owned, Personally-Enabled, unlike managed devices allows private usecases
+  \item[BYOD] Bring your own device, various approaches (MDM and MAM applied to whole smartphone, Container App Management, Application Wrapper Management, MDM and MAM only applied to ``business area'' as in BlackBerry Balance)
+  \item[Consumer] Little security-critical consumer application usecases (eg. banking)
+\end{description}
+
+\question{How do key derivation functions work?}
+%
+\begin{enumerate}
+  \item Use salt and shared secret as input for key establishment scheme (like HMAC, AES-CMAC). Use output as key derivation key
+  \item Use key derivation key as input to derive actual key. Derivation happens by applying cryptographic primitive multiple times in some mode of operation (like PBKDF2, scrypt, mcrypt).
+\end{enumerate}
+
+\question{How does PBKDF2 work?}
+%
+Input parameters:
+\begin{itemize}
+  \item iteration count
+  \item salt
+  \item required output length
+  \item underlying PRF
+\end{itemize}
+
+Output:
+\begin{itemize}
+  \item derived key
+\end{itemize}
+
+\question{Which implementations use PBKDF2?}
+%
+\begin{itemize}
+  \item WPA2
+  \item TrueCrypt
+  \item Mac OS X Mountain Lion
+\end{itemize}
+
+\question{What is bcrypt?}
+%
+\begin{itemize}
+  \item key derivation function
+  \item iteration count is a power of two (hence less configurable than PBKDF2)
+\end{itemize}
+
+\question{What is scrypt?}
+%
+\begin{itemize}
+  \item key derivation function like PBKDF2
+  \item strength is the usage of RAM (uses a lot of RAM, mathematically proven); hence difficulty to parallelize attack
+\end{itemize}
+
+\question{Which side-channels of mobile devices do you know?}
+%
+\begin{itemize}
+  \item Power consumption
+  \item Sound
+  \item Heat
+  \item Execution time
+  \item EM emission
+\end{itemize}
+
+
+\end{document}

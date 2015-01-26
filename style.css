@@ -1,0 +1,14 @@
+body { font-family: Vollkorn, Georgia, serif; }
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+dt { font-style: italic; font-variant: small-caps; }
+a, a:link, a:visited, a:focus { text-decoration: underline; color: black; }
+a:hover { outline: black solid 1px; }
+li { margin: 5px 0; padding: 0; }
+.progress { outline: black solid 2px; text-align: center; margin: 10px 0; }
+.progress + * { clear: left; }
+.progress-bar { background-color: #333; }
+.progress-text { display: inline; background-color: #EEE; }
+.todo { font-weight: bolder; }
+.done { text-decoration: line-through; }
+.done:before { content: "[done] "; color: #666; }

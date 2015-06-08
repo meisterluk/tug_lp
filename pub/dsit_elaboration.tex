@@ -1,0 +1,1056 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbold}
+\usepackage{csquotes}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{xcolor}
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+\newcommand\dotcup{\charfusion[\mathbin]{\cup}{\cdot}}
+\newcommand\bigdotcup{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand\p{\mathcal{P}}
+
+\newcommand\op[2][P]{\mathbb{#1}\left(#2\right)}
+\newcommand\os[2][P]{\mathbb{#1}\left[#2\right]}
+\newcommand\cond[3][P]{\mathbb{#1}\left(#2 \left|\:#3\right)\right.}
+\newcommand\cons[3][P]{\mathbb{#1}\left[#2 \left|\:#3\right]\right.}
+\newcommand\kld[3][D]{\mathbb{#1}\left(#2 \left\|\:#3\right)\right.}
+
+\newcommand\fall{\:\forall\:}
+\newcommand\ex{\:\exists\:}
+\newcommand\dt{\,\text{d}}
+\newcommand\set[1]{\left\{#1\right\}}
+\newcommand\key[1]{\textit{#1}}
+\newcommand\card[1]{\left|#1\right|}
+\newcommand\ind{\mathbb{1}}
+\newcommand\converges{\rightarrow}
+\newcommand\Perr{\mathbb{P}_{\text{err}}}
+
+\DeclareMathOperator{\Capacity}{Cap}
+\DeclareMathOperator{\Ex}{\mathbb{E}}
+\DeclareMathOperator{\Va}{\mathbb{V}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+
+\parindent0pt
+\setlength\parskip{8pt}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\title{
+  Discrete Stochastics and Information Theory  \\
+  \small{Elaboration on Prof. Wöss' course}
+}
+\author{Lukas Prokop}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+% questions of high  importance: 29
+% question of medium importance: 18
+% questions of low   importance: 3
+
+\section{Definitions and axioms of probability theory}
+
+\subsection[Basic definitions]{Explain the basic definitions of probability theory. What is $\Omega$? What is $\sigma$?}
+%
+\begin{description}
+  \item[Event space $\Omega$] \hfill{} \\
+    Defines the event space. A coin toss results in head or tail. So we could define an event space of $\{h, t\}$. Or we could consider sequences of coin tosses: $\{\text{hhh}, \text{hht}, \text{hth}, \text{thh}, \text{htt}, \text{tth}, \text{tht}, \text{ttt}\}$. $\Omega$ contains all possible outcomes. Events are (reasonable) subsets.
+
+  \item[Subset $\mathcal{A}$] \hfill{} \\
+    Defines a subset of possible outcomes of $\Omega$ with $\mathcal{A} \subset \op{\Omega}$.
+    An example is a throw of the dice with result \enquote{even number} ($\mathcal{A} = \set{2, 4, 6}$) or \enquote{number 6} ($\mathcal{A} = \set{6}$).
+
+  \item[$\sigma$ algebra on a set $\mathcal{A}$] \hfill{} \\
+    A set closed under complement, union and intersection. The following axioms hold:
+    \begin{enumerate}
+      \item $\varnothing \in \mathcal{A}$
+      \item $A \in \mathcal{A} \Rightarrow A^C \in \mathcal{A}$
+      \item If $A_n \in \mathcal{A}$ with $n = 1, 2, \ldots$ then $\bigcup_{n=1}^\infty A_n \in \mathcal{A}$
+    \end{enumerate}
+
+  \item[Probability measure] \hfill{} \\
+    Assigns a real number between 0 and 1 (inclusive) to every event.
+    $P: \mathcal{A} \rightarrow [0, 1]$.
+    It satisfies $P(\varnothing) = 0$ and $P(\Omega) = 1$ where $P$ with a set parameter means \enquote{one of}.
+
+  \item[Probability space $(\Omega, \mathcal{A}, P)$] \hfill{} \\
+    Defines a probability space $(\Omega, \mathcal{A}, P)$ consisting of an event space, the possible outcomes $\mathcal{A}$ and some probability measure.
+\end{description}
+
+\subsection{What does $\sigma$ additivity mean?}
+
+\[
+  A_n \in \mathcal{A} \land A_n \cap A_m = \varnothing \quad\fall n \in \mathbb{N}^+, n \neq m
+\] \[
+  \Rightarrow
+  \op{\bigcup_{n=1}^\infty A_n} = \sum_{n=1}^\infty \op{A_n}
+\]
+
+\subsection{What does the \enquote{Law of continuity} tell?}
+
+The law can be derived from the definition of $\sigma$ algebras:
+\begin{align*}
+  A_n \in \mathcal{A}, A_1 \subset A_2 \subset A_3 \subset \ldots & \Rightarrow \lim_{n\rightarrow\infty} \os A_n = \op{\bigcup_{n=1}^\infty A_n} \\
+  B_n \in \mathcal{B}, B_1 \supset B_2 \supset B_3 \supset \ldots & \Rightarrow \lim_{n\rightarrow\infty} \os B_n = \op{\bigcap_{n=1}^\infty B_n}
+\end{align*}
+
+\subsection{What is a random variable?}
+
+A random variable $X$ is a function associating an event with a real value. It maps the probability space to real world values.
+\[ X: \Omega \rightarrow \mathbb{R} \]
+
+\subsection{What is distribution, density, expected value, absolute convergence, continuity and monotonicity?}
+%
+A \key{probability distribution} assigns a probability to each subset of possible outcomes of a random experiment. It can be defined by a probability mass function, probability density function, cumulative distribution function, survival function, hazard function, characteristic function or a rule to create a new random variable with a known joint probability distribution.
+
+The \key{probability density function} (PDF) of a continuous random variable $X: \Omega \rightarrow \mathbb{R}$ is a function that describes the relative likelihood for this random variable to take on a given value. So there exists some $f: \mathbb{R} \rightarrow [0, \infty)$ such that
+\[
+  \os{X \in B} = \p^X(B) = \int_B f(x) \dt x
+\]
+
+Let $X$ be a random variable defined on a probability space ($\Omega, \Sigma, \p$) then the \key{expected value} is defined as
+\[
+  \mathbb{E}(X) = \int_{\Omega} X \dt \p
+\]
+
+Let $P^X$ operate on ($\mathbb{R}, \mathcal{B}$) which is the smallest $\sigma$ algebra containing all intervals. $P^X(B)$ is the probability that $B$ occurs with respect to a random variable $X$ defined as
+\[
+  P^X(B) = \os{X \in \mathcal{B}} = \op{\set{\omega \in \Omega: X(\omega) \in \mathcal{B}}}
+\]
+
+Convergence is a property of a sequence of random variables. \key{Absolute convergence} means that even the sum of absolute values of the series converges as well.
+
+A \key{continuous probability distribution} associates a probability to a continuous range of values. Only continuous probability distributions have a probability density function. The PDF can be \key{monotonic} meaning that it is a function between ordered sets that preserves the given order.
+
+\subsection{What is conditional probability and independence of events?}
+%
+Conditional probability is defined as division of joint probability divided by marginal probability:
+\begin{align}
+  \cond AB = \begin{cases}
+    \frac{\op{A \cap B}}{\op{B}}  & \op{B} > 0 \\
+    0                                 & \op{B} = 0
+  \end{cases}
+\end{align}
+$\cond AB$ semantically asks \enquote{assuming $B$ to happen with certainty, what is the probability that $A$ will happen}.
+$A$ and $B$ are independent if and only if $\cond AB = \op{A}$. Or in general $A_1, A_2, \ldots, A_n \in \mathcal{A}$ is independent if $\forall\: 1 \leq i_1 < i_2 < \ldots < i_k \leq n$
+
+\[
+  \op{A_{i_1} \cap A_{i_2} \cap \ldots \cap A_{i_k}}
+  = \op{A_{i_1}} \op{A_{i_2}} \cdot \ldots \cdot \op{A_{i_k}}
+\]
+
+\subsection{What is marginal/joint distribution? What's their relation?}
+%
+Let $A$ and $B$ be two events occuring with \key{marginal} probability $\op{A}$ and $\op{B}$. The \key{joint probability} is intuitively defined as probability that $A$ \emph{and} $B$ will happen. Formally $\op{A, B}$, defined as the intersection $\op{A \cap B}$.
+
+\begin{align*}
+  \text{marginal probability: }   && p_{X,Y}(x, y) &= \os{X=x, Y=y} \\
+  \text{joint probability: }      && p_X(x_1, x_2, \ldots, x_n) &= \os{X = (x_1, x_2, \ldots, x_n)}
+\end{align*}
+
+Then the following relation holds:
+\[
+  \cond AB = \begin{cases}
+    \frac{\op{A \cap B}}{\op{B}}  & \text{if } \op{B} > 0 \\
+    0 & \text{if } \op{B} = 0
+  \end{cases}
+\]
+
+Bayes' Theorem is given by
+\[
+  \cond AB = \frac{\cond BA \cdot \op A}{\op B}
+\]
+
+\subsection{Prove $\mathbb{E}(X\cdot Y) = \mathbb{E}(X) \cdot \mathbb{E}(Y)$ for independent variables in the discrete case}
+
+\begin{align*}
+  \Ex(X)         &= \sum_x x \cdot p_X(x) \\
+  \Ex(Y)         &= \sum_y y \cdot p_Y(y) \\
+  \Ex(X \cdot Y) &= \sum_{x,y} xy \cdot p_{X,Y}(x,y) \\
+                 &= \sum_x \sum_y xy \cdot p_X(x) \cdot p_Y(y) \\
+                 &= \left(\sum_x x \cdot p_X(x)\right) \cdot \left(\sum_y y \cdot p_Y(y)\right) \\
+                 &= \Ex(X) \cdot \Ex(Y)
+\end{align*}
+
+\subsection{How is covariance and variance defined?}
+
+The expected value $\Ex(X)$ of a random variable $X$ is also known as mean $\mu$.
+
+Covariance is a measure of how much two random variables change together. If the greater values of one variable primarily correspond with the greater values of the other variable (and vice versa for small values), the covariance is positive. If they are linearly disproportional, it is negative.
+
+\[ \sigma(X, Y) = \Ex((X - \Ex(X))(Y - \Ex(Y))) = \Ex(XY) - \Ex(X) \Ex(Y) \]
+
+Variance is a special case of covariance with only one parameter. Variance is the covariance of a variable with itself: $\sigma^2(X) = \sigma(X, X)$. It measures how far a set of numbers is spread out. A variance of zero indicates that all the values are identical. Variance is always non-negative.
+
+\[ \sigma^2(X) = \Va(X) = \Ex((X - \Ex(X))^2) \]
+\begin{align*}
+  \text{discrete:}   && \Va(X) &= \sum_{i=1}^n (p_i \cdot x_i^2) - \mu^2 \\
+  \text{continuous:} && \Va(X) &= \int x^2 p(x) \dt x - \mu^2
+\end{align*}
+
+Covariance is symmetrical: $\sigma(X, Y) = \sigma(Y, X)$. If $X$ and $Y$ are independent, then $\sigma(X, Y) = 0$.
+
+\subsection{Derive Bienaymé's equation for $\Va(\overline{X_n})$}
+
+Bienaymé's equation states that
+%
+\[
+  \Va\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \Va(X_i)
+\]
+%
+\dots which makes variance preferrable in many applications. Furthermore it implies that 
+%
+\begin{align*}
+  \overline{X_n}                 &= \frac{X_1 + \ldots + X_n}{n} \\
+%  \Ex(\overline{X_n})            &= \frac{\Ex(X_1) + \ldots + \Ex(X_n)}{n} = \mu \\
+  \Va\left(\overline{X_n}\right) &= \Va\left(\frac1n \sum_{i=1}^n X_i\right) \\
+                                 &= \frac1{n^2} \sum_{i=1}^n \Va(X_i) \\
+                                 &= \frac1{n^2} n \Va(X) \\
+                                 &= \frac1n \Va(X) \\
+                                 &= \frac{\sigma^2}{n}
+\end{align*}
+
+\subsection{Distinguish between convergence \enquote{almost surely} and \enquote{in probability}}
+
+Let $\left(X_n\right)_{n \in \mathbb{N}}$ be a sequence of random variables.
+
+\begin{align*}
+  \lim_{n \rightarrow \infty} X_n = X \text{ almost surely if }
+      & \mathbb{P}[\exists \lim X_n \land \lim X_n = X] = 1 \\
+  \lim_{n \rightarrow \infty} X_n = X \text{ in probability if }
+      & \forall\: a > 0, \lim_{n \rightarrow \infty} \mathbb{P}[\left|X_n - X\right| \geq a] = 0
+\end{align*}
+
+Intuitively almost surely means convergence is given until infinity. In probability means $n$ converges until a fixed constant (not necessarily infinity).
+
+\subsection{In our notation, what is the difference between $x$, $X$, $X_n$ and $\mathcal{X}$?}
+% source: 10
+
+\begin{description}
+  \item[$x$] \hfill{} \\
+    A specific value (realization) of a random value. For example we iterate over all values of the discrete domain. The $x$ is typically used as iterator $x \in X$.
+
+  \item[$X$] \hfill{} \\
+    $X$ denotes a random variable used in an equation. Often $Y$ accompanies $X$ as second random variable to discuss joint probability.
+
+  \item[$X_n$] \hfill{} \\
+    $X_n$ denotes a sequence of random variables.
+
+  \item[$\mathcal{X}$] \hfill{} \\
+    $\mathcal{X}$ is used with two different meanings:
+    \begin{itemize}
+      \item In the context of Markov chains or information channels, we used $\mathcal{X}$ as the given input values for the Markov process.
+      \item In the context of probability theory, $\mathcal{X}$ denotes the domain of a random variable $X$ or the sequence $X_n$ (if they all use the same domain).
+      \item In the context of codes, $\mathcal{X}$ denotes the alphabet before encoding.
+    \end{itemize}
+\end{description}
+
+\subsection{Define and prove Markov's inequality}
+
+\begin{mdframed}
+  Let $X \geq 0$ be a random variable with $0 < \Ex(X) < \infty$, then 
+  \[ \os{X > a \cdot \Ex(X)} \leq \frac1a \quad\forall\: a > 0 \]
+\end{mdframed}
+
+\begin{align*}
+  A                     &= [X \geq a \Ex(X)] \\
+                        &= \set{w \in \Omega: X(w) \geq a \cdot \Ex(X)} \\
+  X                     &\geq X \ind_A \\
+                        &\geq \underbrace{a \Ex(X)}_{\text{constant } c} \cdot \ind_A \Leftrightarrow \\
+  X(w)                  &\geq X(w) \ind_A(w) \\
+                        &\geq c \cdot \ind_A(w) \Rightarrow \\
+  \Ex(X)                &\geq \Ex(c \cdot \ind_A) \\
+                        &= a\Ex(X) \os A \Rightarrow \\
+  \frac{\Ex(X)}{\Ex(X)} &\geq a \os A \Rightarrow \\
+  \os A                 &\leq \frac 1a
+\end{align*}
+
+\subsection{Define and prove Chebyshev's inequality}
+
+\begin{mdframed}
+  Let $X$ be a random variable with finite $\Ex(X)$ and $\Va(X)$, then $\forall\: a > 0$
+  \[ \os{\card{X - \Ex(X)} \geq a} \leq \frac{\Va(X)}{a^2} \]
+\end{mdframed}
+
+\begin{align*}
+  Y      &= (X - \Ex(X))^2 \geq 0 \\
+  \Ex(Y) &= \Va(X) \\
+  \os{\card{X - \Ex(X)} \geq a}
+         &= \os{Y \geq a^2} \\
+         &= \os{Y \geq \frac{a^2}{\Va(X)} \Ex(Y)} \\
+         &\leq \frac{1}{\frac{a^2}{\Va(X)}}  && \text{[apply Markov inequality]} \\
+         & = \frac{\Va(X)}{a^2}
+\end{align*}
+
+
+
+\subsection{Distinguish between the Weak and Strong Law of Large Numbers}
+
+The Weak Law of Large Numbers derives from Chebyshev's inequality and states,
+
+\begin{mdframed}
+  Given $X_n$ as sequence of iid random variables, $\mu = \Ex(X_n)$ and $\sigma^2 = \Va(X_n) < \infty$, then
+  \[ \overline{X_n} \converges \mu \text{ in probability} \]
+\end{mdframed}
+
+The Strong Law of Large Numbers states,
+
+\begin{mdframed}
+  Given $X_n$ as sequence of iid random variables then there exists a finite random variable $Y$ such that
+  \[ \overline{X_n} \converges Y \text{ almost surely} \]
+\end{mdframed}
+
+The Strong Law of Large Numbers can be equivalently defined as $\Ex(X_n)$ being finite and in this case $Y = \Ex(X_n)$ almost surely.
+
+\subsection{Prove the Weak Law of Large Numbers}
+% source: Patrick
+
+\begin{align*}
+  \os{\card{\overline{X_n} - \mu} \geq a} &\leq \frac{\Va(\overline{X_n})}{a^2}  && \text{[Chebyshev inequality must hold]} \\
+    &= \frac{\sigma^2}{na^2} \\
+    &\converges 0
+\end{align*}
+
+\section{Entropy}
+
+\subsection{Give Hartley's definition of information value}
+%
+\begin{quote}
+  The answer to a question that can assume the two values \enquote{yes} and \enquote{no} (without taking into account the meaning of the question) contains one unit of information.
+\end{quote}
+
+Let $U_N$ be a set of $N$ elements of uniform probability; hence the information amount to identify an element is
+\[ \op[H]{U_N} = \log_2(N) \in \mathbb{R} \]
+
+It holds that
+\begin{itemize}
+  \item $\op[H]{U_2} = 1$
+  \item $\op[H]{U_N} \leq \op[H]{U_{N+1}}$
+  \item $\op[H]{U_{M\cdot N}} = \op[H]{U_M} + \op[H]{U_N}$
+\end{itemize}
+
+\subsection{Derive Shannon's entropy definition from Hartley's information value}
+
+As can be seen by the third corollary of Hartley, we can group information into (not necessarily equally large) groups of values:
+
+\[ U_N = U_{N_1} \dotcup U_{N_2} \dotcup \ldots \dotcup U_{N_n} \]
+
+If we want to identify the value in those groups, we need to ask two questions:
+\begin{enumerate}
+  \item In which group?
+  \item Which element in the group?
+\end{enumerate}
+
+If the value can be found in group $k$, then $\log_2{N_k}$ questions are needed to identify the value.
+The average number of questions for the second question is:
+
+\[ H_2 = \sum_{k=1}^n \frac{N_k}{N} \log_2{N_k} \]
+
+What about $H_1$?
+
+\begin{align*}
+  \op[H]{U_N} &= H_1 + H_2 \\
+  \log_2{N}     &= H_1 + \sum_{k=1}^n \frac{N_k}{N} \log_2{N_k} \\
+  H_1           &= \log_2{N} - \sum_{k=1}^n \frac{N_k}{N} \log_2{N_k} \\
+                &= \sum_{k=1}^n \frac{N_k}{N} \log_2{N} - \sum_{k=1}^n \frac{N_k}{N} \log_2{N_k} \\
+                &= -\sum_{k=1}^n \frac{N_k}{N} \log_2{\frac{N_k}{N}} \\
+                &= -\sum_{k=1}^n p_k \log_2{p_k} && \text{with } p_k = \frac{N_k}{N}
+\end{align*}
+
+\subsection{Give Shannon's definition of \key{entropy} and provide examples for small/large entropy}
+
+\key{Entropy} is a measure of uncertainty of a random variable. Let $X$ be a discrete random variable with alphabet $\mathcal{X}$ and probability mass function $p_X(x) = \os{X = x}$ for $x \in \mathcal{X}$. The entropy $\op[H]{X}$ of a discrete random variable $X$ is defined by
+\[ \op[H]{X} = -\sum_{x \in \mathcal{X}} p_X(x) \log_2{p_X(x)} = -\Ex(\log_2 p_X(x)) \]
+$\op[H]{X} \geq 0$ holds for all $X$. Furthermore we define
+\[
+  0 \log 0 = 0              \quad \forall\, b \geq 0 \qquad
+  a \log \frac a0 = \infty  \quad \forall\, a > 0
+\]
+
+For example a uniform distribution of two discrete values gives
+\[ \op[H]{X} = - \left(\frac12 \log_2{\frac12} + \frac12 \log_2{\frac12} \right) = 1 \]
+Uniform distribution always provides a \key{large} value of entropy. Certain events provide a \key{small} value. For example consider two events, where only event $A$ always happens:
+\[ \op[H]{X} = - \left(0\cdot\log_2{0} + 1\cdot\log_2{1}\right) = \left(1\cdot0\right) = 0 \]
+
+The following holds:
+\begin{itemize}
+  \item $\op[H]{X}$ depends only on the probabilities; not on the specific interpretation.
+        \[ f: \mathcal{X} \rightarrow \mathcal{X}' \land X' = f(X) \Rightarrow \op[H]{X'} = \op[H]{X} \]
+  \item $p_0 \mapsto \op[H]{p_0, 1 - p_0}$ is continuous. The maximum is attained at $\frac12$:
+        \[ \op[H]{p_0, 1 - p_0} = -p_0 \log_2(p_0) - (1 - p_0) \log_2(1 - p_0) \]
+        \[
+           -\frac12 \log_2\left(\frac12\right)
+           - \left(1 - \frac12\right) \log_2 \left(1 - \frac12\right)
+           = +\frac12 - \left(-\frac12\right)
+           = 1
+        \]
+  \item For some fixed $n$,
+        \[ \op[H]{p_1, \ldots, p_n} \leq \op[H]{\frac1n, \ldots, \frac1n} = \log_2(n) \]
+\end{itemize}
+
+\subsection{What is joint entropy? What is the entropy of conditional distribution aka. conditional entropy?}
+
+Given a pair of discrete random variable ($X, Y$). The joint entropy of $X$ and $Y$ is defined as:
+\begin{align*}
+  \op[H]{X, Y} &= -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log_2 p(x, y) \\
+                 &= -\Ex\left(\log_2{p(X, Y)}\right)
+\end{align*}
+
+Entropy of conditional distribution:
+\begin{align*}
+  \cond[H]YX &= \sum_{x \in \mathcal X} p_X(x) \cond[H]{Y}{X=x} \\
+             &= \sum_{x \in \mathcal X} \op{X=x} \left(-\sum_{y \in \mathcal Y} \cond{Y=y}{X=x} \log_2 \cond{Y=y}{X=x} \right) \\
+             &= -\sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} \op{X=x} \cond{Y=y}{X=x} \log_2 \cond{Y=y}{X=x}
+                    & \left[\op x \cdot \cond yx = \op{y,x}\right] \\
+             &= -\sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} \op{Y=y,X=x} \log_2 \frac{\op{Y=y,X=x}}{\op{Y=y}} \\
+             &= \sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} \op{Y=y,X=x} \log_2 \frac{\op{Y=y}}{\op{Y=y,X=x}} \\
+             &= \sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} p_{X,Y}(x,y) \log_2 \frac{p_Y(y)}{p_{X,Y}(x,y)}
+\end{align*}
+
+\subsection{Prove that $\cond[H] YX = \op[H]{X, Y} - \op[H]{X}$}
+
+\begin{align*}
+  \cond[H] YX &= -\sum_x \sum_y p_X(x) p_{X,Y}(y\,|\,x) \log_2 p_{X,Y}(y,x) \\
+            &= -\sum_x \sum_y p_{X,Y}(x,y) \left[\log_2 p_{X,Y}(x,y) - \log_2 p_X(x)\right] \\
+            &= \op[H]{X,Y} + \sum_x \log_2 p_X(x) \sum_y p_{X,Y}(x,y) \\
+            &= \op[H]{X,Y} - \op[H]{X}
+\end{align*}
+
+\subsection{What is the Kullback-Leibler distance? Are the parameters symmetrical?}
+
+Let $p$ and $q$ be two probability distributions on the finite set $\mathcal{X}$.
+$X$ is a random variable with distance probability $p$.
+The \key{relative entropy} or \key{Kullback-Leibler distance} of $p$ with respect to $q$ is
+\[ \kld{p}{q}  = \sum_x p(x) \log_2 \frac{p(x)}{q(x)} = \Ex\left(\log_2 \frac{p(x)}{q(x)}\right) \]
+
+\begin{itemize}
+  \item Be aware that for $p(x) > 0$ and $q(x) = 0$: $\kld pq  = \infty$.
+  \item $\kld pq $ is always non-negative.
+  \item From $\kld pq = 0$ it follows that $p(x) = q(x) \: \forall x \in \mathcal{X}$.
+  \item $\kld pq \neq \kld qp$
+  \item Intuitively it is a measure of the information lost when $q$ is used to approximate $p$.
+\end{itemize}
+
+\subsection{What is mutual information? What is conditional mutual information? What is the chain rule?}
+
+Let $X$ and $Y$ be a pair of random variables. \key{Conditional mutual information} is defined as,
+
+\begin{align*}
+  \op[I]{X, Y} &= \kld{p_{(X,Y)}}{p_X \bigotimes p_Y} \\
+               &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p_X(x)\cdot p_Y(y)} \\
+               &= \op[H]{X} - \cond[H] XY = \op[H]{Y} - \cond[H] YX
+\end{align*}
+
+Intuitively, mutual information measures the information that X and Y share. It measures how much knowing one of these variables reduces uncertainty about the other.
+
+Specifically it holds that $\op[I]{X, X} = \op[H]{X}$. The \key{chain rule} states that
+\[
+  \op[H]{X_1, \dotsc, X_n} = \sum_{k=1}^n \cond[H]{X_k}{X_{k-1}, \dotsc, X_{1}}
+\]
+
+The chain rule of mutual information is defined as,
+\[
+  \op[I]{(X_1, \dotsc, X_k); Y} = \sum_{k=1}^n \cond[I]{X_k; Y}{X_{k-1},\dotsc,X_{1}}
+\]
+
+\key{Conditional mutual information} of $X$ and $Y$ given $Z$:
+
+\begin{align*}
+  \cond[I]{X;Y}{Z} &= \sum_z p_Z(z) \cond[I]{X;Y}{Z=z} \\
+    &= \begin{cases}
+      \cond[H]YZ - \cond[H]Y{X,Z} \\
+      \cond[H]XZ - \cond[H]X{Y,Z}
+    \end{cases}
+\end{align*}
+
+\subsection{What is Jensen's inequality?}
+%
+Given a continuous, convex function $f: I \rightarrow \mathbb{R}$ (with $I$ as open interval) and $X$ as random variable,
+\[  \Ex(f(X)) \geq f(\Ex(X))  \]
+
+\subsection{What is information inequality?}
+
+Let $p(x)$ and $q(x)$ be a pair of probability distributions with $x \in \mathcal{X}$, then $\kld{p}{q} \geq 0$.
+
+Equality holds if and only if $p(x) = q(x) \quad\fall x$.
+
+Corollaries:
+\begin{itemize}
+  \item $\op[I]{X;Y} \geq 0$
+  \item $\cond[H]XY \leq \op[H]{X}$
+  \item $\cond[I]{X;Y}{Z} \geq 0$
+  \item $\op[H]{X_1, \dotsc, X_n} \leq \sum_{k=1}^n \op[H]{X_k}$
+\end{itemize}
+
+\subsection{What is the log-sum inequality?}
+
+Given $a_1, \dotsc, a_n$ and $b_1, \dotsc, b_n \geq 0$, then
+\[
+  \sum_{i=1}^n a_i \log{\frac{a_i}{b_i}}
+    \geq \left(\sum_{i=1}^n a_i\right) \log{\frac{\sum_{i=1}^n a_i}{\sum_{i=1}^n b_i}}
+\]
+
+Given $p^{(1)}(\cdot), p^{(2)}(\cdot)$ and $q^{(1)}(\cdot), q^{(2)}(\cdot)$
+as probability densities on $\mathcal{X}$ with $0 \leq \lambda \leq 1$
+\begin{multline*}
+  \Rightarrow
+    \kld{\lambda \cdot p^{(1)} + (1 - \lambda) p^{(2)}}%
+    {\lambda \cdot q^{(1)} + (1 - \lambda) \cdot q^{(2)}} \\
+  \leq
+    \lambda \kld{p^{(1)}}{q^{(1)}} +
+    (1 - \lambda) \kld{p^{(2)}}{q^{(2)}}
+\end{multline*}
+
+\subsection{What is a Markov chain?}
+%
+A \key{Markov chain} is a random process satisfying the Markov property which means transitions happen memoryless.
+Given a state space, transitions can happen between any two states with associated probabilities. Transition probabilities are stored in the so-called \enquote{stochastic matrix}.
+
+Hence a Markov chain is a sequence of random variables $X_1, X_2, X_3, \dotsc$ with the Markov property, namely that, given the present state, the future and past states are independent. Formally $\cond{X_{n+1}}{X_1 = x_1, X_2 = x_2, \dotsc, X_n = x_n} = \cond{X_{n+1} = x}{X_n = x_n}$.
+
+A Markov chain is ergodic iff every transition probability is greater zero. A Markov triple is a Markov chain of three states.
+
+\subsection{Define Data Processing inequality}
+
+Let $X \rightarrow Y \rightarrow Z$ be a Markov triple \emph{in that order} meaning $X$ and $Z$ are independent but conditional on $Y$. Hence
+\[ \cons{X=x, Z=z}{Y=y} = \cons{X=x}{Y=y} \cdot \cons{Z=z}{Y=y} \]
+
+It holds that
+\[  \op[I]{X;Y} \geq \op[I]{X;Z}  \]
+
+The information that $Y$ knows about $X$ cannot be increased by manipulating (processing) $Y$ deterministically or at random.
+
+\subsection{Prove Data Processing inequality}
+
+The chain rule tells
+\[  \op[I]{(Y, Z); X} = \op[I]{Y;X} + \cond[I]{Z;X}{Y}  \]
+
+So,
+\begin{align*}
+  \op[I]{X;Y,Z} &= \op[I]{X;Y,Z} \\
+  \op[I]{X;Y} + \underbrace{\cond[I]{X;Z}{Y}}_{\geq0} &= \op[I]{X;Z} + \underbrace{\cond[I]{X;Y}{Z}}_{=0} \\
+  \op[I]{X;Y} &\geq \op[I]{X;Z}
+\end{align*}
+
+\subsection{Define and prove Fano's inequality}
+% source: 10, Felix
+
+\begin{mdframed}
+  Define a Markov triple $X \rightarrow Y \rightarrow \hat X$
+  with $\mathbb{P}_{\text{err}}$ as the error that $X \neq \hat X$.
+  \[
+    H(\Perr) + \Perr \log{\card{\mathcal{X}}}
+      \geq \cond[H]{X}{\hat X}
+      \geq \cond[H]XY
+  \]
+
+  Equivalently
+  \[ 1 + \Perr \log{\card{\mathcal{X}}} \geq \cond[H]XY \]
+  \[ \Perr \geq \frac{\cond[H]XY - 1}{\log_2\card{\mathcal{X}}} \]
+\end{mdframed}
+
+\[
+  E = \begin{cases}
+    1 & \text{if } \hat X \neq X \\
+    0 & \text{if } \hat X = X
+  \end{cases}
+\]
+
+\begin{align*}
+  \cond[H]{E,X}{\hat X} &= \cond[H]{E,X}{\hat X} \\
+  \underbrace{\cond[H]{E}{\hat X}}_{\leq \op[H]{\Perr}} + \underbrace{\cond[H]{X}{E,\hat X}}_{\leq \Perr \log\card{\mathcal{X}}}  &= \cond[H]{X}{\hat X} + \underbrace{\cond[H]{E}{X,\hat X}}_{=0} \\
+\end{align*}
+
+$\cond[H]{X}{E,\hat X}$ is bounded by
+\begin{align*}
+  \cond[H]{X}{E,\hat X} &= \os{E = 0}\cond[H]{X}{\hat X, E = 0} + \os{E = 1}\cond[H]{X}{\hat X, E = 1} \\
+                        &\leq (1 - \Perr) \cdot 0 + \Perr \log \card{\mathcal{X}}
+\end{align*}
+
+Hence, we obtain Fano's inequality. Intuitively it relates the probability of error in guessing the random variable $X$ to its conditional entropy $\cond[H]XY$. Given $X$ as a function of $Y$. Iff $X$ can estimate $Y$ with zero probability of error, then $\cond[H]XY = 0$. Fano's inequality uses this fact: Estimate $X$ with a low probability of error if the conditional entropy $\cond[H]XY$ is small.
+
+\section{Asymptotic entropy}
+
+\subsection{What does iid mean?}
+
+iid is a property of a set of random variables. A set of random variables can be \enquote{independent, identically distributed} meaning that they all utilize the same probability distribution, but are independent in every possible form.
+
+\subsection{What is a stochastic process?}
+
+A stochastic process (in discrete time) is a sequence of random variables
+\[  \left(X_n\right)_{n\geq1} \]
+
+\subsection{What is asymptotic entropy?}
+
+Given $X_n$ as discrete random variables and its values in some finite/countable set $\mathcal{X}$.
+The \key{asymptotic entropy} or \key{asymptotic rate} $h$ of the stochastic process is defined as
+\[ h = \lim_{n \rightarrow \infty} \frac1n \op[H]{X_1,\dotsc,X_n} \]
+
+Furthermore
+\[ h' = \lim_{n \rightarrow \infty} \cond[H]{X_n}{X_{n-1},\dotsc,X_1} \]
+if the limit exists. If $h'$ exists, then $h$ exists and $h = h'$.
+
+Convergence is interpreted as
+\[
+  \lim_{n\rightarrow\infty} a_n = a
+    \Leftrightarrow
+      \fall \varepsilon > 0
+      \ex N_\varepsilon:
+      \fall n > N_\varepsilon:
+      \card{a_n - a} < \varepsilon
+\]
+
+\subsection{What is a stationary distribution?}
+
+A distribution $\left(X_n\right)_{n\geq1}$ is stationary if $\fall n, l \in \mathbb{N}:$ $(X_1,\dotsc,X_n)$ and $(X_{l+1},\dotsc,X_{l+n})$ have the same joint distribution.
+
+\[ \fall x_1, \dotsc, x_n \in \mathcal{X}: \os{X_1=x_1,\dotsc,X_n=x_n} = \os{X_{l+1}=x_1,\dotsc,X_{l+n}=x_n} \]
+
+If $\left(X_n\right)_{n\geq1}$ is stationary, $h'$ exists.
+
+\subsection{What is time homogeneity?}
+
+A Markov chain is called time-homogeneous if
+\[ p_n(y\,|\,x) = p_m(y\,|\,x) \qquad \fall m,n \]
+
+Hence, transition probability do not depend on time.
+
+\subsection{Prove that at least one stationary distribution exists for every stochastic matrix.}
+
+Formally, a distribution at time $n$ is given as
+\[
+  \os{X_n=y}
+    = \sum_{x\in\mathcal{X}} \cons{X_n=y}{X_0=x} \cdot \os{X_0=x}
+    = \sum_x p_{x,y}^{(n)} \mu_x
+    = \left(\mu P^n\right)_x
+\]
+
+Now for an arbitrary stochastic matrix $P = \left(p_{x,y}\right)_{x,y \in \mathcal{X}}$ at least one stationary distribution $\nu$ exists.
+
+Consider an initial distribution $\mu = \mu_0$.
+\[ \left( \mu + \mu P + \mu P^2 + \dotsb + \mu P^{n-1} \right) \frac1n = \mu_n \]
+$\mu_n$ is a probability vector on $\mathcal{X}$ for various $n$. A subsequence $\left(\mu_{n_k}\right)_{k \in \mathbb{N}}$ exists which converges to some vector $\nu$.
+
+\begin{align*}
+  \sum_{x \in \mathcal{X}} \nu_X &= \sum_{x \in \mathcal{X}} \lim \mu_{n_k} \\
+                                 &= \lim \sum_{x \in \mathcal{X}} \mu_{n_k} && \text{[because $\mathcal{X}$ is finite]} \\
+                                 &= 1 \\
+  \mu_n^P - \mu_n &= \frac1n \left(\mu P + \mu P^2 + \dotsb + \mu P^n\right) \\
+                  &= \frac1n \left(\mu + \mu P + \dotsb + \mu P^{n+1}\right) \\
+                  &= \frac1n \underbrace{\left(\mu - \mu P^n\right)}_{\text{bounded by } 1} \\
+                  &\converges 0
+\end{align*}
+\[
+ \begin{array}{ccccc}
+   \mu_{n_k} P & - & \mu_{n_k}  & \rightarrow & 0 \\
+   \downarrow  &   & \downarrow &             & \\
+   \nu P       & - & \nu        & =           & 0
+ \end{array}
+\]
+
+\subsection{What does irreducibility of $(\mathcal{X}, P)$ mean?}
+
+$(\mathcal{X}, P)$ is called irreducible\footnote{for finite $\mathcal{X}$ it is called ergodic} if $\fall x,y \in \mathcal{X}: \exists n = n_{x,y}: p_{x,y}^n > 0$. Graph theoretically irreducibility means strongly connectedness.
+
+If $(\mathcal{X}, P)$ is finite and irreducible then there is a unique stationary distribution $\mu$ and
+\[
+  \nu_x = \frac{1}{\Ex_X(t^x)}
+\]
+where $\Ex_X(t^x)$ denotes the expected return time to $x$ with $t_{(w)}^x = \inf\set{n \geq 1: X_n^{(w)} = x}$.
+$t^x$ is almost surely finite: $\os{t^x < \infty} = 1$ and $\Ex_X(t^x) < \infty$.
+
+\subsection{How can we compute the stationary distribution for a given irreducible distribution?}
+
+\subsection{Discuss a random walk.}
+
+\subsection{Under which circumstances does a unique stationary initial distribution exist? Prove it.}
+
+A unique stationary initial distribution $\nu$ exists, if $(\mathcal{X}, P)$ is irreducible.
+
+Proof: missing
+% TODO: lecture of 2014.05.07
+
+\section{Asymptotic equipartition}
+
+\subsection{What is asymptotic equipartition?}
+
+Suppose that $(X_n)_{n \geq 1}$ is an $\mathcal{X}$-valued stochastic process with entropy rate $h$. Then the process is said to have asymptotic equipartition property (AEP), if
+\[ -\frac1n \log_2 p_n(X_1, \dotsc, X_n) \converges h \text{ almost surely} \]
+(Sometimes convergence in probability suffices)
+
+\subsection{Under which conditions does the asymptotic equipartition property hold? What is it good for?}
+
+\[ -\frac1n \log_2 p_n(X_1, \dotsc, X_n) \converges h \text{ almost surely} \]
+must hold. Furthermore the AEP is good for data compression.
+
+\subsection{What is a typical set?}
+
+The typical set is defined as
+\[
+  A_\varepsilon^{(n)}
+    = \left\{
+      (x_1, \dotsc, x_n) \in \mathcal{X}^n:
+      \left|-\frac1n \log_2 p_n(x_1,\dotsc,x_n) - h\right| < \varepsilon
+    \right\}
+\]
+where $\varepsilon > 0$. The following theorems hold for typical sets
+\begin{itemize}
+  \item $2^{-n(h+\varepsilon)} < p_n(x_1,\dotsc,x_n) < 2^{-n(h - \varepsilon)} \quad\fall (x_1,\dotsc,x_n) \in A_\varepsilon^{(n)}$
+  \item $\os{(X_1,\dotsc,X_n) \in A_\varepsilon^{(n)}} > 1 - \varepsilon \quad \fall n \geq N_\varepsilon$
+  \item $(1 - \varepsilon) 2^{n(h-\varepsilon)} \leq \card{A_\varepsilon^{(n)}} \leq 2^{n(h + \varepsilon)}$
+\end{itemize}
+Those theorems follow from the definition of typical sets.
+
+\section{Coding and compression}
+
+\subsection{How is expected and average code length defined?}
+
+\begin{description}
+  \item[\key{Expected code length}] \hfill{} \\
+    $\sum_{(x_1,\dotsc,x_n)} l(C(x_1,\dotsc,x_n)) p_n(x_1,\dotsc,x_n)$
+  \item[\key{Average code length}] \hfill{} \\
+    $\frac1n \Ex\left(l(x_1,\dotsc,x_n)\right) \leq h + \varepsilon' \qquad\fall n > N_\varepsilon$
+\end{description}
+
+\subsection{What does the Ergodic theorem state?}
+
+For finite irreducible Markov chains $(\mathcal{X}, P)$ it holds that for any $f: \mathcal{X} \rightarrow \mathbb{R}$
+\begin{align*}
+  \frac1n\left(f(X_0) + f(X_1) + \dotsb + f(X_{n-1})\right)
+    &= \sum_{x \in \mathcal{X}} f(X) \nu_x \text{ almost surely}   && \text{ [discrete case]} \\
+    &= \int_\mathcal{X} f \dt\nu                                   && \text{ [continuous case]} \\
+\end{align*}
+
+\section{Codes}
+
+\subsection{Define the properties non-singularity, unique decodability and prefix-freedom.}
+
+\begin{description}
+  \item[\key{nonsingular}]
+    $C: \mathcal{X} \rightarrow \Sigma^+$ is injective
+  \item[\key{uniquely decodable}]
+    $C: \mathcal{X}^* \rightarrow \Sigma^*$ is injective
+  \item[\key{instantaneous or prefix-free}]
+    $\fall x,y \in \mathcal{X}: C(x)$ is not a prefix of $C(y)$
+\end{description}
+
+\subsection{What is the Theorem Kraft Inequality?}
+
+Let $D = \card{\Sigma}$ and $C: \mathcal{X} \rightarrow \Sigma$ is a prefix-free code. It holds that
+\[
+  \sum_{x \in \mathcal{X}} D^{-l(C(x))} \leq 1
+\]
+
+Conversely if $l_X \in \mathbb{N}$ ($x \in \mathcal{X}$) are such that $\sum_{x \in \mathcal{X}} D^{-l_x} \leq 1$
+then there is a prefix-free code $C$ with $C(L(x)) = L_x \fall x \in \mathcal{X}$.
+
+\subsection{Define a general integer optimization problem.}
+
+\subsection{What are Lagrange multipliers and what are they used for?}
+
+\subsection{Which theorem regarding code length holds for every prefix-free code?}
+
+For every prefix-free code $C: \mathcal{X} \rightarrow \Sigma^+$ the expected code length satisfies $L_C \geq H_D(X)$.
+If equality holds, then $p(x) = D^{-l(C(x))}$. Remember that $D = \card{\Sigma}$.
+
+It follows that if $p$ is D-adic\footnote{meaning $p(x) \in \set{D^{-n}: n \in \mathbb{N}}$} then the minimum value $H_D(X)$ is attained. We can set $l_X = -\log_D p(x)$ satisfy Kraft equality.
+
+Otherwise minimise $\log_D{B} + \frac{1}{\log_2 D} \kld pr$.
+
+\subsection{Which theorem holds for optimal code lengths?}
+
+Optimal code lengths $l_x^*$ with $x \in \mathcal{X}$ are such that the expected code length satisfies $H_D(X) \leq L^* < H_D(X) + 1$.
+
+\subsection{How does the Huffman algorithm work?}
+
+\subsection{Prove that Huffman codes are optimal.}
+
+\subsection{Which codes are canonical? Are Huffman codes canonical?}
+
+Canonical codes satisfy the following properties:
+
+\begin{enumerate}
+  \item if $p(x) > p(y)$ then $l(C(x)) \leq l(C(y))$
+  \item If $v,w \in C(\mathcal{X})$ are longest code words, then $l(v) = l(w)$
+  \item $C$ can be modified into another optimal prefix-free code $C'$. $C'$ satisfies:
+    Let $v, w$ be the least likely symbols
+    \begin{itemize}
+      \item $v$ and $w$ are siblings in the coding tree
+      \item $\fall z \in \mathcal{X} \setminus \set{x,y}: p(z) \geq p(x) \geq p(y)$
+    \end{itemize}
+\end{enumerate}
+
+Huffman codes are canonical.
+
+\section{Information channels}
+
+\subsection{Define discrete channels. What distinguishes a memoryless channel and the $n$-th extension of $\mathcal{C}$ without feedback?}
+
+Input alphabet $\mathcal X$ \\
+Output alphabet $\mathcal Y$ \\
+Probability transition matrix $\cond yx$
+
+The channel is \key{memoryless} iff the probability distribution of the output depends only on the current input and is conditionally independent of previous channel inputs or outputs.
+
+%A \key{discrete memoryless channel} $\mathcal{C} = (\mathcal{X}, P, Y)$ with $P = (p(y\,|\,x))_{x \in \mathcal{X}}$ with $p(y\,|\,x)$ is the probability that the outcome is $y$ given that the input is $x$.
+
+The \key{n-th extension of $\mathcal{C}$ without feedback} is the channel
+\[ \mathcal{C}^n = (\mathcal{X}^n, P_n, Y^n) \]
+
+Without feedback means than input symbol are conditionally independent of previous output values.
+In this case the transition function satisfies
+\[ \cond{y^n}{x^n} = \prod_{i=1}^n \cond{y_i}{x_i} \]
+
+\subsection{How is capacity of a channel defined?}
+
+\[ \Capacity(\mathcal C) = \max_{p(x)}\set{\op[I]{X;Y}: p_X \in M(\mathcal{X})} \]
+where $M(\mathcal{X}) = \set{p(\cdot) \text{ probability distributions on } \mathcal{X}}$
+given $P = (p(y\,|\,x))_{x\in\mathcal{X}}$ and $p_X$. This defines \key{information channel capacity}.
+
+From Shannon's second theorem it follows that information channel capacity equals to operational channel capacity.
+
+\subsection{Give examples for channels and their capacity}
+
+\begin{itemize}
+  \item Noise-less binary channel
+  \item Channel with non-overlapping outputs
+  \item Noisy typewriter
+  \item Binary symmetric channel
+  \item Binary erasure channel
+\end{itemize}
+
+\paragraph{A noise-less binary channel}
+transmits both bits always without error.
+If we want to compute the capacity
+\begin{align*}
+  C &= \max\left\{\op[I]{X;Y}\right\} \\
+    &= \op[H]{X} - \cond[H]XY \\
+    &= -2\left(\frac12 \log_2 \frac12\right) + \left(2 \cdot 0 \log_2 0 + 2 \cdot 1 \log_2 1\right) \\
+    &= 1 + 0 = 1
+\end{align*}
+
+\paragraph{A noisy typewriter} transmits a letter of the latin alphabet correctly with probability $\frac12$. With probability $\frac12$ the next letter of the alphabet will be transmitted instead.
+
+\[ \Capacity(\mathcal C) = \max\left\{\op[I]{X;Y}\right\} = \op[H]{X} - \cond[H]{X}{Y} \]
+
+\begin{align*}
+  \cond[H]{X}{Y} &= \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X} \op{X=x,Y=y} \log_2 \frac{\op{Y=y}}{\cond{X=x}{Y=y}} \\
+                 &= \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X} \frac1{2\cdot 26} \log_2 \frac{\frac{1}{26}}{\frac{1}{52}} \\
+                 &= \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X} \frac{1}{2\cdot 26} \log_2 2 \\
+                 &= 26 \cdot 2 \cdot \frac{1}{2\cdot 26} \cdot 1 \\
+                 &= 1
+\end{align*}
+
+or
+
+\begin{align*}
+  \cond[H]{X}{Y} &= \sum_{y \in \mathcal Y} \op{Y=y} \cond[H]{X}{Y=y} \\
+                 &= \sum_{y \in \mathcal Y} \frac1{26} \cdot 1 \\
+                 &= 26 \cdot \frac1{26} \\
+                 &= 1
+\end{align*}
+
+with
+
+\begin{align*}
+  H(X) &= -\sum_{x \in \mathcal X} \op{X=x} \log_2 \op{X=x} \\
+       &= -\sum_{x \in \mathcal X} \frac{1}{26} \log_2 \frac{1}{26} \\
+       &= -26 \cdot \frac{1}{26} \log_2 \frac{1}{26} \\
+       &= \log_2 \frac1{26}
+\end{align*}
+
+\paragraph{A binary symmetric channel} transmits a bit correctly
+with probability $(1-p)$. The wrong bit is sent with probability $p$.
+
+\begin{align*}
+  \Capacity(\mathcal{C}) &= \op[H]{X} - \sum_{y \in \mathcal Y} \op{Y=y} \cond[H]{X}{Y=y} \\
+                         &= \op[H]{\frac12, \frac12} - \op[H]{p, 1-p} \\
+                         &= 1 - \op[H]{p}
+\end{align*}
+
+\paragraph{A binary erasure channel} transmits a bit correctly with probability
+$1 - \alpha$. With probability $\alpha$ a bit will be transmitted as detectable
+error bit.
+
+\begin{align*}
+  \Capacity(\mathcal C) &= \max_{p(x)}\left(\op[H]{X} - \sum_{y \in \mathcal Y} \op{Y=y} \cond[H]{X}{Y=y}\right) \\
+                        &= \max_{p(x)}\left(\op[H]{X} - \alpha \op[H]{X}\right) \\
+                        &= \max_{\op[H]{X}}\left(\op[H]{X} - \alpha \op[H]{X}\right) \\
+                        &= \left(1 - \alpha \cdot 1\right) \\
+                        &= 1 - \alpha
+\end{align*}
+
+\subsection{When is $P$ of an information channel called (weakly) symmetric? Which associated theorem exists?}
+
+$P = (p(y\,|\,x))_{x \in \mathcal{X}, y \in \mathcal{Y}}$ is called \key{symmetric} iff
+\begin{enumerate}
+  \item rows are permutations of each other
+  \item columns are permutations of each other
+\end{enumerate}
+
+$P = (p(y\,|\,x))_{x \in \mathcal{X}, y \in \mathcal{Y}}$ is called \key{weakly symmetric} if
+\begin{enumerate}
+  \item rows are permutations of each other
+  \item all columns yield the same sum
+    \[ \exists c: \sum_x p(y\,|\,x) = c \qquad \fall y \in Y \]
+\end{enumerate}
+
+The theorem states,
+\begin{quote}
+  If $P$ is weakly symmetric, then $\Capacity(\mathcal{C}) = \log_2\card{Y} - \op[H]{p(\cdot\,|\,x)}$ and the maximum is achieved when $X$ is uniform on $\mathcal{X}$.
+\end{quote}
+
+\subsection{Prove $\Capacity(\mathcal{C}^n) = n \cdot \Capacity(\mathcal{C})$}
+
+\subsection{What is a $(M, n)$ code? What is the average and maximum error of it?}
+
+An $(M, n)$ code for the channel $C = (\mathcal{X}, P, Y)$ consists of the following:
+\begin{enumerate}
+  \item An input set $W$ with $\card{W} = M$ or wlog. $W = \set{1,\dotsc,M}$
+  \item The codebook $B$ (set of codewords)
+  \item A decoding function $g: Y^n \rightarrow \hat W$
+\end{enumerate}
+
+The average error is defined as
+\begin{align*}
+  \lambda_w^{(n)} &= \cons{g(Y^{(n)}) \neq w}{X^{(n)} = x^{(n)}(w)} \\
+                  &= \sum_{y \in Y} p(y \,|\, x(w))
+\end{align*}
+
+The maximum probability of the error is $\lambda^{(n)} = \max_w \lambda_w^{(n)}$.
+
+\subsection{What is the rate of a code?}
+
+\[ R = \frac{\log_2 M}{n} \]
+
+%A rate $R$ is said to be \key{achievable} if there exists a sequence of $\left(\lceil 2^{nR} \rceil, n\right)$ codes such that the maximal probability of error $\lambda^{(n)}$ converges towards $0$ as $n \to \infty$.
+
+\subsection{What is an achievable rate? What is an achievable capacity?}
+
+A rate $R > 0$ is achievable if there is a sequence of $(M_n, n)$ codes such that
+\[ R_n = \frac{\log_2 M_n}{n} \converges R \]
+and
+\[ \lambda^{(n)} \converges 0 \]
+
+The achievable capacity $R^*$ of a channel is the supremum of all achievable rates:
+\[
+  \fall \varepsilon > 0 \qquad
+  \exists (M,n) \text{ code with rate } R > R^* - \varepsilon \land \lambda^{(n)} < \varepsilon
+\]
+
+\subsection{What is the set of jointly typical sequences?}
+
+Intuitively, we decode a channel output $Y^n$ as the $i$-th index iff the codeword $X^n(i)$ is in the jointly typical set of the received signal $Y^n$.
+
+The set $A_\varepsilon^{(n)}$ of \key{jointly typical} sequences $\set{(x^n, y^n)}$ with respect to the distribution $\op{x,y}$ is the set of $n$-sequences with empirical entropies $\varepsilon$-close to the true entropies:
+\[
+	A_\varepsilon^{(n)} = \set{
+		(x^n, y^n) \in \mathcal X^n \times \mathcal Y^n:
+		\card{-\frac1{n} \log_2 \op{x^n} - \op[H]{X}} < \varepsilon
+	}
+\]
+
+The following statements hold for jointly typical sequences:
+\begin{enumerate}
+  \item $\op{(X^{(n)}, Y^{(n)}) \in A_\varepsilon^{(n)}} \to 1$ as $n \to \infty$
+  \item $(1 - \varepsilon) 2^{n(\op[H]{X,Y} - \varepsilon)} \leq \card{A_n^\varepsilon} \leq \varepsilon 2^{n(\op[H]{X,Y} - \varepsilon)}$
+  \item $(X'_1, \ldots, X'_n), (Y'_1, \ldots, Y'_n)$ are independent. Then
+    \[
+		\op{(X'_1, \ldots, X'_n, Y'_1, \ldots, Y'_n) \in A_\varepsilon^{(n)}} =
+		\begin{cases}
+		  \leq 2^{-n(\op[I]{X,Y} - 3\varepsilon)} & \text{else} \\
+		  \geq (1 - \varepsilon) 2^{-n (\op[I]{X,Y} + 3\varepsilon)} & n \geq N_\varepsilon
+		\end{cases}
+    \]
+\end{enumerate}
+
+\subsection{Define Shannon's 2nd theorem and give an overview over the proof.}
+
+Also called ``Channel coding theorem''.
+
+\begin{quote}
+  For a discrete memoryless channel, all rates below capacity C are achievable.
+  Specifically for every rate $R < C$, there exists a sequence of $(2^{nR}, n)$ codes with maximum probability of error $\lambda^n \to 0$.
+
+  Conversely any sequence of $(2^{nR}, n)$ codes with $\lambda^{(n)} \to 0$ must have $R \leq C$.
+\end{quote}
+
+\[ R^* = \Capacity(\mathcal{C}) \]
+
+\section{List of theorems}
+
+See also
+\begin{itemize}
+  \item Markov inequality
+  \item Chebyshev inequality
+  \item Weak and Strong Law of Large Numbers
+\end{itemize}
+
+\begin{thm}
+  If $X,Y$ are independent random variables with finite $\Ex(X)$ and $\Ex(Y)$, then
+  \[ \Ex(X\cdot Y) = \Ex(X) \cdot \Ex(Y) \]
+\end{thm}
+
+\begin{thm}
+  If $X_n \rightarrow X$ almost surely then $X_n \rightarrow X$ in probability.
+\end{thm}
+
+\begin{thm}
+  $X_n \rightarrow X$ almost surely $\Leftrightarrow$ $U_k \rightarrow 0$ in probability with
+  $ U_k = \sup\set{\card{X_n - X}: n \geq k} $
+\end{thm}
+
+\begin{thm}
+  If $\lim X_n = X$ almost surely and $\lim X_n = X'$ almost surely, then $X = X'$ almost surely.
+  If $\lim X_n = X$ in probability and $\lim X_n = X'$ in probability, then $X = X'$ almost surely.
+\end{thm}
+
+\begin{thm}
+  The function $N \mapsto H(U_N) = \log_2{N}$ is the \emph{unique} function satisfying the associated 3~axioms to Hartley formula:
+  \begin{itemize}
+    \itemsep0pt
+    \item $H(U_2) = 1$
+    \item $H(U_N) \leq H(U_{N+1})$ (\enquote{monotonicity})
+    \item $H(U_{M\cdot N}) = H(U_M) + H(U_N)$
+  \end{itemize}
+  It is also the \emph{unique} function satisfying
+  \begin{itemize}
+    \itemsep0pt
+    \item $H(U_{N+1}) - H(U_N) \xrightarrow{N \rightarrow \infty} 0$
+  \end{itemize}
+\end{thm}
+
+\begin{thm}
+  \begin{align*}
+    & \cond[H] YX = \op[H]{X,Y} - \op[H]{X} \\
+    \Leftrightarrow{ } & \op[H]{X,Y} = \op[H]{X} + \cond[H] YX
+  \end{align*}
+\end{thm}
+
+\end{document}

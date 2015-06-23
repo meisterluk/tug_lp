@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.1935962"
-     inkscape:cx="282.48402"
-     inkscape:cy="245.57672"
+     inkscape:zoom="0.84399997"
+     inkscape:cx="268.20434"
+     inkscape:cy="191.13595"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1478,7 +1478,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 39.962825,75.27881 c 44.95646,34.17361 96.154445,94.17834 129.480065,122.56217 9.95864,8.4819 23.48876,122.49161 8.58981,139.37315 C 91.458461,435.30875 111.71351,467.11656 62.267658,482.34201 49.423495,486.29701 23.283599,484.38736 20.690551,471.2006 -8.9087263,320.67559 22.013185,168.98667 26.022305,94.795539 26.453692,86.81246 33.598183,70.440734 39.962825,75.27881 z"
+       d="m 39.962825,75.27881 c 8.511974,-1.01417 96.154445,94.17834 129.480065,122.56217 9.95864,8.4819 23.48876,122.49161 8.58981,139.37315 C 91.458461,435.30875 111.71351,467.11656 62.267658,482.34201 49.423495,486.29701 23.283599,484.38736 20.690551,471.2006 -8.9087263,320.67559 22.013185,168.98667 26.022305,94.795539 26.453692,86.81246 32.024248,76.224662 39.962825,75.27881 z"
        id="path4122"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssssss"
@@ -3067,6 +3067,12 @@
        style="fill:none;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 113.37921,677.86366 150.97903,0"
        id="path3102-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 320.1537,903.65192 156.57984,0"
+       id="path3868-2-0"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
   </g>

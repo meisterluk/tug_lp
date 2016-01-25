@@ -28,14 +28,14 @@
       function get_sum()
       {
         var i, j, value;
-        var indizes = new Array();
+        var indices = new Array();
         var sums = new Array();
         var base = "#analyse tfoot td";
         for (i = 0; i < $(base).length; i++)
         {
           if ($(base + ":nth(" + i + ")").hasClass("sum"))
           {
-            indizes.push(i);
+            indices.push(i);
             sums.push(0);
           }
         }
@@ -43,10 +43,10 @@
         base = "#analyse tbody tr:visible";
         for (i = 0; i < $(base).length; i++)
         {
-          for (j = 0; j < indizes.length; j++)
+          for (j = 0; j < indices.length; j++)
           {
-            value = parseFloat($(base + ":nth(" + i + ") td:nth(" + indizes[j] + ")").text());
-            if (value != NaN)
+            value = parseFloat($(base + ":nth(" + i + ") td:nth(" + indices[j] + ")").text());
+            if (!isNaN(value))
               sums[j] += value;
           }
         }
@@ -100,14 +100,14 @@
     <article>
       <dl>
         <dt>Last update</dt>
-        <dd><time datetime="2015-03-30 00:38:00+01:00">30th of Mar 2014</time></dd>
+        <dd><time datetime="2016-01-25 22:02:00+01:00">25th of Jan 2016</time></dd>
 
         <dt>Catalogues</dt>
         <dd>Algorithms &amp; IT Security</dd>
       </dl>
 
       <h3 id="courses">Courses <a class="id" href="#courses">#</a></h3>
-      
+
       <table style="width:100%; text-align:center" id="analyse">
         <thead>
           <tr>
@@ -118,8 +118,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>  <td>CombOpt 1 (L)</td>              <td>4.5</td> <td>?</td> <td>30.05.2015</td> </tr>
-          <tr>  <td>IT Security Project</td>        <td>10</td>  <td>?</td> <td>01.05.2014</td> </tr>
+          <tr>  <td>IT Security Project</td>  <td>10</td>  <td>N/A</td> <td>15.02.2016</td> </tr>
+          <tr>  <td>master thesis</td>        <td>30</td>  <td>20</td> <td>15.04.2016</td> </tr>
+          <tr>  <td>Diplomanden-Seminar</td>  <td>5</td>   <td>3</td> <td>15.04.2016</td> </tr>
         </tbody>
         <tfoot>
           <tr>
